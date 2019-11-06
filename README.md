@@ -1,4 +1,6 @@
 # rrhh2
+docker run -d  --name watchtower  -v /var/run/docker.sock:/var/run/docker.sock  containrrr/watchtower
+----
 docker images
 docker push lightcube/rrhh2:latest
 -----
