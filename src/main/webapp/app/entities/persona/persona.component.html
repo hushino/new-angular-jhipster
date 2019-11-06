@@ -1,0 +1,85 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="rrhh2App.persona.home.title">Personas</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-persona"
+            [routerLink]="['/persona/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span jhiTranslate="rrhh2App.persona.home.createLabel">
+                Create a new Persona
+            </span>
+        </button>
+    </h2>
+    <jhi-alert-error></jhi-alert-error>
+    <jhi-alert></jhi-alert>
+    <br />
+    <div class="alert alert-warning" *ngIf="personas?.length === 0">
+        <span jhiTranslate="rrhh2App.persona.home.notFound">No personas found</span>
+    </div>
+    <div class="table-responsive" *ngIf="personas?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+                    <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span>
+                        <fa-icon [icon]="'sort'"></fa-icon>
+                    </th>
+                    <th scope="col" jhiSortBy="nombre"><span jhiTranslate="rrhh2App.persona.nombre">Nombre</span>
+                        <fa-icon [icon]="'sort'"></fa-icon>
+                    </th>
+                    <th scope="col" jhiSortBy="apellido"><span jhiTranslate="rrhh2App.persona.apellido">Apellido</span>
+                        <fa-icon [icon]="'sort'"></fa-icon>
+                    </th>
+                    <th scope="col" jhiSortBy="cuil"><span jhiTranslate="rrhh2App.persona.cuil">Cuil</span>
+                        <fa-icon [icon]="'sort'"></fa-icon>
+                    </th>
+                    <th scope="col" jhiSortBy="dni"><span jhiTranslate="rrhh2App.persona.dni">Dni</span>
+                        <fa-icon [icon]="'sort'"></fa-icon>
+                    </th>
+                    <th scope="col" jhiSortBy="legajo"><span jhiTranslate="rrhh2App.persona.legajo">Legajo</span>
+                        <fa-icon [icon]="'sort'"></fa-icon>
+                    </th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let persona of personas ;trackBy: trackId">
+                    <td><a [routerLink]="['/persona', persona.id, 'view' ]">{{persona.id}}</a></td>
+                    <td>{{persona.nombre}}</td>
+                    <td>{{persona.apellido}}</td>
+                    <td>{{persona.cuil}}</td>
+                    <td>{{persona.dni}}</td>
+                    <td>{{persona.legajo}}</td>
+
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit" [routerLink]="['/persona', persona.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                                <fa-icon [icon]="'eye'"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+                            <button type="submit" [routerLink]="['/persona', persona.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                                <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+                            <button type="submit"
+                                [routerLink]="['/persona', { outlets: { popup: persona.id + '/delete'} }]"
+                                replaceUrl="true" queryParamsHandling="merge" class="btn btn-danger btn-sm">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div [hidden]="personas?.length === 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5"
+                [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

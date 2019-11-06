@@ -1,0 +1,33 @@
+version: '3.7'
+services:
+  rrhh2-app:
+    image: rrhh2
+    restart: always
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 5s
+      restart_policy:
+        condition: always
+    environment:
+      - _JAVA_OPTIONS=-Xmx1512m -Xms556m
+      - SPRING_PROFILES_ACTIVE=prod,swagger
+      - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
+      - SPRING_DATASOURCE_URL=jdbc:mysql://rrhh2-mysql:3306/rrhh2?useUnicode=true&characterEncoding=utf8&useSSL=false
+      - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
+    ports:
+      - 8080:8080
+  rrhh2-mysql:
+    image: mysql:8.0.17
+    restart: always
+    # volumes:
+    #     - ~/volumes/jhipster/rrhh2/mysql/:/var/lib/mysql/
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=rrhh2
+    ports:
+      - 3306:3306
+    command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+

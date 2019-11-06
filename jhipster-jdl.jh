@@ -1,0 +1,190 @@
+entity Persona {
+	nombre String required maxlength(150)
+    apellido String required maxlength(150)
+    cuil String required  maxlength(50)
+    dni Integer required 
+    legajo Integer required 
+	apodo String  maxlength(50)
+    foto ImageBlob 
+	soltero String  maxlength(50)
+	casado String  maxlength(50)
+	conviviente String   maxlength(50)
+	viudo String  maxlength(50)
+	domicilio String  maxlength(50)
+	lugar String  maxlength(50)
+	calle String  maxlength(50)
+	numero String  maxlength(50)
+	telefonofijo String  maxlength(50)
+	numerodecelular String  maxlength(50)
+	oficioprofecion String  maxlength(50)
+	niveldeestudios String  maxlength(50)
+gruposanguineo String  maxlength(50)
+factor String  maxlength(50)
+donante String  maxlength(50)
+diabetes String  maxlength(50)
+hipertension String maxlength(50)
+alergias String  maxlength(50)
+asma String  maxlength(50)
+otros String  maxlength(50)
+fechadeingreso LocalDate 
+instrumentolegal String  maxlength(50)
+categoria String  maxlength(50)
+item String  maxlength(50) 
+planta String  maxlength(50)
+area String  maxlength(50)
+direccion String  maxlength(50)
+annos Integer
+meses Integer 
+dias Integer  
+realizocomputodeservicios String  maxlength(50)
+poseeconocimientoenmaquinasviales String  maxlength(50)
+casoemergenciacelular String  maxlength(50)
+casoemergenciafijo String  maxlength(50)
+casoemergencianombre String  maxlength(50)
+casoemergenciacelular2 String  maxlength(50)
+casoemergenciafijo2 String  maxlength(50)
+casoemergencianombre2 String  maxlength(50)
+familiaracargonombre String  maxlength(50)
+familiaracargonombre2 String  maxlength(50)
+familiaracargonombre3 String  maxlength(50)
+familiaracargonombre4 String  maxlength(50)
+familiaracargonombre5 String  maxlength(50)
+familiaracargodni String  maxlength(50)
+familiaracargodni2 String  maxlength(50)
+familiaracargodni3 String  maxlength(50)
+familiaracargodni4 String  maxlength(50)
+familiaracargodni5 String  maxlength(50)
+familiaracargoedad String  maxlength(50)
+familiaracargoedad2 String  maxlength(50)
+familiaracargoedad3 String  maxlength(50)
+familiaracargoedad4 String  maxlength(50)
+familiaracargoedad5 String  maxlength(50)
+altura String  maxlength(50)
+barrio String  maxlength(50)
+estudiosincompletos String  maxlength(50)
+conyugeapellido String  maxlength(50)
+conyugenombre String  maxlength(50)
+conyugedni Integer 
+conyugecuil String  maxlength(50)
+grupofamiliarapellidonombre String  maxlength(50)
+grupofamiliarapellidonombre2 String  maxlength(50)
+grupofamiliarapellidonombre3 String  maxlength(50)
+grupofamiliarapellidonombre4 String  maxlength(50)
+grupofamiliarapellidonombre5 String  maxlength(50)
+grupofamiliarapellidonombre6 String  maxlength(50)
+grupofamiliarapellidonombre7 String  maxlength(50)
+grupofamiliarapellidonombre8 String  maxlength(50)
+grupofamiliarapellidonombre9 String  maxlength(50)
+grupofamiliarapellidonombre10 String  maxlength(50)
+grupofamiliarapellidonombre11 String  maxlength(50)
+grupofamiliarapellidonombreedad String  maxlength(50) 
+grupofamiliarapellidonombreedad2 String maxlength(50) 
+grupofamiliarapellidonombreedad3 String maxlength(50)
+grupofamiliarapellidonombreedad4 String  maxlength(50)
+grupofamiliarapellidonombreedad5 String  maxlength(50)
+grupofamiliarapellidonombreedad6 String maxlength(50)
+grupofamiliarapellidonombreedad7 String maxlength(50)
+grupofamiliarapellidonombreedad8 String maxlength(50)
+grupofamiliarapellidonombreedad9 String maxlength(50)
+grupofamiliarapellidonombreedad10 String maxlength(50)
+grupofamiliarapellidonombreedad11 String maxlength(50)
+	grupofamiliarapellidonombredni Integer
+	grupofamiliarapellidonombredni2 Integer
+	grupofamiliarapellidonombredni3 Integer
+	grupofamiliarapellidonombredni4 Integer
+	grupofamiliarapellidonombredni5 Integer
+	grupofamiliarapellidonombredni6 Integer
+	grupofamiliarapellidonombredni7 Integer
+	grupofamiliarapellidonombredni8 Integer
+	grupofamiliarapellidonombredni9 Integer 
+	grupofamiliarapellidonombredni10 Integer
+	grupofamiliarapellidonombredni11 Integer
+	grupofamiliarapellidonombrefamiliar String  maxlength(50)
+	grupofamiliarapellidonombrefamiliar2 String  maxlength(50)
+	grupofamiliarapellidonombrefamiliar4 String  maxlength(50)
+	grupofamiliarapellidonombrefamiliar3 String  maxlength(50)
+	grupofamiliarapellidonombrefamiliar5 String  maxlength(50)
+	grupofamiliarapellidonombrefamiliar6 String  maxlength(50)
+	grupofamiliarapellidonombrefamiliar7 String  maxlength(50)
+	grupofamiliarapellidonombrefamiliar8 String  maxlength(50)
+	grupofamiliarapellidonombrefamiliar9 String  maxlength(50)
+	grupofamiliarapellidonombrefamiliar10 String  maxlength(50)
+	grupofamiliarapellidonombrefamiliar11 String  maxlength(50)
+	
+
+
+}
+
+
+
+relationship OneToMany{
+	Persona{licencia} to Licencia{persona}
+    Persona{altasAscensosBajas} to AltasAscensosBajas{persona}
+    Persona{concpremios} to Concpremios{persona}
+    Persona{embargos} to Embargos{persona}
+    Persona{garantia} to Garantia{persona}
+    Persona{otrosServiciosPrestados} to OtrosServiciosPrestados{persona}
+    Persona{penasDisciplinariasSufridas} to PenasDisciplinariasSufridas{persona}
+}
+
+entity Licencia{
+ fechaLicencia LocalDate
+referencias String
+numeroDeDias String
+observaciones String
+usuariosMod String
+ 
+}
+entity OtrosServiciosPrestados{
+fecha LocalDate
+referencias String
+}
+entity PenasDisciplinariasSufridas{
+fecha LocalDate
+expediente String
+referencias String
+}
+entity Garantia{
+presentadaFecha LocalDate
+garantia String
+observaciones String
+}
+entity AltasAscensosBajas{
+fecha LocalDate
+cargo String 
+observaciones String
+expediente String
+prestaservicioen String
+}
+entity Embargos{
+fecha LocalDate 
+juzgado String
+acreedor String 
+cantidad String
+expediente String
+fianzaODeudaPropia String
+origenDeLaDeuda String
+observaciones String
+levantada String
+}
+entity Concpremios{
+	fecha LocalDate
+	referencias String
+}
+paginate Persona with pagination
+paginate Licencia with pagination
+paginate Concpremios with pagination
+paginate Embargos with pagination
+paginate AltasAscensosBajas with pagination
+paginate PenasDisciplinariasSufridas with pagination
+paginate Garantia with pagination
+paginate OtrosServiciosPrestados with pagination
+filter Persona
+filter Licencia
+filter Concpremios
+filter Embargos
+filter AltasAscensosBajas
+filter PenasDisciplinariasSufridas
+filter Garantia
+filter OtrosServiciosPrestados
+service all with serviceImpl
