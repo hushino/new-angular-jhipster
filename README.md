@@ -9,6 +9,9 @@ gradlew -Pprod bootJar jibDockerBuild
 docker-compose -f src/main/docker/app.yml up
 -----
 docker run --rm -it -p 8080:8080/tcp lightcube/rrhh2:latest
+---BACKUP DATABASE--
+docker exec docker_rrhh2-mysql_1  /usr/bin/mysqldump -u root --password= rrhh2 > backup.sql
+-----
 
 This application was generated using JHipster 6.4.1, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v6.4.1](https://www.jhipster.tech/documentation-archive/v6.4.1).
 
