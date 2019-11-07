@@ -43,4 +43,20 @@ jobs:
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
       # run tests!
-      - run: gradle test
+      #- run: gradle test
+    
+     - run: gradlew -Pprod bootJar jibDockerBuild 
+        
+     - run:
+        name: Install Docker Compose
+        command: |
+        curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+        chmod +x ~/docker-compose
+        sudo mv ~/docker-compose /usr/local/bin/docker-compose
+        - run:
+          name: Start container and verify it is working
+          command: |
+            set -x
+            docker-compose -f src/main/docker/app.yml up
+            docker run --network container:contacts \
+              appropriate/curl --retry 10 --retry-delay 1 --retry-connrefused http://localhost:8080/
