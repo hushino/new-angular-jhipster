@@ -1,5 +1,5 @@
 # rrhh2
-docker run -d  --name watchtower -e REPO_USER=lightcube -e REPO_PASS=123qweasdZXC -v /var/run/docker.sock:/var/run/docker.sock  containrrr/watchtower
+docker run --restart=always -d --name watchtower -e REPO_USER=lightcube -e REPO_PASS=123qweasdZXC -v /var/run/docker.sock:/var/run/docker.sock containrrr/watchtower --interval 60
 ----
 docker images
 docker push lightcube/rrhh2:latest
