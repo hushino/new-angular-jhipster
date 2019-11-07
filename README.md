@@ -1,5 +1,5 @@
 # rrhh2
-docker run -d  --name watchtower  -v /var/run/docker.sock:/var/run/docker.sock  containrrr/watchtower
+docker run -d  --name watchtower -e REPO_USER=lightcube -e REPO_PASS=123qweasdZXC -v /var/run/docker.sock:/var/run/docker.sock  containrrr/watchtower
 ----
 docker images
 docker push lightcube/rrhh2:latest
@@ -15,6 +15,8 @@ docker exec docker_rrhh2-mysql_1  /usr/bin/mysqldump -u root --password= rrhh2 >
 buildear y pushear para actualizar remotamente:
 gradlew -Pprod bootJar jibDockerBuild 
 docker push lightcube/rrhh2:latest
+rrhh2-app:
+    image: lightcube/rrhh2
 -----
 This application was generated using JHipster 6.4.1, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v6.4.1](https://www.jhipster.tech/documentation-archive/v6.4.1).
 
