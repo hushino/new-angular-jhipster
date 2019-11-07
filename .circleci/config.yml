@@ -45,9 +45,9 @@ jobs:
       # run tests!
       #- run: gradle test
     
-     - run: gradlew -Pprod bootJar jibDockerBuild 
+      - run: gradlew -Pprod bootJar jibDockerBuild 
         
-     - run:
+      - run:
         name: Install Docker Compose
         command: |
         curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
