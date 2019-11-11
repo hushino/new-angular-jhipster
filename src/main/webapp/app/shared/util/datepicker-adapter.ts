@@ -10,12 +10,12 @@ import * as moment from 'moment';
 export class NgbDateMomentAdapter extends NgbDateAdapter<Moment> {
   fromModel(date: Moment): NgbDateStruct {
     if (date != null && moment.isMoment(date) && date.isValid()) {
-      return { year: date.year(), month: date.month() + 1, day: date.date() };
+      return { day: date.date(), month: date.month() + 1, year: date.year() };
     }
     return null;
   }
 
   toModel(date: NgbDateStruct): Moment {
-    return date ? moment(date.year + '-' + date.month + '-' + date.day, 'YYYY-MM-DD') : null;
+    return date ? moment(date.day + '-' + date.month + '-' + date.year, 'DD-MM-YYYY') : null;
   }
 }
