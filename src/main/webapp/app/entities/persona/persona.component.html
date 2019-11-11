@@ -10,10 +10,10 @@
         </button>
     </h2>
 
-    <input (keydown)="onKeydown($event)" type="text" placeholder="ingrese nombre,dni,legajo..." (input)="searchPosts($event.target.value)">
+    <input style="width: 40% !important;" [ngbTypeahead]="search" class="form-control" id="typeahead-basic"  type="text" placeholder="ingrese Nombre, Legajo o DNI..." (input)="searchPosts($event.target.value)">
     <ng-container *ngIf="(blogPosts$ | async) as blogPosts">
         <p *ngIf="blogPosts?.length >= 1">Resultados de busqueda:</p>
-        <ul  >
+        <ul>
             <li *ngFor="let persona of blogPosts" >
                 <button type="submit" [routerLink]="['/persona', persona.id, 'view' ]" class="btn btn-info btn-sm">
                     <fa-icon [icon]="'eye'"></fa-icon>

@@ -17,6 +17,7 @@ import { PersonaService } from './persona.service';
 export class PersonaUpdateComponent implements OnInit {
   isSaving: boolean;
   fechadeingresoDp: any;
+  public isCollapsed = true;
 
   editForm = this.fb.group({
     id: [],

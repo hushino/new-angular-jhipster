@@ -54,16 +54,11 @@ export class PersonaComponent implements OnInit, OnDestroy {
       this.predicate = data.pagingParams.predicate;
     });
   }
-  onKeydown(event) {
-    if (event.key === 'Enter') {
-      //this.blogPosts$ = null
-    }
-  }
   searchPosts(userId: string) {
     if (userId.length > 3) {
       this.userIdSubject.next(userId);
     } else {
-      this.userIdSubject.next('9087');
+      this.userIdSubject.next('09080000');
     }
     //setTimeout(() => {
     // this.blogPosts$ = null

@@ -38,8 +38,11 @@ export class PersonaService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
-  fetchPosts(id: string): Observable<EntityResponseType[]> {
-    return this.http.get<EntityResponseType[]>(`${this.resourceUrl}?nombre.contains=${id}`).pipe(catchError(err => of([])));
+  fetchPosts(id: string | number): Observable<EntityResponseType[]> {
+    //return this.http.get<EntityResponseType[]>(`${this.resourceUrl}?dni.equals=${id}`).pipe(catchError(err => of([])));
+    //return this.http.get<EntityResponseType[]>(`${this.resourceUrl}?legajo.equals=${id}`).pipe(catchError(err => of([])));
+
+    return this.http.get<EntityResponseType[]>(`${this.resourceUrl}?apellido.contains=${id}`).pipe(catchError(err => of([])));
   }
 
   find(id: number): Observable<EntityResponseType> {
