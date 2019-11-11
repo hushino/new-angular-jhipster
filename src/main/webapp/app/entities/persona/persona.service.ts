@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import * as moment from 'moment';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { DATE_FORMAT } from 'app/shared/constants/input.constants';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
@@ -12,7 +12,12 @@ import { IPersona } from 'app/shared/model/persona.model';
 
 type EntityResponseType = HttpResponse<IPersona>;
 type EntityArrayResponseType = HttpResponse<IPersona[]>;
-
+interface BlogPost {
+  userId: number;
+  id: number;
+  title: string;
+  body: string;
+}
 @Injectable({ providedIn: 'root' })
 export class PersonaService {
   public resourceUrl = SERVER_API_URL + 'api/personas';
@@ -31,6 +36,10 @@ export class PersonaService {
     return this.http
       .put<IPersona>(this.resourceUrl, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  fetchPosts(id: string): Observable<EntityResponseType[]> {
+    return this.http.get<EntityResponseType[]>(`${this.resourceUrl}?nombre.contains=${id}`).pipe(catchError(err => of([])));
   }
 
   find(id: number): Observable<EntityResponseType> {

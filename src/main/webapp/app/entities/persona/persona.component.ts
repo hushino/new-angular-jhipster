@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { filter, map } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+
 import { JhiEventManager, JhiParseLinks, JhiDataUtils } from 'ng-jhipster';
 
 import { IPersona } from 'app/shared/model/persona.model';
@@ -30,7 +31,12 @@ export class PersonaComponent implements OnInit, OnDestroy {
   predicate: any;
   previousPage: any;
   reverse: any;
-
+  private userIdSubject = new Subject<string>();
+  readonly blogPosts$ = this.userIdSubject.pipe(
+    debounceTime(100),
+    distinctUntilChanged(),
+    switchMap(userId => this.personaService.fetchPosts(userId))
+  );
   constructor(
     protected personaService: PersonaService,
     protected parseLinks: JhiParseLinks,
@@ -47,6 +53,10 @@ export class PersonaComponent implements OnInit, OnDestroy {
       this.reverse = data.pagingParams.ascending;
       this.predicate = data.pagingParams.predicate;
     });
+  }
+
+  searchPosts(userId: string) {
+    this.userIdSubject.next(userId);
   }
 
   loadAll() {

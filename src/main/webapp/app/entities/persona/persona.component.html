@@ -9,6 +9,22 @@
             </span>
         </button>
     </h2>
+    <input 
+  type="text" 
+  placeholder="enter user id..."
+  (input)="searchPosts($event.target.value)"
+>
+
+<ng-container *ngIf="(blogPosts$ | async) as blogPosts">
+  <p>User posts titles:</p>
+  <ul>
+    <li *ngFor="let persona of blogPosts">
+      {{persona.nombre}}
+      {{persona.cuil}}
+      {{persona.dni}}
+    </li>
+  </ul>
+</ng-container>
     <jhi-alert-error></jhi-alert-error>
     <jhi-alert></jhi-alert>
     <br />
