@@ -1,23 +1,37 @@
 # rrhh2
-docker run --restart=always -d --name watchtower -e REPO_USER=lightcube -e REPO_PASS=123qweasdZXC -v /var/run/docker.sock:/var/run/docker.sock containrrr/watchtower --interval 60
-----
+
+## docker run --restart=always -d --name watchtower -e REPO_USER=lightcube -e REPO_PASS=123qweasdZXC -v /var/run/docker.sock:/var/run/docker.sock containrrr/watchtower --interval 60
+
 docker images
 docker push lightcube/rrhh2:latest
------
+
+---
+
 docker pull lightcube/rrhh2
-gradlew -Pprod bootJar jibDockerBuild 
+gradlew -Pprod bootJar jibDockerBuild
 docker-compose -f src/main/docker/app.yml up
------
+
+---
+
 docker run --rm -it -p 8080:8080/tcp lightcube/rrhh2:latest
 ---BACKUP DATABASE--
-docker exec docker_rrhh2-mysql_1  /usr/bin/mysqldump -u root --password= rrhh2 > backup.sql
------
+docker exec docker_rrhh2-mysql_1 /usr/bin/mysqldump -u root --password= rrhh2 > backup.sql
+
+---
+
 buildear y pushear para actualizar remotamente:
-gradlew -Pprod bootJar jibDockerBuild 
+gradlew -Pprod bootJar jibDockerBuild
 docker push lightcube/rrhh2:latest
+el hosting remoto debe tener esto:
 rrhh2-app:
-    image: lightcube/rrhh2
------
+image: lightcube/rrhh2
+el hosting local desde el que hace el push es
+rrhh2-app:
+image: rrhh2
+y le sigue el push en el local
+
+---
+
 This application was generated using JHipster 6.4.1, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v6.4.1](https://www.jhipster.tech/documentation-archive/v6.4.1).
 
 ## Development
