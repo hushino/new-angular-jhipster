@@ -1,10 +1,13 @@
 package com.rrhh.red.domain;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * A Garantia.
@@ -20,6 +23,8 @@ public class Garantia implements Serializable {
     private Long id;
 
     @Column(name = "presentada_fecha")
+    //@JsonFormat(pattern = "dd-MM-YYYY")
+    //@DateTimeFormat(iso = DateTimeFormatter.ofPattern("dd-MM-YYYY"))
     private LocalDate presentadaFecha;
 
     @Column(name = "garantia")

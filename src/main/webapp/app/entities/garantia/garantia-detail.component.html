@@ -20,7 +20,8 @@
                 <dt><span jhiTranslate="rrhh2App.garantia.persona">Persona</span></dt>
                 <dd>
                     <div *ngIf="garantia.persona">
-                        <a [routerLink]="['/persona', garantia.persona?.id, 'view']">{{garantia.persona?.id}}</a>
+                        <a [routerLink]="['/persona', garantia.persona?.id, 'view']"></a>
+                            ID: {{garantia.persona?.id}} -Nombre: {{garantia.persona?.nombre}} -Apellido: {{garantia.persona?.apellido}} -DNI: {{garantia.persona?.dni}} -Legajo: {{garantia.persona?.legajo}}
                     </div>
                 </dd>
             </dl>
