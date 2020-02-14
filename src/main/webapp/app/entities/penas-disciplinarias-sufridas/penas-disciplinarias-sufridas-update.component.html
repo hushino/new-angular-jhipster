@@ -33,7 +33,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.penasDisciplinariasSufridas.persona" for="field_persona">Persona</label>
                     <select class="form-control" id="field_persona" name="persona" formControlName="persona">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="personaOption.id === editForm.get('persona').value?.id ? editForm.get('persona').value : personaOption" *ngFor="let personaOption of personas; trackBy: trackPersonaById">ID: {{personaOption.id}}  -Apellido: {{personaOption.persona?.apellido}} -DNI: {{personaOption.persona?.dni}} -Legajo: {{personaOption.persona?.legajo}}</option>
+                        <option [ngValue]="personaOption.id === editForm.get('persona').value?.id ? editForm.get('persona').value : personaOption" *ngFor="let personaOption of personas; trackBy: trackPersonaById">ID: {{personaOption.id}}  -Apellido: {{personaOption.apellido}} -DNI: {{personaOption.dni}} -Legajo: {{personaOption.legajo}}</option>
                     </select>
                 </div>
             </div>
