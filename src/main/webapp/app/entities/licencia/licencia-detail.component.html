@@ -28,7 +28,7 @@
                 <dt><span jhiTranslate="rrhh2App.licencia.persona">Persona</span></dt>
                 <dd>
                     <div *ngIf="licencia.persona">
-                        <a [routerLink]="['/persona', licencia.persona?.id, 'view']">{{licencia.persona?.id}}</a>
+                        <a [routerLink]="['/persona', licencia.persona?.id, 'view']">ID: {{licencia.persona?.id}} -Apellido: {{licencia.persona?.apellido}} -DNI: {{licencia.persona?.dni}} -Legajo: {{licencia.persona?.legajo}}</a>
                     </div>
                 </dd>
             </dl>

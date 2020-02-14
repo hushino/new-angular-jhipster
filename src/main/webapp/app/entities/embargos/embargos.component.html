@@ -46,7 +46,7 @@
                 <td>{{embargos.levantada}}</td>
                 <td>
                     <div *ngIf="embargos.persona">
-                        <a [routerLink]="['/persona', embargos.persona?.id, 'view' ]" >{{embargos.persona?.id}}</a>
+                        <a [routerLink]="['/persona', embargos.persona?.id, 'view' ]" >ID: {{embargos.persona?.id}} -DNI: {{embargos.persona?.dni}}</a>
                     </div>
                 </td>
                 <td class="text-right">

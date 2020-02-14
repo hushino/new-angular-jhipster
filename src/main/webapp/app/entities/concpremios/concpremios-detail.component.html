@@ -16,7 +16,7 @@
                 <dt><span jhiTranslate="rrhh2App.concpremios.persona">Persona</span></dt>
                 <dd>
                     <div *ngIf="concpremios.persona">
-                        <a [routerLink]="['/persona', concpremios.persona?.id, 'view']">{{concpremios.persona?.id}}</a>
+                        <a [routerLink]="['/persona', concpremios.persona?.id, 'view']">ID:{{concpremios.persona?.id}} -Apellido: {{concpremios.persona?.apellido}} -DNI: {{concpremios.persona?.dni}} -Legajo: {{concpremios.persona?.legajo}}</a>
                     </div>
                 </dd>
             </dl>

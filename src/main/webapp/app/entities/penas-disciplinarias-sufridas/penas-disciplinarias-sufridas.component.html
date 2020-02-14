@@ -34,7 +34,7 @@
                 <td>{{penasDisciplinariasSufridas.referencias}}</td>
                 <td>
                     <div *ngIf="penasDisciplinariasSufridas.persona">
-                        <a [routerLink]="['/persona', penasDisciplinariasSufridas.persona?.id, 'view' ]" >{{penasDisciplinariasSufridas.persona?.id}}</a>
+                        <a [routerLink]="['/persona', penasDisciplinariasSufridas.persona?.id, 'view' ]" >ID: {{penasDisciplinariasSufridas.persona?.id}} -Apellido: {{penasDisciplinariasSufridas.persona?.apellido}} -DNI: {{penasDisciplinariasSufridas.persona?.dni}} -Legajo: {{penasDisciplinariasSufridas.persona?.legajo}}</a>
                     </div>
                 </td>
                 <td class="text-right">

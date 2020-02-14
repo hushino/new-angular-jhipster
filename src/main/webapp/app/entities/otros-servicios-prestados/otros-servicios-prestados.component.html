@@ -32,7 +32,7 @@
                 <td>{{otrosServiciosPrestados.referencias}}</td>
                 <td>
                     <div *ngIf="otrosServiciosPrestados.persona">
-                        <a [routerLink]="['/persona', otrosServiciosPrestados.persona?.id, 'view' ]" >{{otrosServiciosPrestados.persona?.id}}</a>
+                        <a [routerLink]="['/persona', otrosServiciosPrestados.persona?.id, 'view' ]" >ID:{{otrosServiciosPrestados.persona?.id}} -DNI: {{otrosServiciosPrestados.persona?.dni}}</a>
                     </div>
                 </td>
                 <td class="text-right">

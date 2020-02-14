@@ -20,7 +20,7 @@
                 <dt><span jhiTranslate="rrhh2App.penasDisciplinariasSufridas.persona">Persona</span></dt>
                 <dd>
                     <div *ngIf="penasDisciplinariasSufridas.persona">
-                        <a [routerLink]="['/persona', penasDisciplinariasSufridas.persona?.id, 'view']">{{penasDisciplinariasSufridas.persona?.id}}</a>
+                        <a [routerLink]="['/persona', penasDisciplinariasSufridas.persona?.id, 'view']">ID: {{penasDisciplinariasSufridas.persona?.id}}  -Apellido: {{penasDisciplinariasSufridas.persona?.apellido}} -DNI: {{penasDisciplinariasSufridas.persona?.dni}} -Legajo: {{penasDisciplinariasSufridas.persona?.legajo}}</a>
                     </div>
                 </dd>
             </dl>

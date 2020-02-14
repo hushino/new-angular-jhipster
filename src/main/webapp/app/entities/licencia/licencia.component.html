@@ -38,7 +38,7 @@
                 <td>{{licencia.usuariosMod}}</td>
                 <td>
                     <div *ngIf="licencia.persona">
-                        <a [routerLink]="['/persona', licencia.persona?.id, 'view' ]" >{{licencia.persona?.id}}</a>
+                        <a [routerLink]="['/persona', licencia.persona?.id, 'view' ]" >ID:{{licencia.persona?.id}} -DNI:{{licencia.persona?.dni}}</a>
                     </div>
                 </td>
                 <td class="text-right">
