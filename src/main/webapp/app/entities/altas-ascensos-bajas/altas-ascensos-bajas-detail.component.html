@@ -28,7 +28,7 @@
                 <dt><span jhiTranslate="rrhh2App.altasAscensosBajas.persona">Persona</span></dt>
                 <dd>
                     <div *ngIf="altasAscensosBajas.persona">
-                        <a [routerLink]="['/persona', altasAscensosBajas.persona?.id, 'view']">{{altasAscensosBajas.persona?.id}}</a>
+                        <a [routerLink]="['/persona', altasAscensosBajas.persona?.id, 'view']">ID:{{altasAscensosBajas.persona?.id}} -Nombre: {{altasAscensosBajas.persona?.nombre}} -Apellido: {{altasAscensosBajas.persona?.apellido}} -DNI: {{altasAscensosBajas.persona?.dni}} -Legajo:{{altasAscensosBajas.persona?.legajo}} </a>
                     </div>
                 </dd>
             </dl>
