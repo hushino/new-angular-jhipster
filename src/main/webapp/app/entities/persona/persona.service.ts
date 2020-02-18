@@ -1,3 +1,4 @@
+/* eslint-disable no-empty */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
@@ -39,10 +40,19 @@ export class PersonaService {
   }
 
   fetchPosts(id: string | number): Observable<EntityResponseType[]> {
-    //return this.http.get<EntityResponseType[]>(`${this.resourceUrl}?dni.equals=${id}`).pipe(catchError(err => of([])));
-    //return this.http.get<EntityResponseType[]>(`${this.resourceUrl}?legajo.equals=${id}`).pipe(catchError(err => of([])));
+    // return this.http.get<EntityResponseType[]>(`${this.resourceUrl}?dni.equals=${id}`).pipe(catchError(err => of([])));
+    // return this.http.get<EntityResponseType[]>(`${this.resourceUrl}?legajo.equals=${id}`).pipe(catchError(err => of([])));
 
-    return this.http.get<EntityResponseType[]>(`${this.resourceUrl}?apellido.contains=${id}`).pipe(catchError(err => of([])));
+    const sd = Number(id);
+
+    const f = this.http.get<EntityResponseType[]>(`${this.resourceUrl}?apellido.contains=${id}`).pipe(catchError(err => of([])));
+    const dnii = this.http.get<EntityResponseType[]>(`${this.resourceUrl}?dni.equals=${sd}`).pipe(catchError(err => of([])));
+
+    if (sd) {
+      return dnii;
+    } else {
+      return f;
+    }
   }
 
   find(id: number): Observable<EntityResponseType> {

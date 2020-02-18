@@ -58,6 +58,7 @@ export class PersonaComponent implements OnInit, OnDestroy {
     if (userId.length > 3) {
       this.userIdSubject.next(userId);
     } else {
+      //null
       this.userIdSubject.next('09080000');
     }
     //setTimeout(() => {
