@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import * as moment from 'moment';
-import { JhiAlertService } from 'ng-jhipster';
+
 import { IPenasDisciplinariasSufridas, PenasDisciplinariasSufridas } from 'app/shared/model/penas-disciplinarias-sufridas.model';
 import { PenasDisciplinariasSufridasService } from './penas-disciplinarias-sufridas.service';
 import { IPersona } from 'app/shared/model/persona.model';
@@ -15,12 +12,11 @@ import { PersonaService } from 'app/entities/persona/persona.service';
 
 @Component({
   selector: 'jhi-penas-disciplinarias-sufridas-update',
-  templateUrl: './penas-disciplinarias-sufridas-update.component.html'
+  templateUrl: './penas-disciplinarias-sufridas-update.component.html',
 })
 export class PenasDisciplinariasSufridasUpdateComponent implements OnInit {
-  isSaving: boolean;
-
-  personas: IPersona[];
+  isSaving = false;
+  personas: IPersona[] = [];
   fechaDp: any;
 
   editForm = this.fb.group({
@@ -28,46 +24,39 @@ export class PenasDisciplinariasSufridasUpdateComponent implements OnInit {
     fecha: [],
     expediente: [],
     referencias: [],
-    persona: []
+    persona: [],
   });
 
   constructor(
-    protected jhiAlertService: JhiAlertService,
     protected penasDisciplinariasSufridasService: PenasDisciplinariasSufridasService,
     protected personaService: PersonaService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
 
-  ngOnInit() {
-    this.isSaving = false;
+  ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ penasDisciplinariasSufridas }) => {
       this.updateForm(penasDisciplinariasSufridas);
+
+      this.personaService.query().subscribe((res: HttpResponse<IPersona[]>) => (this.personas = res.body || []));
     });
-    this.personaService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IPersona[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IPersona[]>) => response.body)
-      )
-      .subscribe((res: IPersona[]) => (this.personas = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
-  updateForm(penasDisciplinariasSufridas: IPenasDisciplinariasSufridas) {
+  updateForm(penasDisciplinariasSufridas: IPenasDisciplinariasSufridas): void {
     this.editForm.patchValue({
       id: penasDisciplinariasSufridas.id,
       fecha: penasDisciplinariasSufridas.fecha,
       expediente: penasDisciplinariasSufridas.expediente,
       referencias: penasDisciplinariasSufridas.referencias,
-      persona: penasDisciplinariasSufridas.persona
+      persona: penasDisciplinariasSufridas.persona,
     });
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 
-  save() {
+  save(): void {
     this.isSaving = true;
     const penasDisciplinariasSufridas = this.createFromForm();
     if (penasDisciplinariasSufridas.id !== undefined) {
@@ -80,31 +69,31 @@ export class PenasDisciplinariasSufridasUpdateComponent implements OnInit {
   private createFromForm(): IPenasDisciplinariasSufridas {
     return {
       ...new PenasDisciplinariasSufridas(),
-      id: this.editForm.get(['id']).value,
-      fecha: this.editForm.get(['fecha']).value,
-      expediente: this.editForm.get(['expediente']).value,
-      referencias: this.editForm.get(['referencias']).value,
-      persona: this.editForm.get(['persona']).value
+      id: this.editForm.get(['id'])!.value,
+      fecha: this.editForm.get(['fecha'])!.value,
+      expediente: this.editForm.get(['expediente'])!.value,
+      referencias: this.editForm.get(['referencias'])!.value,
+      persona: this.editForm.get(['persona'])!.value,
     };
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IPenasDisciplinariasSufridas>>) {
-    result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<IPenasDisciplinariasSufridas>>): void {
+    result.subscribe(
+      () => this.onSaveSuccess(),
+      () => this.onSaveError()
+    );
   }
 
-  protected onSaveSuccess() {
+  protected onSaveSuccess(): void {
     this.isSaving = false;
     this.previousState();
   }
 
-  protected onSaveError() {
+  protected onSaveError(): void {
     this.isSaving = false;
   }
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
-  }
 
-  trackPersonaById(index: number, item: IPersona) {
+  trackById(index: number, item: IPersona): any {
     return item.id;
   }
 }

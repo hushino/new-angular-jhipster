@@ -5,31 +5,26 @@ import com.rrhh.red.domain.Garantia;
 import com.rrhh.red.domain.Persona;
 import com.rrhh.red.repository.GarantiaRepository;
 import com.rrhh.red.service.GarantiaService;
-import com.rrhh.red.web.rest.errors.ExceptionTranslator;
 import com.rrhh.red.service.dto.GarantiaCriteria;
 import com.rrhh.red.service.GarantiaQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
-
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
-import static com.rrhh.red.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -37,6 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link GarantiaResource} REST controller.
  */
 @SpringBootTest(classes = Rrhh2App.class)
+@AutoConfigureMockMvc
+@WithMockUser
 public class GarantiaResourceIT {
 
     private static final LocalDate DEFAULT_PRESENTADA_FECHA = LocalDate.ofEpochDay(0L);
@@ -59,35 +56,12 @@ public class GarantiaResourceIT {
     private GarantiaQueryService garantiaQueryService;
 
     @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
-    private Validator validator;
-
     private MockMvc restGarantiaMockMvc;
 
     private Garantia garantia;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final GarantiaResource garantiaResource = new GarantiaResource(garantiaService, garantiaQueryService);
-        this.restGarantiaMockMvc = MockMvcBuilders.standaloneSetup(garantiaResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
-    }
 
     /**
      * Create an entity for this test.
@@ -125,10 +99,9 @@ public class GarantiaResourceIT {
     @Transactional
     public void createGarantia() throws Exception {
         int databaseSizeBeforeCreate = garantiaRepository.findAll().size();
-
         // Create the Garantia
-        restGarantiaMockMvc.perform(post("/api/garantias")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restGarantiaMockMvc.perform(post("/api/garantias").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(garantia)))
             .andExpect(status().isCreated());
 
@@ -150,8 +123,8 @@ public class GarantiaResourceIT {
         garantia.setId(1L);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restGarantiaMockMvc.perform(post("/api/garantias")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restGarantiaMockMvc.perform(post("/api/garantias").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(garantia)))
             .andExpect(status().isBadRequest());
 
@@ -170,7 +143,7 @@ public class GarantiaResourceIT {
         // Get all the garantiaList
         restGarantiaMockMvc.perform(get("/api/garantias?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(garantia.getId().intValue())))
             .andExpect(jsonPath("$.[*].presentadaFecha").value(hasItem(DEFAULT_PRESENTADA_FECHA.toString())))
             .andExpect(jsonPath("$.[*].garantia").value(hasItem(DEFAULT_GARANTIA)))
@@ -186,12 +159,32 @@ public class GarantiaResourceIT {
         // Get the garantia
         restGarantiaMockMvc.perform(get("/api/garantias/{id}", garantia.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(garantia.getId().intValue()))
             .andExpect(jsonPath("$.presentadaFecha").value(DEFAULT_PRESENTADA_FECHA.toString()))
             .andExpect(jsonPath("$.garantia").value(DEFAULT_GARANTIA))
             .andExpect(jsonPath("$.observaciones").value(DEFAULT_OBSERVACIONES));
     }
+
+
+    @Test
+    @Transactional
+    public void getGarantiasByIdFiltering() throws Exception {
+        // Initialize the database
+        garantiaRepository.saveAndFlush(garantia);
+
+        Long id = garantia.getId();
+
+        defaultGarantiaShouldBeFound("id.equals=" + id);
+        defaultGarantiaShouldNotBeFound("id.notEquals=" + id);
+
+        defaultGarantiaShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultGarantiaShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultGarantiaShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultGarantiaShouldNotBeFound("id.lessThan=" + id);
+    }
+
 
     @Test
     @Transactional
@@ -479,7 +472,7 @@ public class GarantiaResourceIT {
     private void defaultGarantiaShouldBeFound(String filter) throws Exception {
         restGarantiaMockMvc.perform(get("/api/garantias?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(garantia.getId().intValue())))
             .andExpect(jsonPath("$.[*].presentadaFecha").value(hasItem(DEFAULT_PRESENTADA_FECHA.toString())))
             .andExpect(jsonPath("$.[*].garantia").value(hasItem(DEFAULT_GARANTIA)))
@@ -488,7 +481,7 @@ public class GarantiaResourceIT {
         // Check, that the count call also returns 1
         restGarantiaMockMvc.perform(get("/api/garantias/count?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(content().string("1"));
     }
 
@@ -498,17 +491,16 @@ public class GarantiaResourceIT {
     private void defaultGarantiaShouldNotBeFound(String filter) throws Exception {
         restGarantiaMockMvc.perform(get("/api/garantias?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$").isArray())
             .andExpect(jsonPath("$").isEmpty());
 
         // Check, that the count call also returns 0
         restGarantiaMockMvc.perform(get("/api/garantias/count?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(content().string("0"));
     }
-
 
     @Test
     @Transactional
@@ -535,8 +527,8 @@ public class GarantiaResourceIT {
             .garantia(UPDATED_GARANTIA)
             .observaciones(UPDATED_OBSERVACIONES);
 
-        restGarantiaMockMvc.perform(put("/api/garantias")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restGarantiaMockMvc.perform(put("/api/garantias").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(updatedGarantia)))
             .andExpect(status().isOk());
 
@@ -554,11 +546,9 @@ public class GarantiaResourceIT {
     public void updateNonExistingGarantia() throws Exception {
         int databaseSizeBeforeUpdate = garantiaRepository.findAll().size();
 
-        // Create the Garantia
-
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restGarantiaMockMvc.perform(put("/api/garantias")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restGarantiaMockMvc.perform(put("/api/garantias").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(garantia)))
             .andExpect(status().isBadRequest());
 
@@ -576,27 +566,12 @@ public class GarantiaResourceIT {
         int databaseSizeBeforeDelete = garantiaRepository.findAll().size();
 
         // Delete the garantia
-        restGarantiaMockMvc.perform(delete("/api/garantias/{id}", garantia.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+        restGarantiaMockMvc.perform(delete("/api/garantias/{id}", garantia.getId()).with(csrf())
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
         List<Garantia> garantiaList = garantiaRepository.findAll();
         assertThat(garantiaList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Garantia.class);
-        Garantia garantia1 = new Garantia();
-        garantia1.setId(1L);
-        Garantia garantia2 = new Garantia();
-        garantia2.setId(garantia1.getId());
-        assertThat(garantia1).isEqualTo(garantia2);
-        garantia2.setId(2L);
-        assertThat(garantia1).isNotEqualTo(garantia2);
-        garantia1.setId(null);
-        assertThat(garantia1).isNotEqualTo(garantia2);
     }
 }

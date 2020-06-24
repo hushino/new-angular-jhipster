@@ -33,10 +33,10 @@ public class ConcpremiosCriteria implements Serializable, Criteria {
 
     private LongFilter personaId;
 
-    public ConcpremiosCriteria(){
+    public ConcpremiosCriteria() {
     }
 
-    public ConcpremiosCriteria(ConcpremiosCriteria other){
+    public ConcpremiosCriteria(ConcpremiosCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.fecha = other.fecha == null ? null : other.fecha.copy();
         this.referencias = other.referencias == null ? null : other.referencias.copy();
@@ -107,6 +107,7 @@ public class ConcpremiosCriteria implements Serializable, Criteria {
         );
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "ConcpremiosCriteria{" +

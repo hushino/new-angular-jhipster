@@ -83,7 +83,7 @@ public class PersonaQueryService extends QueryService<Persona> {
         Specification<Persona> specification = Specification.where(null);
         if (criteria != null) {
             if (criteria.getId() != null) {
-                specification = specification.and(buildSpecification(criteria.getId(), Persona_.id));
+                specification = specification.and(buildRangeSpecification(criteria.getId(), Persona_.id));
             }
             if (criteria.getNombre() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getNombre(), Persona_.nombre));

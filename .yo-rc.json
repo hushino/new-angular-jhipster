@@ -4,7 +4,7 @@
       "packageName": "com.rrhh.red",
       "nativeLanguage": "es"
     },
-    "jhipsterVersion": "6.4.1",
+    "jhipsterVersion": "6.9.1",
     "applicationType": "monolith",
     "baseName": "rrhh2",
     "packageName": "com.rrhh.red",
@@ -35,18 +35,14 @@
     "otherModules": [],
     "enableTranslation": true,
     "nativeLanguage": "es",
-    "languages": [
-      "es",
-      "en"
-    ],
+    "languages": ["es", "en"],
     "blueprints": [],
-    "appsFolders": [
-      "new-angular"
-    ],
+    "appsFolders": ["new-angular"],
     "directoryPath": "../",
     "monitoring": "no",
     "consoleOptions": [],
     "jwtSecretKey": "ZWI4ZmUxZDQ0YzRjNjBiYmZkNTUyZDhhMTUyZmNhZDhiOTk1ZmVlYmVmYjFjOGJiY2ZjMDEwMzVkN2U2MjQyZGI1ZjM3MjI3NzhmZTBiMmM3YWM5YzBmMjAyYThjMDA0M2Y5ZQ==",
-    "enableHibernateCache": true
+    "enableHibernateCache": true,
+    "creationTimestamp": 1593005199050
   }
 }

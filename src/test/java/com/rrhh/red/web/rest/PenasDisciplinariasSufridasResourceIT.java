@@ -5,31 +5,26 @@ import com.rrhh.red.domain.PenasDisciplinariasSufridas;
 import com.rrhh.red.domain.Persona;
 import com.rrhh.red.repository.PenasDisciplinariasSufridasRepository;
 import com.rrhh.red.service.PenasDisciplinariasSufridasService;
-import com.rrhh.red.web.rest.errors.ExceptionTranslator;
 import com.rrhh.red.service.dto.PenasDisciplinariasSufridasCriteria;
 import com.rrhh.red.service.PenasDisciplinariasSufridasQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
-
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
-import static com.rrhh.red.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -37,6 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link PenasDisciplinariasSufridasResource} REST controller.
  */
 @SpringBootTest(classes = Rrhh2App.class)
+@AutoConfigureMockMvc
+@WithMockUser
 public class PenasDisciplinariasSufridasResourceIT {
 
     private static final LocalDate DEFAULT_FECHA = LocalDate.ofEpochDay(0L);
@@ -59,35 +56,12 @@ public class PenasDisciplinariasSufridasResourceIT {
     private PenasDisciplinariasSufridasQueryService penasDisciplinariasSufridasQueryService;
 
     @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
-    private Validator validator;
-
     private MockMvc restPenasDisciplinariasSufridasMockMvc;
 
     private PenasDisciplinariasSufridas penasDisciplinariasSufridas;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final PenasDisciplinariasSufridasResource penasDisciplinariasSufridasResource = new PenasDisciplinariasSufridasResource(penasDisciplinariasSufridasService, penasDisciplinariasSufridasQueryService);
-        this.restPenasDisciplinariasSufridasMockMvc = MockMvcBuilders.standaloneSetup(penasDisciplinariasSufridasResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
-    }
 
     /**
      * Create an entity for this test.
@@ -125,10 +99,9 @@ public class PenasDisciplinariasSufridasResourceIT {
     @Transactional
     public void createPenasDisciplinariasSufridas() throws Exception {
         int databaseSizeBeforeCreate = penasDisciplinariasSufridasRepository.findAll().size();
-
         // Create the PenasDisciplinariasSufridas
-        restPenasDisciplinariasSufridasMockMvc.perform(post("/api/penas-disciplinarias-sufridas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restPenasDisciplinariasSufridasMockMvc.perform(post("/api/penas-disciplinarias-sufridas").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(penasDisciplinariasSufridas)))
             .andExpect(status().isCreated());
 
@@ -150,8 +123,8 @@ public class PenasDisciplinariasSufridasResourceIT {
         penasDisciplinariasSufridas.setId(1L);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restPenasDisciplinariasSufridasMockMvc.perform(post("/api/penas-disciplinarias-sufridas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restPenasDisciplinariasSufridasMockMvc.perform(post("/api/penas-disciplinarias-sufridas").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(penasDisciplinariasSufridas)))
             .andExpect(status().isBadRequest());
 
@@ -170,7 +143,7 @@ public class PenasDisciplinariasSufridasResourceIT {
         // Get all the penasDisciplinariasSufridasList
         restPenasDisciplinariasSufridasMockMvc.perform(get("/api/penas-disciplinarias-sufridas?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(penasDisciplinariasSufridas.getId().intValue())))
             .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())))
             .andExpect(jsonPath("$.[*].expediente").value(hasItem(DEFAULT_EXPEDIENTE)))
@@ -186,12 +159,32 @@ public class PenasDisciplinariasSufridasResourceIT {
         // Get the penasDisciplinariasSufridas
         restPenasDisciplinariasSufridasMockMvc.perform(get("/api/penas-disciplinarias-sufridas/{id}", penasDisciplinariasSufridas.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(penasDisciplinariasSufridas.getId().intValue()))
             .andExpect(jsonPath("$.fecha").value(DEFAULT_FECHA.toString()))
             .andExpect(jsonPath("$.expediente").value(DEFAULT_EXPEDIENTE))
             .andExpect(jsonPath("$.referencias").value(DEFAULT_REFERENCIAS));
     }
+
+
+    @Test
+    @Transactional
+    public void getPenasDisciplinariasSufridasByIdFiltering() throws Exception {
+        // Initialize the database
+        penasDisciplinariasSufridasRepository.saveAndFlush(penasDisciplinariasSufridas);
+
+        Long id = penasDisciplinariasSufridas.getId();
+
+        defaultPenasDisciplinariasSufridasShouldBeFound("id.equals=" + id);
+        defaultPenasDisciplinariasSufridasShouldNotBeFound("id.notEquals=" + id);
+
+        defaultPenasDisciplinariasSufridasShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultPenasDisciplinariasSufridasShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultPenasDisciplinariasSufridasShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultPenasDisciplinariasSufridasShouldNotBeFound("id.lessThan=" + id);
+    }
+
 
     @Test
     @Transactional
@@ -479,7 +472,7 @@ public class PenasDisciplinariasSufridasResourceIT {
     private void defaultPenasDisciplinariasSufridasShouldBeFound(String filter) throws Exception {
         restPenasDisciplinariasSufridasMockMvc.perform(get("/api/penas-disciplinarias-sufridas?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(penasDisciplinariasSufridas.getId().intValue())))
             .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())))
             .andExpect(jsonPath("$.[*].expediente").value(hasItem(DEFAULT_EXPEDIENTE)))
@@ -488,7 +481,7 @@ public class PenasDisciplinariasSufridasResourceIT {
         // Check, that the count call also returns 1
         restPenasDisciplinariasSufridasMockMvc.perform(get("/api/penas-disciplinarias-sufridas/count?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(content().string("1"));
     }
 
@@ -498,17 +491,16 @@ public class PenasDisciplinariasSufridasResourceIT {
     private void defaultPenasDisciplinariasSufridasShouldNotBeFound(String filter) throws Exception {
         restPenasDisciplinariasSufridasMockMvc.perform(get("/api/penas-disciplinarias-sufridas?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$").isArray())
             .andExpect(jsonPath("$").isEmpty());
 
         // Check, that the count call also returns 0
         restPenasDisciplinariasSufridasMockMvc.perform(get("/api/penas-disciplinarias-sufridas/count?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(content().string("0"));
     }
-
 
     @Test
     @Transactional
@@ -535,8 +527,8 @@ public class PenasDisciplinariasSufridasResourceIT {
             .expediente(UPDATED_EXPEDIENTE)
             .referencias(UPDATED_REFERENCIAS);
 
-        restPenasDisciplinariasSufridasMockMvc.perform(put("/api/penas-disciplinarias-sufridas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restPenasDisciplinariasSufridasMockMvc.perform(put("/api/penas-disciplinarias-sufridas").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(updatedPenasDisciplinariasSufridas)))
             .andExpect(status().isOk());
 
@@ -554,11 +546,9 @@ public class PenasDisciplinariasSufridasResourceIT {
     public void updateNonExistingPenasDisciplinariasSufridas() throws Exception {
         int databaseSizeBeforeUpdate = penasDisciplinariasSufridasRepository.findAll().size();
 
-        // Create the PenasDisciplinariasSufridas
-
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restPenasDisciplinariasSufridasMockMvc.perform(put("/api/penas-disciplinarias-sufridas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restPenasDisciplinariasSufridasMockMvc.perform(put("/api/penas-disciplinarias-sufridas").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(penasDisciplinariasSufridas)))
             .andExpect(status().isBadRequest());
 
@@ -576,27 +566,12 @@ public class PenasDisciplinariasSufridasResourceIT {
         int databaseSizeBeforeDelete = penasDisciplinariasSufridasRepository.findAll().size();
 
         // Delete the penasDisciplinariasSufridas
-        restPenasDisciplinariasSufridasMockMvc.perform(delete("/api/penas-disciplinarias-sufridas/{id}", penasDisciplinariasSufridas.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+        restPenasDisciplinariasSufridasMockMvc.perform(delete("/api/penas-disciplinarias-sufridas/{id}", penasDisciplinariasSufridas.getId()).with(csrf())
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
         List<PenasDisciplinariasSufridas> penasDisciplinariasSufridasList = penasDisciplinariasSufridasRepository.findAll();
         assertThat(penasDisciplinariasSufridasList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(PenasDisciplinariasSufridas.class);
-        PenasDisciplinariasSufridas penasDisciplinariasSufridas1 = new PenasDisciplinariasSufridas();
-        penasDisciplinariasSufridas1.setId(1L);
-        PenasDisciplinariasSufridas penasDisciplinariasSufridas2 = new PenasDisciplinariasSufridas();
-        penasDisciplinariasSufridas2.setId(penasDisciplinariasSufridas1.getId());
-        assertThat(penasDisciplinariasSufridas1).isEqualTo(penasDisciplinariasSufridas2);
-        penasDisciplinariasSufridas2.setId(2L);
-        assertThat(penasDisciplinariasSufridas1).isNotEqualTo(penasDisciplinariasSufridas2);
-        penasDisciplinariasSufridas1.setId(null);
-        assertThat(penasDisciplinariasSufridas1).isNotEqualTo(penasDisciplinariasSufridas2);
     }
 }

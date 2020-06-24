@@ -35,10 +35,10 @@ public class PenasDisciplinariasSufridasCriteria implements Serializable, Criter
 
     private LongFilter personaId;
 
-    public PenasDisciplinariasSufridasCriteria(){
+    public PenasDisciplinariasSufridasCriteria() {
     }
 
-    public PenasDisciplinariasSufridasCriteria(PenasDisciplinariasSufridasCriteria other){
+    public PenasDisciplinariasSufridasCriteria(PenasDisciplinariasSufridasCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.fecha = other.fecha == null ? null : other.fecha.copy();
         this.expediente = other.expediente == null ? null : other.expediente.copy();
@@ -120,6 +120,7 @@ public class PenasDisciplinariasSufridasCriteria implements Serializable, Criter
         );
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "PenasDisciplinariasSufridasCriteria{" +

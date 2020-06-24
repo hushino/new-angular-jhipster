@@ -5,31 +5,26 @@ import com.rrhh.red.domain.AltasAscensosBajas;
 import com.rrhh.red.domain.Persona;
 import com.rrhh.red.repository.AltasAscensosBajasRepository;
 import com.rrhh.red.service.AltasAscensosBajasService;
-import com.rrhh.red.web.rest.errors.ExceptionTranslator;
 import com.rrhh.red.service.dto.AltasAscensosBajasCriteria;
 import com.rrhh.red.service.AltasAscensosBajasQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
-
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
-import static com.rrhh.red.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -37,6 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link AltasAscensosBajasResource} REST controller.
  */
 @SpringBootTest(classes = Rrhh2App.class)
+@AutoConfigureMockMvc
+@WithMockUser
 public class AltasAscensosBajasResourceIT {
 
     private static final LocalDate DEFAULT_FECHA = LocalDate.ofEpochDay(0L);
@@ -65,35 +62,12 @@ public class AltasAscensosBajasResourceIT {
     private AltasAscensosBajasQueryService altasAscensosBajasQueryService;
 
     @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
-    private Validator validator;
-
     private MockMvc restAltasAscensosBajasMockMvc;
 
     private AltasAscensosBajas altasAscensosBajas;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final AltasAscensosBajasResource altasAscensosBajasResource = new AltasAscensosBajasResource(altasAscensosBajasService, altasAscensosBajasQueryService);
-        this.restAltasAscensosBajasMockMvc = MockMvcBuilders.standaloneSetup(altasAscensosBajasResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
-    }
 
     /**
      * Create an entity for this test.
@@ -135,10 +109,9 @@ public class AltasAscensosBajasResourceIT {
     @Transactional
     public void createAltasAscensosBajas() throws Exception {
         int databaseSizeBeforeCreate = altasAscensosBajasRepository.findAll().size();
-
         // Create the AltasAscensosBajas
-        restAltasAscensosBajasMockMvc.perform(post("/api/altas-ascensos-bajas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restAltasAscensosBajasMockMvc.perform(post("/api/altas-ascensos-bajas").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(altasAscensosBajas)))
             .andExpect(status().isCreated());
 
@@ -162,8 +135,8 @@ public class AltasAscensosBajasResourceIT {
         altasAscensosBajas.setId(1L);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restAltasAscensosBajasMockMvc.perform(post("/api/altas-ascensos-bajas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restAltasAscensosBajasMockMvc.perform(post("/api/altas-ascensos-bajas").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(altasAscensosBajas)))
             .andExpect(status().isBadRequest());
 
@@ -182,7 +155,7 @@ public class AltasAscensosBajasResourceIT {
         // Get all the altasAscensosBajasList
         restAltasAscensosBajasMockMvc.perform(get("/api/altas-ascensos-bajas?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(altasAscensosBajas.getId().intValue())))
             .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())))
             .andExpect(jsonPath("$.[*].cargo").value(hasItem(DEFAULT_CARGO)))
@@ -200,7 +173,7 @@ public class AltasAscensosBajasResourceIT {
         // Get the altasAscensosBajas
         restAltasAscensosBajasMockMvc.perform(get("/api/altas-ascensos-bajas/{id}", altasAscensosBajas.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(altasAscensosBajas.getId().intValue()))
             .andExpect(jsonPath("$.fecha").value(DEFAULT_FECHA.toString()))
             .andExpect(jsonPath("$.cargo").value(DEFAULT_CARGO))
@@ -208,6 +181,26 @@ public class AltasAscensosBajasResourceIT {
             .andExpect(jsonPath("$.expediente").value(DEFAULT_EXPEDIENTE))
             .andExpect(jsonPath("$.prestaservicioen").value(DEFAULT_PRESTASERVICIOEN));
     }
+
+
+    @Test
+    @Transactional
+    public void getAltasAscensosBajasByIdFiltering() throws Exception {
+        // Initialize the database
+        altasAscensosBajasRepository.saveAndFlush(altasAscensosBajas);
+
+        Long id = altasAscensosBajas.getId();
+
+        defaultAltasAscensosBajasShouldBeFound("id.equals=" + id);
+        defaultAltasAscensosBajasShouldNotBeFound("id.notEquals=" + id);
+
+        defaultAltasAscensosBajasShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultAltasAscensosBajasShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultAltasAscensosBajasShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultAltasAscensosBajasShouldNotBeFound("id.lessThan=" + id);
+    }
+
 
     @Test
     @Transactional
@@ -651,7 +644,7 @@ public class AltasAscensosBajasResourceIT {
     private void defaultAltasAscensosBajasShouldBeFound(String filter) throws Exception {
         restAltasAscensosBajasMockMvc.perform(get("/api/altas-ascensos-bajas?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(altasAscensosBajas.getId().intValue())))
             .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())))
             .andExpect(jsonPath("$.[*].cargo").value(hasItem(DEFAULT_CARGO)))
@@ -662,7 +655,7 @@ public class AltasAscensosBajasResourceIT {
         // Check, that the count call also returns 1
         restAltasAscensosBajasMockMvc.perform(get("/api/altas-ascensos-bajas/count?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(content().string("1"));
     }
 
@@ -672,17 +665,16 @@ public class AltasAscensosBajasResourceIT {
     private void defaultAltasAscensosBajasShouldNotBeFound(String filter) throws Exception {
         restAltasAscensosBajasMockMvc.perform(get("/api/altas-ascensos-bajas?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$").isArray())
             .andExpect(jsonPath("$").isEmpty());
 
         // Check, that the count call also returns 0
         restAltasAscensosBajasMockMvc.perform(get("/api/altas-ascensos-bajas/count?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(content().string("0"));
     }
-
 
     @Test
     @Transactional
@@ -711,8 +703,8 @@ public class AltasAscensosBajasResourceIT {
             .expediente(UPDATED_EXPEDIENTE)
             .prestaservicioen(UPDATED_PRESTASERVICIOEN);
 
-        restAltasAscensosBajasMockMvc.perform(put("/api/altas-ascensos-bajas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restAltasAscensosBajasMockMvc.perform(put("/api/altas-ascensos-bajas").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(updatedAltasAscensosBajas)))
             .andExpect(status().isOk());
 
@@ -732,11 +724,9 @@ public class AltasAscensosBajasResourceIT {
     public void updateNonExistingAltasAscensosBajas() throws Exception {
         int databaseSizeBeforeUpdate = altasAscensosBajasRepository.findAll().size();
 
-        // Create the AltasAscensosBajas
-
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restAltasAscensosBajasMockMvc.perform(put("/api/altas-ascensos-bajas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restAltasAscensosBajasMockMvc.perform(put("/api/altas-ascensos-bajas").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(altasAscensosBajas)))
             .andExpect(status().isBadRequest());
 
@@ -754,27 +744,12 @@ public class AltasAscensosBajasResourceIT {
         int databaseSizeBeforeDelete = altasAscensosBajasRepository.findAll().size();
 
         // Delete the altasAscensosBajas
-        restAltasAscensosBajasMockMvc.perform(delete("/api/altas-ascensos-bajas/{id}", altasAscensosBajas.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+        restAltasAscensosBajasMockMvc.perform(delete("/api/altas-ascensos-bajas/{id}", altasAscensosBajas.getId()).with(csrf())
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
         List<AltasAscensosBajas> altasAscensosBajasList = altasAscensosBajasRepository.findAll();
         assertThat(altasAscensosBajasList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(AltasAscensosBajas.class);
-        AltasAscensosBajas altasAscensosBajas1 = new AltasAscensosBajas();
-        altasAscensosBajas1.setId(1L);
-        AltasAscensosBajas altasAscensosBajas2 = new AltasAscensosBajas();
-        altasAscensosBajas2.setId(altasAscensosBajas1.getId());
-        assertThat(altasAscensosBajas1).isEqualTo(altasAscensosBajas2);
-        altasAscensosBajas2.setId(2L);
-        assertThat(altasAscensosBajas1).isNotEqualTo(altasAscensosBajas2);
-        altasAscensosBajas1.setId(null);
-        assertThat(altasAscensosBajas1).isNotEqualTo(altasAscensosBajas2);
     }
 }

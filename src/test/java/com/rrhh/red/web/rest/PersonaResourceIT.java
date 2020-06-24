@@ -11,32 +11,27 @@ import com.rrhh.red.domain.OtrosServiciosPrestados;
 import com.rrhh.red.domain.PenasDisciplinariasSufridas;
 import com.rrhh.red.repository.PersonaRepository;
 import com.rrhh.red.service.PersonaService;
-import com.rrhh.red.web.rest.errors.ExceptionTranslator;
 import com.rrhh.red.service.dto.PersonaCriteria;
 import com.rrhh.red.service.PersonaQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Base64Utils;
-import org.springframework.validation.Validator;
-
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
-import static com.rrhh.red.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -44,6 +39,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link PersonaResource} REST controller.
  */
 @SpringBootTest(classes = Rrhh2App.class)
+@AutoConfigureMockMvc
+@WithMockUser
 public class PersonaResourceIT {
 
     private static final String DEFAULT_NOMBRE = "AAAAAAAAAA";
@@ -409,35 +406,12 @@ public class PersonaResourceIT {
     private PersonaQueryService personaQueryService;
 
     @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
-    private Validator validator;
-
     private MockMvc restPersonaMockMvc;
 
     private Persona persona;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final PersonaResource personaResource = new PersonaResource(personaService, personaQueryService);
-        this.restPersonaMockMvc = MockMvcBuilders.standaloneSetup(personaResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
-    }
 
     /**
      * Create an entity for this test.
@@ -693,10 +667,9 @@ public class PersonaResourceIT {
     @Transactional
     public void createPersona() throws Exception {
         int databaseSizeBeforeCreate = personaRepository.findAll().size();
-
         // Create the Persona
-        restPersonaMockMvc.perform(post("/api/personas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restPersonaMockMvc.perform(post("/api/personas").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(persona)))
             .andExpect(status().isCreated());
 
@@ -827,8 +800,8 @@ public class PersonaResourceIT {
         persona.setId(1L);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restPersonaMockMvc.perform(post("/api/personas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restPersonaMockMvc.perform(post("/api/personas").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(persona)))
             .andExpect(status().isBadRequest());
 
@@ -847,8 +820,9 @@ public class PersonaResourceIT {
 
         // Create the Persona, which fails.
 
-        restPersonaMockMvc.perform(post("/api/personas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+
+        restPersonaMockMvc.perform(post("/api/personas").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(persona)))
             .andExpect(status().isBadRequest());
 
@@ -865,8 +839,9 @@ public class PersonaResourceIT {
 
         // Create the Persona, which fails.
 
-        restPersonaMockMvc.perform(post("/api/personas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+
+        restPersonaMockMvc.perform(post("/api/personas").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(persona)))
             .andExpect(status().isBadRequest());
 
@@ -883,8 +858,9 @@ public class PersonaResourceIT {
 
         // Create the Persona, which fails.
 
-        restPersonaMockMvc.perform(post("/api/personas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+
+        restPersonaMockMvc.perform(post("/api/personas").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(persona)))
             .andExpect(status().isBadRequest());
 
@@ -901,8 +877,9 @@ public class PersonaResourceIT {
 
         // Create the Persona, which fails.
 
-        restPersonaMockMvc.perform(post("/api/personas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+
+        restPersonaMockMvc.perform(post("/api/personas").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(persona)))
             .andExpect(status().isBadRequest());
 
@@ -919,8 +896,9 @@ public class PersonaResourceIT {
 
         // Create the Persona, which fails.
 
-        restPersonaMockMvc.perform(post("/api/personas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+
+        restPersonaMockMvc.perform(post("/api/personas").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(persona)))
             .andExpect(status().isBadRequest());
 
@@ -937,7 +915,7 @@ public class PersonaResourceIT {
         // Get all the personaList
         restPersonaMockMvc.perform(get("/api/personas?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(persona.getId().intValue())))
             .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)))
             .andExpect(jsonPath("$.[*].apellido").value(hasItem(DEFAULT_APELLIDO)))
@@ -1062,7 +1040,7 @@ public class PersonaResourceIT {
         // Get the persona
         restPersonaMockMvc.perform(get("/api/personas/{id}", persona.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(persona.getId().intValue()))
             .andExpect(jsonPath("$.nombre").value(DEFAULT_NOMBRE))
             .andExpect(jsonPath("$.apellido").value(DEFAULT_APELLIDO))
@@ -1177,6 +1155,26 @@ public class PersonaResourceIT {
             .andExpect(jsonPath("$.grupofamiliarapellidonombrefamiliar10").value(DEFAULT_GRUPOFAMILIARAPELLIDONOMBREFAMILIAR_10))
             .andExpect(jsonPath("$.grupofamiliarapellidonombrefamiliar11").value(DEFAULT_GRUPOFAMILIARAPELLIDONOMBREFAMILIAR_11));
     }
+
+
+    @Test
+    @Transactional
+    public void getPersonasByIdFiltering() throws Exception {
+        // Initialize the database
+        personaRepository.saveAndFlush(persona);
+
+        Long id = persona.getId();
+
+        defaultPersonaShouldBeFound("id.equals=" + id);
+        defaultPersonaShouldNotBeFound("id.notEquals=" + id);
+
+        defaultPersonaShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultPersonaShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultPersonaShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultPersonaShouldNotBeFound("id.lessThan=" + id);
+    }
+
 
     @Test
     @Transactional
@@ -10389,7 +10387,7 @@ public class PersonaResourceIT {
     private void defaultPersonaShouldBeFound(String filter) throws Exception {
         restPersonaMockMvc.perform(get("/api/personas?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(persona.getId().intValue())))
             .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)))
             .andExpect(jsonPath("$.[*].apellido").value(hasItem(DEFAULT_APELLIDO)))
@@ -10507,7 +10505,7 @@ public class PersonaResourceIT {
         // Check, that the count call also returns 1
         restPersonaMockMvc.perform(get("/api/personas/count?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(content().string("1"));
     }
 
@@ -10517,17 +10515,16 @@ public class PersonaResourceIT {
     private void defaultPersonaShouldNotBeFound(String filter) throws Exception {
         restPersonaMockMvc.perform(get("/api/personas?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$").isArray())
             .andExpect(jsonPath("$").isEmpty());
 
         // Check, that the count call also returns 0
         restPersonaMockMvc.perform(get("/api/personas/count?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(content().string("0"));
     }
-
 
     @Test
     @Transactional
@@ -10663,8 +10660,8 @@ public class PersonaResourceIT {
             .grupofamiliarapellidonombrefamiliar10(UPDATED_GRUPOFAMILIARAPELLIDONOMBREFAMILIAR_10)
             .grupofamiliarapellidonombrefamiliar11(UPDATED_GRUPOFAMILIARAPELLIDONOMBREFAMILIAR_11);
 
-        restPersonaMockMvc.perform(put("/api/personas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restPersonaMockMvc.perform(put("/api/personas").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(updatedPersona)))
             .andExpect(status().isOk());
 
@@ -10791,11 +10788,9 @@ public class PersonaResourceIT {
     public void updateNonExistingPersona() throws Exception {
         int databaseSizeBeforeUpdate = personaRepository.findAll().size();
 
-        // Create the Persona
-
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restPersonaMockMvc.perform(put("/api/personas")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restPersonaMockMvc.perform(put("/api/personas").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(persona)))
             .andExpect(status().isBadRequest());
 
@@ -10813,27 +10808,12 @@ public class PersonaResourceIT {
         int databaseSizeBeforeDelete = personaRepository.findAll().size();
 
         // Delete the persona
-        restPersonaMockMvc.perform(delete("/api/personas/{id}", persona.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+        restPersonaMockMvc.perform(delete("/api/personas/{id}", persona.getId()).with(csrf())
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
         List<Persona> personaList = personaRepository.findAll();
         assertThat(personaList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Persona.class);
-        Persona persona1 = new Persona();
-        persona1.setId(1L);
-        Persona persona2 = new Persona();
-        persona2.setId(persona1.getId());
-        assertThat(persona1).isEqualTo(persona2);
-        persona2.setId(2L);
-        assertThat(persona1).isNotEqualTo(persona2);
-        persona1.setId(null);
-        assertThat(persona1).isNotEqualTo(persona2);
     }
 }

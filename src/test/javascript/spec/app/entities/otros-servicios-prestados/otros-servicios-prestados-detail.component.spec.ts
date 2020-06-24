@@ -16,7 +16,7 @@ describe('Component Tests', () => {
       TestBed.configureTestingModule({
         imports: [Rrhh2TestModule],
         declarations: [OtrosServiciosPrestadosDetailComponent],
-        providers: [{ provide: ActivatedRoute, useValue: route }]
+        providers: [{ provide: ActivatedRoute, useValue: route }],
       })
         .overrideTemplate(OtrosServiciosPrestadosDetailComponent, '')
         .compileComponents();
@@ -25,9 +25,7 @@ describe('Component Tests', () => {
     });
 
     describe('OnInit', () => {
-      it('Should call load all on init', () => {
-        // GIVEN
-
+      it('Should load otrosServiciosPrestados on init', () => {
         // WHEN
         comp.ngOnInit();
 

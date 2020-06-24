@@ -95,7 +95,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<PersistentToken> persistentTokens = new HashSet<>();
 
     public Long getId() {
@@ -227,6 +227,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
         return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "User{" +

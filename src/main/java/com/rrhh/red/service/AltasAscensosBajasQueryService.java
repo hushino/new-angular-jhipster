@@ -83,7 +83,7 @@ public class AltasAscensosBajasQueryService extends QueryService<AltasAscensosBa
         Specification<AltasAscensosBajas> specification = Specification.where(null);
         if (criteria != null) {
             if (criteria.getId() != null) {
-                specification = specification.and(buildSpecification(criteria.getId(), AltasAscensosBajas_.id));
+                specification = specification.and(buildRangeSpecification(criteria.getId(), AltasAscensosBajas_.id));
             }
             if (criteria.getFecha() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getFecha(), AltasAscensosBajas_.fecha));

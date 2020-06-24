@@ -18,7 +18,7 @@ describe('Component Tests', () => {
       TestBed.configureTestingModule({
         imports: [Rrhh2TestModule],
         declarations: [PersonaUpdateComponent],
-        providers: [FormBuilder]
+        providers: [FormBuilder],
       })
         .overrideTemplate(PersonaUpdateComponent, '')
         .compileComponents();

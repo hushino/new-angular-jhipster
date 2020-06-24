@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import * as moment from 'moment';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
+import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IPersona } from 'app/shared/model/persona.model';
@@ -46,20 +45,20 @@ export class PersonaService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  delete(id: number): Observable<HttpResponse<any>> {
-    return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  delete(id: number): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
   protected convertDateFromClient(persona: IPersona): IPersona {
     const copy: IPersona = Object.assign({}, persona, {
-      fechadeingreso: persona.fechadeingreso != null && persona.fechadeingreso.isValid() ? persona.fechadeingreso.format(DATE_FORMAT) : null
+      fechadeingreso: persona.fechadeingreso && persona.fechadeingreso.isValid() ? persona.fechadeingreso.format(DATE_FORMAT) : undefined,
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.fechadeingreso = res.body.fechadeingreso != null ? moment(res.body.fechadeingreso) : null;
+      res.body.fechadeingreso = res.body.fechadeingreso ? moment(res.body.fechadeingreso) : undefined;
     }
     return res;
   }
@@ -67,7 +66,7 @@ export class PersonaService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((persona: IPersona) => {
-        persona.fechadeingreso = persona.fechadeingreso != null ? moment(persona.fechadeingreso) : null;
+        persona.fechadeingreso = persona.fechadeingreso ? moment(persona.fechadeingreso) : undefined;
       });
     }
     return res;

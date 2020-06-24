@@ -5,23 +5,17 @@ import { Rrhh2SharedModule } from 'app/shared/shared.module';
 import { AltasAscensosBajasComponent } from './altas-ascensos-bajas.component';
 import { AltasAscensosBajasDetailComponent } from './altas-ascensos-bajas-detail.component';
 import { AltasAscensosBajasUpdateComponent } from './altas-ascensos-bajas-update.component';
-import {
-  AltasAscensosBajasDeletePopupComponent,
-  AltasAscensosBajasDeleteDialogComponent
-} from './altas-ascensos-bajas-delete-dialog.component';
-import { altasAscensosBajasRoute, altasAscensosBajasPopupRoute } from './altas-ascensos-bajas.route';
-
-const ENTITY_STATES = [...altasAscensosBajasRoute, ...altasAscensosBajasPopupRoute];
+import { AltasAscensosBajasDeleteDialogComponent } from './altas-ascensos-bajas-delete-dialog.component';
+import { altasAscensosBajasRoute } from './altas-ascensos-bajas.route';
 
 @NgModule({
-  imports: [Rrhh2SharedModule, RouterModule.forChild(ENTITY_STATES)],
+  imports: [Rrhh2SharedModule, RouterModule.forChild(altasAscensosBajasRoute)],
   declarations: [
     AltasAscensosBajasComponent,
     AltasAscensosBajasDetailComponent,
     AltasAscensosBajasUpdateComponent,
     AltasAscensosBajasDeleteDialogComponent,
-    AltasAscensosBajasDeletePopupComponent
   ],
-  entryComponents: [AltasAscensosBajasDeleteDialogComponent]
+  entryComponents: [AltasAscensosBajasDeleteDialogComponent],
 })
 export class Rrhh2AltasAscensosBajasModule {}

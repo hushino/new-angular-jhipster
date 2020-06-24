@@ -1,5 +1,8 @@
 package com.rrhh.red.domain;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
@@ -11,6 +14,7 @@ import java.time.LocalDate;
  */
 @Entity
 @Table(name = "embargos")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Embargos implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,10 +51,10 @@ public class Embargos implements Serializable {
     private String levantada;
 
     @ManyToOne
-    @JsonIgnoreProperties("embargos")
+    @JsonIgnoreProperties(value = "embargos", allowSetters = true)
     private Persona persona;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
     }
@@ -188,7 +192,7 @@ public class Embargos implements Serializable {
     public void setPersona(Persona persona) {
         this.persona = persona;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -206,6 +210,7 @@ public class Embargos implements Serializable {
         return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "Embargos{" +

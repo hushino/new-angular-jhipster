@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -92,9 +91,7 @@ public class LicenciaResource {
     /**
      * {@code GET  /licencias} : get all the licencias.
      *
-
      * @param pageable the pagination information.
-
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of licencias in body.
      */
@@ -107,11 +104,11 @@ public class LicenciaResource {
     }
 
     /**
-    * {@code GET  /licencias/count} : count all the licencias.
-    *
-    * @param criteria the criteria which the requested entities should match.
-    * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-    */
+     * {@code GET  /licencias/count} : count all the licencias.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
     @GetMapping("/licencias/count")
     public ResponseEntity<Long> countLicencias(LicenciaCriteria criteria) {
         log.debug("REST request to count Licencias by criteria: {}", criteria);

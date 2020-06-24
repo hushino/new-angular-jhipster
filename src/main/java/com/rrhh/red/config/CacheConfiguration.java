@@ -10,13 +10,19 @@ import io.github.jhipster.config.JHipsterProperties;
 
 import org.springframework.boot.autoconfigure.cache.JCacheManagerCustomizer;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
+import org.springframework.boot.info.BuildProperties;
+import org.springframework.boot.info.GitProperties;
+import org.springframework.cache.interceptor.KeyGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
+import io.github.jhipster.config.cache.PrefixedKeyGenerator;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.*;
 
 @Configuration
 @EnableCaching
 public class CacheConfiguration {
-
+    private GitProperties gitProperties;
+    private BuildProperties buildProperties;
     private final javax.cache.configuration.Configuration<Object, Object> jcacheConfiguration;
 
     public CacheConfiguration(JHipsterProperties jHipsterProperties) {
@@ -44,16 +50,44 @@ public class CacheConfiguration {
             createCache(cm, com.rrhh.red.domain.User.class.getName() + ".authorities");
             createCache(cm, com.rrhh.red.domain.PersistentToken.class.getName());
             createCache(cm, com.rrhh.red.domain.User.class.getName() + ".persistentTokens");
+            createCache(cm, com.rrhh.red.domain.Persona.class.getName());
+            createCache(cm, com.rrhh.red.domain.Persona.class.getName() + ".licencias");
+            createCache(cm, com.rrhh.red.domain.Persona.class.getName() + ".altasAscensosBajas");
+            createCache(cm, com.rrhh.red.domain.Persona.class.getName() + ".concpremios");
+            createCache(cm, com.rrhh.red.domain.Persona.class.getName() + ".embargos");
+            createCache(cm, com.rrhh.red.domain.Persona.class.getName() + ".garantias");
+            createCache(cm, com.rrhh.red.domain.Persona.class.getName() + ".otrosServiciosPrestados");
+            createCache(cm, com.rrhh.red.domain.Persona.class.getName() + ".penasDisciplinariasSufridas");
+            createCache(cm, com.rrhh.red.domain.Licencia.class.getName());
+            createCache(cm, com.rrhh.red.domain.OtrosServiciosPrestados.class.getName());
+            createCache(cm, com.rrhh.red.domain.PenasDisciplinariasSufridas.class.getName());
+            createCache(cm, com.rrhh.red.domain.Garantia.class.getName());
+            createCache(cm, com.rrhh.red.domain.AltasAscensosBajas.class.getName());
+            createCache(cm, com.rrhh.red.domain.Embargos.class.getName());
+            createCache(cm, com.rrhh.red.domain.Concpremios.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
 
     private void createCache(javax.cache.CacheManager cm, String cacheName) {
         javax.cache.Cache<Object, Object> cache = cm.getCache(cacheName);
-        if (cache != null) {
-            cm.destroyCache(cacheName);
+        if (cache == null) {
+            cm.createCache(cacheName, jcacheConfiguration);
         }
-        cm.createCache(cacheName, jcacheConfiguration);
     }
 
+    @Autowired(required = false)
+    public void setGitProperties(GitProperties gitProperties) {
+        this.gitProperties = gitProperties;
+    }
+
+    @Autowired(required = false)
+    public void setBuildProperties(BuildProperties buildProperties) {
+        this.buildProperties = buildProperties;
+    }
+
+    @Bean
+    public KeyGenerator keyGenerator() {
+        return new PrefixedKeyGenerator(this.gitProperties, this.buildProperties);
+    }
 }

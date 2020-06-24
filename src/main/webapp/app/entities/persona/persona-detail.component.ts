@@ -6,27 +6,26 @@ import { IPersona } from 'app/shared/model/persona.model';
 
 @Component({
   selector: 'jhi-persona-detail',
-  templateUrl: './persona-detail.component.html'
+  templateUrl: './persona-detail.component.html',
 })
 export class PersonaDetailComponent implements OnInit {
-  persona: IPersona;
+  persona: IPersona | null = null;
 
   constructor(protected dataUtils: JhiDataUtils, protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
-    this.activatedRoute.data.subscribe(({ persona }) => {
-      this.persona = persona;
-    });
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ persona }) => (this.persona = persona));
   }
 
-  byteSize(field) {
-    return this.dataUtils.byteSize(field);
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
   }
 
-  openFile(contentType, field) {
-    return this.dataUtils.openFile(contentType, field);
+  openFile(contentType = '', base64String: string): void {
+    this.dataUtils.openFile(contentType, base64String);
   }
-  previousState() {
+
+  previousState(): void {
     window.history.back();
   }
 }

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import * as moment from 'moment';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
+import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IPenasDisciplinariasSufridas } from 'app/shared/model/penas-disciplinarias-sufridas.model';
@@ -46,23 +45,23 @@ export class PenasDisciplinariasSufridasService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  delete(id: number): Observable<HttpResponse<any>> {
-    return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  delete(id: number): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
   protected convertDateFromClient(penasDisciplinariasSufridas: IPenasDisciplinariasSufridas): IPenasDisciplinariasSufridas {
     const copy: IPenasDisciplinariasSufridas = Object.assign({}, penasDisciplinariasSufridas, {
       fecha:
-        penasDisciplinariasSufridas.fecha != null && penasDisciplinariasSufridas.fecha.isValid()
+        penasDisciplinariasSufridas.fecha && penasDisciplinariasSufridas.fecha.isValid()
           ? penasDisciplinariasSufridas.fecha.format(DATE_FORMAT)
-          : null
+          : undefined,
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.fecha = res.body.fecha != null ? moment(res.body.fecha) : null;
+      res.body.fecha = res.body.fecha ? moment(res.body.fecha) : undefined;
     }
     return res;
   }
@@ -70,7 +69,7 @@ export class PenasDisciplinariasSufridasService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((penasDisciplinariasSufridas: IPenasDisciplinariasSufridas) => {
-        penasDisciplinariasSufridas.fecha = penasDisciplinariasSufridas.fecha != null ? moment(penasDisciplinariasSufridas.fecha) : null;
+        penasDisciplinariasSufridas.fecha = penasDisciplinariasSufridas.fecha ? moment(penasDisciplinariasSufridas.fecha) : undefined;
       });
     }
     return res;

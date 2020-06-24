@@ -5,31 +5,26 @@ import com.rrhh.red.domain.Licencia;
 import com.rrhh.red.domain.Persona;
 import com.rrhh.red.repository.LicenciaRepository;
 import com.rrhh.red.service.LicenciaService;
-import com.rrhh.red.web.rest.errors.ExceptionTranslator;
 import com.rrhh.red.service.dto.LicenciaCriteria;
 import com.rrhh.red.service.LicenciaQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
-
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
-import static com.rrhh.red.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -37,6 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link LicenciaResource} REST controller.
  */
 @SpringBootTest(classes = Rrhh2App.class)
+@AutoConfigureMockMvc
+@WithMockUser
 public class LicenciaResourceIT {
 
     private static final LocalDate DEFAULT_FECHA_LICENCIA = LocalDate.ofEpochDay(0L);
@@ -65,35 +62,12 @@ public class LicenciaResourceIT {
     private LicenciaQueryService licenciaQueryService;
 
     @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
-    private Validator validator;
-
     private MockMvc restLicenciaMockMvc;
 
     private Licencia licencia;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final LicenciaResource licenciaResource = new LicenciaResource(licenciaService, licenciaQueryService);
-        this.restLicenciaMockMvc = MockMvcBuilders.standaloneSetup(licenciaResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
-    }
 
     /**
      * Create an entity for this test.
@@ -135,10 +109,9 @@ public class LicenciaResourceIT {
     @Transactional
     public void createLicencia() throws Exception {
         int databaseSizeBeforeCreate = licenciaRepository.findAll().size();
-
         // Create the Licencia
-        restLicenciaMockMvc.perform(post("/api/licencias")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restLicenciaMockMvc.perform(post("/api/licencias").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(licencia)))
             .andExpect(status().isCreated());
 
@@ -162,8 +135,8 @@ public class LicenciaResourceIT {
         licencia.setId(1L);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restLicenciaMockMvc.perform(post("/api/licencias")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restLicenciaMockMvc.perform(post("/api/licencias").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(licencia)))
             .andExpect(status().isBadRequest());
 
@@ -182,7 +155,7 @@ public class LicenciaResourceIT {
         // Get all the licenciaList
         restLicenciaMockMvc.perform(get("/api/licencias?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(licencia.getId().intValue())))
             .andExpect(jsonPath("$.[*].fechaLicencia").value(hasItem(DEFAULT_FECHA_LICENCIA.toString())))
             .andExpect(jsonPath("$.[*].referencias").value(hasItem(DEFAULT_REFERENCIAS)))
@@ -200,7 +173,7 @@ public class LicenciaResourceIT {
         // Get the licencia
         restLicenciaMockMvc.perform(get("/api/licencias/{id}", licencia.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(licencia.getId().intValue()))
             .andExpect(jsonPath("$.fechaLicencia").value(DEFAULT_FECHA_LICENCIA.toString()))
             .andExpect(jsonPath("$.referencias").value(DEFAULT_REFERENCIAS))
@@ -208,6 +181,26 @@ public class LicenciaResourceIT {
             .andExpect(jsonPath("$.observaciones").value(DEFAULT_OBSERVACIONES))
             .andExpect(jsonPath("$.usuariosMod").value(DEFAULT_USUARIOS_MOD));
     }
+
+
+    @Test
+    @Transactional
+    public void getLicenciasByIdFiltering() throws Exception {
+        // Initialize the database
+        licenciaRepository.saveAndFlush(licencia);
+
+        Long id = licencia.getId();
+
+        defaultLicenciaShouldBeFound("id.equals=" + id);
+        defaultLicenciaShouldNotBeFound("id.notEquals=" + id);
+
+        defaultLicenciaShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultLicenciaShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultLicenciaShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultLicenciaShouldNotBeFound("id.lessThan=" + id);
+    }
+
 
     @Test
     @Transactional
@@ -651,7 +644,7 @@ public class LicenciaResourceIT {
     private void defaultLicenciaShouldBeFound(String filter) throws Exception {
         restLicenciaMockMvc.perform(get("/api/licencias?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(licencia.getId().intValue())))
             .andExpect(jsonPath("$.[*].fechaLicencia").value(hasItem(DEFAULT_FECHA_LICENCIA.toString())))
             .andExpect(jsonPath("$.[*].referencias").value(hasItem(DEFAULT_REFERENCIAS)))
@@ -662,7 +655,7 @@ public class LicenciaResourceIT {
         // Check, that the count call also returns 1
         restLicenciaMockMvc.perform(get("/api/licencias/count?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(content().string("1"));
     }
 
@@ -672,17 +665,16 @@ public class LicenciaResourceIT {
     private void defaultLicenciaShouldNotBeFound(String filter) throws Exception {
         restLicenciaMockMvc.perform(get("/api/licencias?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$").isArray())
             .andExpect(jsonPath("$").isEmpty());
 
         // Check, that the count call also returns 0
         restLicenciaMockMvc.perform(get("/api/licencias/count?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(content().string("0"));
     }
-
 
     @Test
     @Transactional
@@ -711,8 +703,8 @@ public class LicenciaResourceIT {
             .observaciones(UPDATED_OBSERVACIONES)
             .usuariosMod(UPDATED_USUARIOS_MOD);
 
-        restLicenciaMockMvc.perform(put("/api/licencias")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restLicenciaMockMvc.perform(put("/api/licencias").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(updatedLicencia)))
             .andExpect(status().isOk());
 
@@ -732,11 +724,9 @@ public class LicenciaResourceIT {
     public void updateNonExistingLicencia() throws Exception {
         int databaseSizeBeforeUpdate = licenciaRepository.findAll().size();
 
-        // Create the Licencia
-
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restLicenciaMockMvc.perform(put("/api/licencias")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restLicenciaMockMvc.perform(put("/api/licencias").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(licencia)))
             .andExpect(status().isBadRequest());
 
@@ -754,27 +744,12 @@ public class LicenciaResourceIT {
         int databaseSizeBeforeDelete = licenciaRepository.findAll().size();
 
         // Delete the licencia
-        restLicenciaMockMvc.perform(delete("/api/licencias/{id}", licencia.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+        restLicenciaMockMvc.perform(delete("/api/licencias/{id}", licencia.getId()).with(csrf())
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
         List<Licencia> licenciaList = licenciaRepository.findAll();
         assertThat(licenciaList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Licencia.class);
-        Licencia licencia1 = new Licencia();
-        licencia1.setId(1L);
-        Licencia licencia2 = new Licencia();
-        licencia2.setId(licencia1.getId());
-        assertThat(licencia1).isEqualTo(licencia2);
-        licencia2.setId(2L);
-        assertThat(licencia1).isNotEqualTo(licencia2);
-        licencia1.setId(null);
-        assertThat(licencia1).isNotEqualTo(licencia2);
     }
 }

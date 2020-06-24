@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -92,9 +91,7 @@ public class GarantiaResource {
     /**
      * {@code GET  /garantias} : get all the garantias.
      *
-
      * @param pageable the pagination information.
-
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of garantias in body.
      */
@@ -107,11 +104,11 @@ public class GarantiaResource {
     }
 
     /**
-    * {@code GET  /garantias/count} : count all the garantias.
-    *
-    * @param criteria the criteria which the requested entities should match.
-    * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-    */
+     * {@code GET  /garantias/count} : count all the garantias.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
     @GetMapping("/garantias/count")
     public ResponseEntity<Long> countGarantias(GarantiaCriteria criteria) {
         log.debug("REST request to count Garantias by criteria: {}", criteria);

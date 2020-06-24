@@ -1,28 +1,33 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { JhiResolvePagingParams } from 'ng-jhipster';
+import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
+import { Observable, of, EMPTY } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
+
+import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { Licencia } from 'app/shared/model/licencia.model';
+import { ILicencia, Licencia } from 'app/shared/model/licencia.model';
 import { LicenciaService } from './licencia.service';
 import { LicenciaComponent } from './licencia.component';
 import { LicenciaDetailComponent } from './licencia-detail.component';
 import { LicenciaUpdateComponent } from './licencia-update.component';
-import { LicenciaDeletePopupComponent } from './licencia-delete-dialog.component';
-import { ILicencia } from 'app/shared/model/licencia.model';
 
 @Injectable({ providedIn: 'root' })
 export class LicenciaResolve implements Resolve<ILicencia> {
-  constructor(private service: LicenciaService) {}
+  constructor(private service: LicenciaService, private router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ILicencia> {
+  resolve(route: ActivatedRouteSnapshot): Observable<ILicencia> | Observable<never> {
     const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
-        filter((response: HttpResponse<Licencia>) => response.ok),
-        map((licencia: HttpResponse<Licencia>) => licencia.body)
+        flatMap((licencia: HttpResponse<Licencia>) => {
+          if (licencia.body) {
+            return of(licencia.body);
+          } else {
+            this.router.navigate(['404']);
+            return EMPTY;
+          }
+        })
       );
     }
     return of(new Licencia());
@@ -33,66 +38,47 @@ export const licenciaRoute: Routes = [
   {
     path: '',
     component: LicenciaComponent,
-    resolve: {
-      pagingParams: JhiResolvePagingParams
-    },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: [Authority.USER],
       defaultSort: 'id,asc',
-      pageTitle: 'rrhh2App.licencia.home.title'
+      pageTitle: 'rrhh2App.licencia.home.title',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/view',
     component: LicenciaDetailComponent,
     resolve: {
-      licencia: LicenciaResolve
+      licencia: LicenciaResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'rrhh2App.licencia.home.title'
+      authorities: [Authority.USER],
+      pageTitle: 'rrhh2App.licencia.home.title',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: 'new',
     component: LicenciaUpdateComponent,
     resolve: {
-      licencia: LicenciaResolve
+      licencia: LicenciaResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'rrhh2App.licencia.home.title'
+      authorities: [Authority.USER],
+      pageTitle: 'rrhh2App.licencia.home.title',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/edit',
     component: LicenciaUpdateComponent,
     resolve: {
-      licencia: LicenciaResolve
+      licencia: LicenciaResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'rrhh2App.licencia.home.title'
-    },
-    canActivate: [UserRouteAccessService]
-  }
-];
-
-export const licenciaPopupRoute: Routes = [
-  {
-    path: ':id/delete',
-    component: LicenciaDeletePopupComponent,
-    resolve: {
-      licencia: LicenciaResolve
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'rrhh2App.licencia.home.title'
+      authorities: [Authority.USER],
+      pageTitle: 'rrhh2App.licencia.home.title',
     },
     canActivate: [UserRouteAccessService],
-    outlet: 'popup'
-  }
+  },
 ];

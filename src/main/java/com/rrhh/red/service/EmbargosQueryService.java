@@ -83,7 +83,7 @@ public class EmbargosQueryService extends QueryService<Embargos> {
         Specification<Embargos> specification = Specification.where(null);
         if (criteria != null) {
             if (criteria.getId() != null) {
-                specification = specification.and(buildSpecification(criteria.getId(), Embargos_.id));
+                specification = specification.and(buildRangeSpecification(criteria.getId(), Embargos_.id));
             }
             if (criteria.getFecha() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getFecha(), Embargos_.fecha));

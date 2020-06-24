@@ -39,10 +39,10 @@ public class AltasAscensosBajasCriteria implements Serializable, Criteria {
 
     private LongFilter personaId;
 
-    public AltasAscensosBajasCriteria(){
+    public AltasAscensosBajasCriteria() {
     }
 
-    public AltasAscensosBajasCriteria(AltasAscensosBajasCriteria other){
+    public AltasAscensosBajasCriteria(AltasAscensosBajasCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.fecha = other.fecha == null ? null : other.fecha.copy();
         this.cargo = other.cargo == null ? null : other.cargo.copy();
@@ -146,6 +146,7 @@ public class AltasAscensosBajasCriteria implements Serializable, Criteria {
         );
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "AltasAscensosBajasCriteria{" +

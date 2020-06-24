@@ -261,10 +261,10 @@ public class PersonaCriteria implements Serializable, Criteria {
 
     private LongFilter penasDisciplinariasSufridasId;
 
-    public PersonaCriteria(){
+    public PersonaCriteria() {
     }
 
-    public PersonaCriteria(PersonaCriteria other){
+    public PersonaCriteria(PersonaCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.nombre = other.nombre == null ? null : other.nombre.copy();
         this.apellido = other.apellido == null ? null : other.apellido.copy();
@@ -1589,6 +1589,7 @@ public class PersonaCriteria implements Serializable, Criteria {
         );
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "PersonaCriteria{" +

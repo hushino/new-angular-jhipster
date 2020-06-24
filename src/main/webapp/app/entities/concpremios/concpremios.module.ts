@@ -5,20 +5,12 @@ import { Rrhh2SharedModule } from 'app/shared/shared.module';
 import { ConcpremiosComponent } from './concpremios.component';
 import { ConcpremiosDetailComponent } from './concpremios-detail.component';
 import { ConcpremiosUpdateComponent } from './concpremios-update.component';
-import { ConcpremiosDeletePopupComponent, ConcpremiosDeleteDialogComponent } from './concpremios-delete-dialog.component';
-import { concpremiosRoute, concpremiosPopupRoute } from './concpremios.route';
-
-const ENTITY_STATES = [...concpremiosRoute, ...concpremiosPopupRoute];
+import { ConcpremiosDeleteDialogComponent } from './concpremios-delete-dialog.component';
+import { concpremiosRoute } from './concpremios.route';
 
 @NgModule({
-  imports: [Rrhh2SharedModule, RouterModule.forChild(ENTITY_STATES)],
-  declarations: [
-    ConcpremiosComponent,
-    ConcpremiosDetailComponent,
-    ConcpremiosUpdateComponent,
-    ConcpremiosDeleteDialogComponent,
-    ConcpremiosDeletePopupComponent
-  ],
-  entryComponents: [ConcpremiosDeleteDialogComponent]
+  imports: [Rrhh2SharedModule, RouterModule.forChild(concpremiosRoute)],
+  declarations: [ConcpremiosComponent, ConcpremiosDetailComponent, ConcpremiosUpdateComponent, ConcpremiosDeleteDialogComponent],
+  entryComponents: [ConcpremiosDeleteDialogComponent],
 })
 export class Rrhh2ConcpremiosModule {}

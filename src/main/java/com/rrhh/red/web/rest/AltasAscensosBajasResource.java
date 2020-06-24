@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -92,9 +91,7 @@ public class AltasAscensosBajasResource {
     /**
      * {@code GET  /altas-ascensos-bajas} : get all the altasAscensosBajas.
      *
-
      * @param pageable the pagination information.
-
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of altasAscensosBajas in body.
      */
@@ -107,11 +104,11 @@ public class AltasAscensosBajasResource {
     }
 
     /**
-    * {@code GET  /altas-ascensos-bajas/count} : count all the altasAscensosBajas.
-    *
-    * @param criteria the criteria which the requested entities should match.
-    * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-    */
+     * {@code GET  /altas-ascensos-bajas/count} : count all the altasAscensosBajas.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
     @GetMapping("/altas-ascensos-bajas/count")
     public ResponseEntity<Long> countAltasAscensosBajas(AltasAscensosBajasCriteria criteria) {
         log.debug("REST request to count AltasAscensosBajas by criteria: {}", criteria);

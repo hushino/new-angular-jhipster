@@ -1,28 +1,33 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { JhiResolvePagingParams } from 'ng-jhipster';
+import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
+import { Observable, of, EMPTY } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
+
+import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { AltasAscensosBajas } from 'app/shared/model/altas-ascensos-bajas.model';
+import { IAltasAscensosBajas, AltasAscensosBajas } from 'app/shared/model/altas-ascensos-bajas.model';
 import { AltasAscensosBajasService } from './altas-ascensos-bajas.service';
 import { AltasAscensosBajasComponent } from './altas-ascensos-bajas.component';
 import { AltasAscensosBajasDetailComponent } from './altas-ascensos-bajas-detail.component';
 import { AltasAscensosBajasUpdateComponent } from './altas-ascensos-bajas-update.component';
-import { AltasAscensosBajasDeletePopupComponent } from './altas-ascensos-bajas-delete-dialog.component';
-import { IAltasAscensosBajas } from 'app/shared/model/altas-ascensos-bajas.model';
 
 @Injectable({ providedIn: 'root' })
 export class AltasAscensosBajasResolve implements Resolve<IAltasAscensosBajas> {
-  constructor(private service: AltasAscensosBajasService) {}
+  constructor(private service: AltasAscensosBajasService, private router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IAltasAscensosBajas> {
+  resolve(route: ActivatedRouteSnapshot): Observable<IAltasAscensosBajas> | Observable<never> {
     const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
-        filter((response: HttpResponse<AltasAscensosBajas>) => response.ok),
-        map((altasAscensosBajas: HttpResponse<AltasAscensosBajas>) => altasAscensosBajas.body)
+        flatMap((altasAscensosBajas: HttpResponse<AltasAscensosBajas>) => {
+          if (altasAscensosBajas.body) {
+            return of(altasAscensosBajas.body);
+          } else {
+            this.router.navigate(['404']);
+            return EMPTY;
+          }
+        })
       );
     }
     return of(new AltasAscensosBajas());
@@ -33,66 +38,47 @@ export const altasAscensosBajasRoute: Routes = [
   {
     path: '',
     component: AltasAscensosBajasComponent,
-    resolve: {
-      pagingParams: JhiResolvePagingParams
-    },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: [Authority.USER],
       defaultSort: 'id,asc',
-      pageTitle: 'rrhh2App.altasAscensosBajas.home.title'
+      pageTitle: 'rrhh2App.altasAscensosBajas.home.title',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/view',
     component: AltasAscensosBajasDetailComponent,
     resolve: {
-      altasAscensosBajas: AltasAscensosBajasResolve
+      altasAscensosBajas: AltasAscensosBajasResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'rrhh2App.altasAscensosBajas.home.title'
+      authorities: [Authority.USER],
+      pageTitle: 'rrhh2App.altasAscensosBajas.home.title',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: 'new',
     component: AltasAscensosBajasUpdateComponent,
     resolve: {
-      altasAscensosBajas: AltasAscensosBajasResolve
+      altasAscensosBajas: AltasAscensosBajasResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'rrhh2App.altasAscensosBajas.home.title'
+      authorities: [Authority.USER],
+      pageTitle: 'rrhh2App.altasAscensosBajas.home.title',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/edit',
     component: AltasAscensosBajasUpdateComponent,
     resolve: {
-      altasAscensosBajas: AltasAscensosBajasResolve
+      altasAscensosBajas: AltasAscensosBajasResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'rrhh2App.altasAscensosBajas.home.title'
-    },
-    canActivate: [UserRouteAccessService]
-  }
-];
-
-export const altasAscensosBajasPopupRoute: Routes = [
-  {
-    path: ':id/delete',
-    component: AltasAscensosBajasDeletePopupComponent,
-    resolve: {
-      altasAscensosBajas: AltasAscensosBajasResolve
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'rrhh2App.altasAscensosBajas.home.title'
+      authorities: [Authority.USER],
+      pageTitle: 'rrhh2App.altasAscensosBajas.home.title',
     },
     canActivate: [UserRouteAccessService],
-    outlet: 'popup'
-  }
+  },
 ];

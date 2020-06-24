@@ -5,23 +5,17 @@ import { Rrhh2SharedModule } from 'app/shared/shared.module';
 import { PenasDisciplinariasSufridasComponent } from './penas-disciplinarias-sufridas.component';
 import { PenasDisciplinariasSufridasDetailComponent } from './penas-disciplinarias-sufridas-detail.component';
 import { PenasDisciplinariasSufridasUpdateComponent } from './penas-disciplinarias-sufridas-update.component';
-import {
-  PenasDisciplinariasSufridasDeletePopupComponent,
-  PenasDisciplinariasSufridasDeleteDialogComponent
-} from './penas-disciplinarias-sufridas-delete-dialog.component';
-import { penasDisciplinariasSufridasRoute, penasDisciplinariasSufridasPopupRoute } from './penas-disciplinarias-sufridas.route';
-
-const ENTITY_STATES = [...penasDisciplinariasSufridasRoute, ...penasDisciplinariasSufridasPopupRoute];
+import { PenasDisciplinariasSufridasDeleteDialogComponent } from './penas-disciplinarias-sufridas-delete-dialog.component';
+import { penasDisciplinariasSufridasRoute } from './penas-disciplinarias-sufridas.route';
 
 @NgModule({
-  imports: [Rrhh2SharedModule, RouterModule.forChild(ENTITY_STATES)],
+  imports: [Rrhh2SharedModule, RouterModule.forChild(penasDisciplinariasSufridasRoute)],
   declarations: [
     PenasDisciplinariasSufridasComponent,
     PenasDisciplinariasSufridasDetailComponent,
     PenasDisciplinariasSufridasUpdateComponent,
     PenasDisciplinariasSufridasDeleteDialogComponent,
-    PenasDisciplinariasSufridasDeletePopupComponent
   ],
-  entryComponents: [PenasDisciplinariasSufridasDeleteDialogComponent]
+  entryComponents: [PenasDisciplinariasSufridasDeleteDialogComponent],
 })
 export class Rrhh2PenasDisciplinariasSufridasModule {}

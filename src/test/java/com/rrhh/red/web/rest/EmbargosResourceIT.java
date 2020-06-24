@@ -5,31 +5,26 @@ import com.rrhh.red.domain.Embargos;
 import com.rrhh.red.domain.Persona;
 import com.rrhh.red.repository.EmbargosRepository;
 import com.rrhh.red.service.EmbargosService;
-import com.rrhh.red.web.rest.errors.ExceptionTranslator;
 import com.rrhh.red.service.dto.EmbargosCriteria;
 import com.rrhh.red.service.EmbargosQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
-
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
-import static com.rrhh.red.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -37,6 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link EmbargosResource} REST controller.
  */
 @SpringBootTest(classes = Rrhh2App.class)
+@AutoConfigureMockMvc
+@WithMockUser
 public class EmbargosResourceIT {
 
     private static final LocalDate DEFAULT_FECHA = LocalDate.ofEpochDay(0L);
@@ -77,35 +74,12 @@ public class EmbargosResourceIT {
     private EmbargosQueryService embargosQueryService;
 
     @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
-    private Validator validator;
-
     private MockMvc restEmbargosMockMvc;
 
     private Embargos embargos;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final EmbargosResource embargosResource = new EmbargosResource(embargosService, embargosQueryService);
-        this.restEmbargosMockMvc = MockMvcBuilders.standaloneSetup(embargosResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
-    }
 
     /**
      * Create an entity for this test.
@@ -155,10 +129,9 @@ public class EmbargosResourceIT {
     @Transactional
     public void createEmbargos() throws Exception {
         int databaseSizeBeforeCreate = embargosRepository.findAll().size();
-
         // Create the Embargos
-        restEmbargosMockMvc.perform(post("/api/embargos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restEmbargosMockMvc.perform(post("/api/embargos").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(embargos)))
             .andExpect(status().isCreated());
 
@@ -186,8 +159,8 @@ public class EmbargosResourceIT {
         embargos.setId(1L);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restEmbargosMockMvc.perform(post("/api/embargos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restEmbargosMockMvc.perform(post("/api/embargos").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(embargos)))
             .andExpect(status().isBadRequest());
 
@@ -206,7 +179,7 @@ public class EmbargosResourceIT {
         // Get all the embargosList
         restEmbargosMockMvc.perform(get("/api/embargos?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(embargos.getId().intValue())))
             .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())))
             .andExpect(jsonPath("$.[*].juzgado").value(hasItem(DEFAULT_JUZGADO)))
@@ -228,7 +201,7 @@ public class EmbargosResourceIT {
         // Get the embargos
         restEmbargosMockMvc.perform(get("/api/embargos/{id}", embargos.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(embargos.getId().intValue()))
             .andExpect(jsonPath("$.fecha").value(DEFAULT_FECHA.toString()))
             .andExpect(jsonPath("$.juzgado").value(DEFAULT_JUZGADO))
@@ -240,6 +213,26 @@ public class EmbargosResourceIT {
             .andExpect(jsonPath("$.observaciones").value(DEFAULT_OBSERVACIONES))
             .andExpect(jsonPath("$.levantada").value(DEFAULT_LEVANTADA));
     }
+
+
+    @Test
+    @Transactional
+    public void getEmbargosByIdFiltering() throws Exception {
+        // Initialize the database
+        embargosRepository.saveAndFlush(embargos);
+
+        Long id = embargos.getId();
+
+        defaultEmbargosShouldBeFound("id.equals=" + id);
+        defaultEmbargosShouldNotBeFound("id.notEquals=" + id);
+
+        defaultEmbargosShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultEmbargosShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultEmbargosShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultEmbargosShouldNotBeFound("id.lessThan=" + id);
+    }
+
 
     @Test
     @Transactional
@@ -995,7 +988,7 @@ public class EmbargosResourceIT {
     private void defaultEmbargosShouldBeFound(String filter) throws Exception {
         restEmbargosMockMvc.perform(get("/api/embargos?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(embargos.getId().intValue())))
             .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())))
             .andExpect(jsonPath("$.[*].juzgado").value(hasItem(DEFAULT_JUZGADO)))
@@ -1010,7 +1003,7 @@ public class EmbargosResourceIT {
         // Check, that the count call also returns 1
         restEmbargosMockMvc.perform(get("/api/embargos/count?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(content().string("1"));
     }
 
@@ -1020,17 +1013,16 @@ public class EmbargosResourceIT {
     private void defaultEmbargosShouldNotBeFound(String filter) throws Exception {
         restEmbargosMockMvc.perform(get("/api/embargos?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$").isArray())
             .andExpect(jsonPath("$").isEmpty());
 
         // Check, that the count call also returns 0
         restEmbargosMockMvc.perform(get("/api/embargos/count?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(content().string("0"));
     }
-
 
     @Test
     @Transactional
@@ -1063,8 +1055,8 @@ public class EmbargosResourceIT {
             .observaciones(UPDATED_OBSERVACIONES)
             .levantada(UPDATED_LEVANTADA);
 
-        restEmbargosMockMvc.perform(put("/api/embargos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restEmbargosMockMvc.perform(put("/api/embargos").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(updatedEmbargos)))
             .andExpect(status().isOk());
 
@@ -1088,11 +1080,9 @@ public class EmbargosResourceIT {
     public void updateNonExistingEmbargos() throws Exception {
         int databaseSizeBeforeUpdate = embargosRepository.findAll().size();
 
-        // Create the Embargos
-
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restEmbargosMockMvc.perform(put("/api/embargos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restEmbargosMockMvc.perform(put("/api/embargos").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(embargos)))
             .andExpect(status().isBadRequest());
 
@@ -1110,27 +1100,12 @@ public class EmbargosResourceIT {
         int databaseSizeBeforeDelete = embargosRepository.findAll().size();
 
         // Delete the embargos
-        restEmbargosMockMvc.perform(delete("/api/embargos/{id}", embargos.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+        restEmbargosMockMvc.perform(delete("/api/embargos/{id}", embargos.getId()).with(csrf())
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
         List<Embargos> embargosList = embargosRepository.findAll();
         assertThat(embargosList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Embargos.class);
-        Embargos embargos1 = new Embargos();
-        embargos1.setId(1L);
-        Embargos embargos2 = new Embargos();
-        embargos2.setId(embargos1.getId());
-        assertThat(embargos1).isEqualTo(embargos2);
-        embargos2.setId(2L);
-        assertThat(embargos1).isNotEqualTo(embargos2);
-        embargos1.setId(null);
-        assertThat(embargos1).isNotEqualTo(embargos2);
     }
 }

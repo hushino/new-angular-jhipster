@@ -83,7 +83,7 @@ public class OtrosServiciosPrestadosQueryService extends QueryService<OtrosServi
         Specification<OtrosServiciosPrestados> specification = Specification.where(null);
         if (criteria != null) {
             if (criteria.getId() != null) {
-                specification = specification.and(buildSpecification(criteria.getId(), OtrosServiciosPrestados_.id));
+                specification = specification.and(buildRangeSpecification(criteria.getId(), OtrosServiciosPrestados_.id));
             }
             if (criteria.getFecha() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getFecha(), OtrosServiciosPrestados_.fecha));

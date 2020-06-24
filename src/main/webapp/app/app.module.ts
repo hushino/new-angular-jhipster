@@ -8,7 +8,7 @@ import { Rrhh2AppRoutingModule } from './app-routing.module';
 import { Rrhh2HomeModule } from './home/home.module';
 import { Rrhh2EntityModule } from './entities/entity.module';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
-import { JhiMainComponent } from './layouts/main/main.component';
+import { MainComponent } from './layouts/main/main.component';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
@@ -23,9 +23,9 @@ import { ErrorComponent } from './layouts/error/error.component';
     Rrhh2HomeModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
     Rrhh2EntityModule,
-    Rrhh2AppRoutingModule
+    Rrhh2AppRoutingModule,
   ],
-  declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
-  bootstrap: [JhiMainComponent]
+  declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
+  bootstrap: [MainComponent],
 })
 export class Rrhh2AppModule {}

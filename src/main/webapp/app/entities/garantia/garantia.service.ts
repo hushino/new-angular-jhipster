@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import * as moment from 'moment';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
+import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IGarantia } from 'app/shared/model/garantia.model';
@@ -46,21 +45,21 @@ export class GarantiaService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  delete(id: number): Observable<HttpResponse<any>> {
-    return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  delete(id: number): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
   protected convertDateFromClient(garantia: IGarantia): IGarantia {
     const copy: IGarantia = Object.assign({}, garantia, {
       presentadaFecha:
-        garantia.presentadaFecha != null && garantia.presentadaFecha.isValid() ? garantia.presentadaFecha.format(DATE_FORMAT) : null
+        garantia.presentadaFecha && garantia.presentadaFecha.isValid() ? garantia.presentadaFecha.format(DATE_FORMAT) : undefined,
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.presentadaFecha = res.body.presentadaFecha != null ? moment(res.body.presentadaFecha) : null;
+      res.body.presentadaFecha = res.body.presentadaFecha ? moment(res.body.presentadaFecha) : undefined;
     }
     return res;
   }
@@ -68,7 +67,7 @@ export class GarantiaService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((garantia: IGarantia) => {
-        garantia.presentadaFecha = garantia.presentadaFecha != null ? moment(garantia.presentadaFecha) : null;
+        garantia.presentadaFecha = garantia.presentadaFecha ? moment(garantia.presentadaFecha) : undefined;
       });
     }
     return res;

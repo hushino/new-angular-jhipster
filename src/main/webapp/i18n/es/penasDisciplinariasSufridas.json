@@ -5,7 +5,7 @@
         "title": "Penas Disciplinarias Sufridas",
         "createLabel": "Crear nuevo Penas Disciplinarias Sufridas",
         "createOrEditLabel": "Crear o editar Penas Disciplinarias Sufridas",
-        "notFound": "No Penas Disciplinarias Sufridas found"
+        "notFound": "Ningún Penas Disciplinarias Sufridas encontrado"
       },
       "created": "Un nuevo Penas Disciplinarias Sufridas ha sido creado con el identificador {{ param }}",
       "updated": "Un Penas Disciplinarias Sufridas ha sido actualizado con el identificador {{ param }}",

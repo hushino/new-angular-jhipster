@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import * as moment from 'moment';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
+import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IOtrosServiciosPrestados } from 'app/shared/model/otros-servicios-prestados.model';
@@ -46,23 +45,23 @@ export class OtrosServiciosPrestadosService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  delete(id: number): Observable<HttpResponse<any>> {
-    return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  delete(id: number): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
   protected convertDateFromClient(otrosServiciosPrestados: IOtrosServiciosPrestados): IOtrosServiciosPrestados {
     const copy: IOtrosServiciosPrestados = Object.assign({}, otrosServiciosPrestados, {
       fecha:
-        otrosServiciosPrestados.fecha != null && otrosServiciosPrestados.fecha.isValid()
+        otrosServiciosPrestados.fecha && otrosServiciosPrestados.fecha.isValid()
           ? otrosServiciosPrestados.fecha.format(DATE_FORMAT)
-          : null
+          : undefined,
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.fecha = res.body.fecha != null ? moment(res.body.fecha) : null;
+      res.body.fecha = res.body.fecha ? moment(res.body.fecha) : undefined;
     }
     return res;
   }
@@ -70,7 +69,7 @@ export class OtrosServiciosPrestadosService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((otrosServiciosPrestados: IOtrosServiciosPrestados) => {
-        otrosServiciosPrestados.fecha = otrosServiciosPrestados.fecha != null ? moment(otrosServiciosPrestados.fecha) : null;
+        otrosServiciosPrestados.fecha = otrosServiciosPrestados.fecha ? moment(otrosServiciosPrestados.fecha) : undefined;
       });
     }
     return res;

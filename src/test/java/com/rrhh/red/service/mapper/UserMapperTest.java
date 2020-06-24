@@ -1,13 +1,10 @@
 package com.rrhh.red.service.mapper;
 
-import com.rrhh.red.Rrhh2App;
 import com.rrhh.red.domain.User;
 import com.rrhh.red.service.dto.UserDTO;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,22 +14,20 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Integration tests for {@link UserMapper}.
+ * Unit tests for {@link UserMapper}.
  */
-@SpringBootTest(classes = Rrhh2App.class)
-public class UserMapperIT {
+public class UserMapperTest {
 
     private static final String DEFAULT_LOGIN = "johndoe";
     private static final Long DEFAULT_ID = 1L;
 
-    @Autowired
     private UserMapper userMapper;
-
     private User user;
     private UserDTO userDto;
 
     @BeforeEach
     public void init() {
+        userMapper = new UserMapper();
         user = new User();
         user.setLogin(DEFAULT_LOGIN);
         user.setPassword(RandomStringUtils.random(60));

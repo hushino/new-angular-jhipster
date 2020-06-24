@@ -83,7 +83,7 @@ public class LicenciaQueryService extends QueryService<Licencia> {
         Specification<Licencia> specification = Specification.where(null);
         if (criteria != null) {
             if (criteria.getId() != null) {
-                specification = specification.and(buildSpecification(criteria.getId(), Licencia_.id));
+                specification = specification.and(buildRangeSpecification(criteria.getId(), Licencia_.id));
             }
             if (criteria.getFechaLicencia() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getFechaLicencia(), Licencia_.fechaLicencia));

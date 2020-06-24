@@ -83,7 +83,7 @@ public class PenasDisciplinariasSufridasQueryService extends QueryService<PenasD
         Specification<PenasDisciplinariasSufridas> specification = Specification.where(null);
         if (criteria != null) {
             if (criteria.getId() != null) {
-                specification = specification.and(buildSpecification(criteria.getId(), PenasDisciplinariasSufridas_.id));
+                specification = specification.and(buildRangeSpecification(criteria.getId(), PenasDisciplinariasSufridas_.id));
             }
             if (criteria.getFecha() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getFecha(), PenasDisciplinariasSufridas_.fecha));

@@ -1,22 +1,25 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="otrosServiciosPrestados">
-            <h2><span jhiTranslate="rrhh2App.otrosServiciosPrestados.detail.title">Otros Servicios Prestados</span> {{otrosServiciosPrestados.id}}</h2>
+            <h2><span jhiTranslate="rrhh2App.otrosServiciosPrestados.detail.title">Otros Servicios Prestados</span> {{ otrosServiciosPrestados.id }}</h2>
+
             <hr>
+
             <jhi-alert-error></jhi-alert-error>
+
             <dl class="row-md jh-entity-details">
                 <dt><span jhiTranslate="rrhh2App.otrosServiciosPrestados.fecha">Fecha</span></dt>
                 <dd>
-                    <span>{{otrosServiciosPrestados.fecha}}</span>
+                    <span>{{ otrosServiciosPrestados.fecha }}</span>
                 </dd>
                 <dt><span jhiTranslate="rrhh2App.otrosServiciosPrestados.referencias">Referencias</span></dt>
                 <dd>
-                    <span>{{otrosServiciosPrestados.referencias}}</span>
+                    <span>{{ otrosServiciosPrestados.referencias }}</span>
                 </dd>
                 <dt><span jhiTranslate="rrhh2App.otrosServiciosPrestados.persona">Persona</span></dt>
                 <dd>
                     <div *ngIf="otrosServiciosPrestados.persona">
-                        <a [routerLink]="['/persona', otrosServiciosPrestados.persona?.id, 'view']">{{otrosServiciosPrestados.persona?.id}}</a>
+                        <a [routerLink]="['/persona', otrosServiciosPrestados.persona?.id, 'view']">{{ otrosServiciosPrestados.persona?.id }}</a>
                     </div>
                 </dd>
             </dl>
@@ -24,13 +27,13 @@
             <button type="submit"
                     (click)="previousState()"
                     class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
             </button>
 
             <button type="button"
                     [routerLink]="['/otros-servicios-prestados', otrosServiciosPrestados.id, 'edit']"
                     class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
             </button>
         </div>
     </div>

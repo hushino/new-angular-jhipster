@@ -5,7 +5,7 @@
         "title": "Garantias",
         "createLabel": "Crear nuevo Garantia",
         "createOrEditLabel": "Crear o editar Garantia",
-        "notFound": "No Garantias found"
+        "notFound": "Ningún Garantias encontrado"
       },
       "created": "Un nuevo Garantia ha sido creado con el identificador {{ param }}",
       "updated": "Un Garantia ha sido actualizado con el identificador {{ param }}",

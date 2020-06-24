@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -93,9 +92,7 @@ public class PersonaResource {
     /**
      * {@code GET  /personas} : get all the personas.
      *
-
      * @param pageable the pagination information.
-
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of personas in body.
      */
@@ -108,11 +105,11 @@ public class PersonaResource {
     }
 
     /**
-    * {@code GET  /personas/count} : count all the personas.
-    *
-    * @param criteria the criteria which the requested entities should match.
-    * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-    */
+     * {@code GET  /personas/count} : count all the personas.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
     @GetMapping("/personas/count")
     public ResponseEntity<Long> countPersonas(PersonaCriteria criteria) {
         log.debug("REST request to count Personas by criteria: {}", criteria);

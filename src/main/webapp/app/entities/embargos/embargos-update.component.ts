@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import * as moment from 'moment';
-import { JhiAlertService } from 'ng-jhipster';
+
 import { IEmbargos, Embargos } from 'app/shared/model/embargos.model';
 import { EmbargosService } from './embargos.service';
 import { IPersona } from 'app/shared/model/persona.model';
@@ -15,12 +12,11 @@ import { PersonaService } from 'app/entities/persona/persona.service';
 
 @Component({
   selector: 'jhi-embargos-update',
-  templateUrl: './embargos-update.component.html'
+  templateUrl: './embargos-update.component.html',
 })
 export class EmbargosUpdateComponent implements OnInit {
-  isSaving: boolean;
-
-  personas: IPersona[];
+  isSaving = false;
+  personas: IPersona[] = [];
   fechaDp: any;
 
   editForm = this.fb.group({
@@ -34,32 +30,25 @@ export class EmbargosUpdateComponent implements OnInit {
     origenDeLaDeuda: [],
     observaciones: [],
     levantada: [],
-    persona: []
+    persona: [],
   });
 
   constructor(
-    protected jhiAlertService: JhiAlertService,
     protected embargosService: EmbargosService,
     protected personaService: PersonaService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
 
-  ngOnInit() {
-    this.isSaving = false;
+  ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ embargos }) => {
       this.updateForm(embargos);
+
+      this.personaService.query().subscribe((res: HttpResponse<IPersona[]>) => (this.personas = res.body || []));
     });
-    this.personaService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IPersona[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IPersona[]>) => response.body)
-      )
-      .subscribe((res: IPersona[]) => (this.personas = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
-  updateForm(embargos: IEmbargos) {
+  updateForm(embargos: IEmbargos): void {
     this.editForm.patchValue({
       id: embargos.id,
       fecha: embargos.fecha,
@@ -71,15 +60,15 @@ export class EmbargosUpdateComponent implements OnInit {
       origenDeLaDeuda: embargos.origenDeLaDeuda,
       observaciones: embargos.observaciones,
       levantada: embargos.levantada,
-      persona: embargos.persona
+      persona: embargos.persona,
     });
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 
-  save() {
+  save(): void {
     this.isSaving = true;
     const embargos = this.createFromForm();
     if (embargos.id !== undefined) {
@@ -92,37 +81,37 @@ export class EmbargosUpdateComponent implements OnInit {
   private createFromForm(): IEmbargos {
     return {
       ...new Embargos(),
-      id: this.editForm.get(['id']).value,
-      fecha: this.editForm.get(['fecha']).value,
-      juzgado: this.editForm.get(['juzgado']).value,
-      acreedor: this.editForm.get(['acreedor']).value,
-      cantidad: this.editForm.get(['cantidad']).value,
-      expediente: this.editForm.get(['expediente']).value,
-      fianzaODeudaPropia: this.editForm.get(['fianzaODeudaPropia']).value,
-      origenDeLaDeuda: this.editForm.get(['origenDeLaDeuda']).value,
-      observaciones: this.editForm.get(['observaciones']).value,
-      levantada: this.editForm.get(['levantada']).value,
-      persona: this.editForm.get(['persona']).value
+      id: this.editForm.get(['id'])!.value,
+      fecha: this.editForm.get(['fecha'])!.value,
+      juzgado: this.editForm.get(['juzgado'])!.value,
+      acreedor: this.editForm.get(['acreedor'])!.value,
+      cantidad: this.editForm.get(['cantidad'])!.value,
+      expediente: this.editForm.get(['expediente'])!.value,
+      fianzaODeudaPropia: this.editForm.get(['fianzaODeudaPropia'])!.value,
+      origenDeLaDeuda: this.editForm.get(['origenDeLaDeuda'])!.value,
+      observaciones: this.editForm.get(['observaciones'])!.value,
+      levantada: this.editForm.get(['levantada'])!.value,
+      persona: this.editForm.get(['persona'])!.value,
     };
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IEmbargos>>) {
-    result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<IEmbargos>>): void {
+    result.subscribe(
+      () => this.onSaveSuccess(),
+      () => this.onSaveError()
+    );
   }
 
-  protected onSaveSuccess() {
+  protected onSaveSuccess(): void {
     this.isSaving = false;
     this.previousState();
   }
 
-  protected onSaveError() {
+  protected onSaveError(): void {
     this.isSaving = false;
   }
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
-  }
 
-  trackPersonaById(index: number, item: IPersona) {
+  trackById(index: number, item: IPersona): any {
     return item.id;
   }
 }

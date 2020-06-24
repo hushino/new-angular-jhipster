@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import * as moment from 'moment';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
+import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IConcpremios } from 'app/shared/model/concpremios.model';
@@ -46,20 +45,20 @@ export class ConcpremiosService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  delete(id: number): Observable<HttpResponse<any>> {
-    return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  delete(id: number): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
   protected convertDateFromClient(concpremios: IConcpremios): IConcpremios {
     const copy: IConcpremios = Object.assign({}, concpremios, {
-      fecha: concpremios.fecha != null && concpremios.fecha.isValid() ? concpremios.fecha.format(DATE_FORMAT) : null
+      fecha: concpremios.fecha && concpremios.fecha.isValid() ? concpremios.fecha.format(DATE_FORMAT) : undefined,
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.fecha = res.body.fecha != null ? moment(res.body.fecha) : null;
+      res.body.fecha = res.body.fecha ? moment(res.body.fecha) : undefined;
     }
     return res;
   }
@@ -67,7 +66,7 @@ export class ConcpremiosService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((concpremios: IConcpremios) => {
-        concpremios.fecha = concpremios.fecha != null ? moment(concpremios.fecha) : null;
+        concpremios.fecha = concpremios.fecha ? moment(concpremios.fecha) : undefined;
       });
     }
     return res;

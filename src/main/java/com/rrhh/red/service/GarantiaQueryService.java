@@ -83,7 +83,7 @@ public class GarantiaQueryService extends QueryService<Garantia> {
         Specification<Garantia> specification = Specification.where(null);
         if (criteria != null) {
             if (criteria.getId() != null) {
-                specification = specification.and(buildSpecification(criteria.getId(), Garantia_.id));
+                specification = specification.and(buildRangeSpecification(criteria.getId(), Garantia_.id));
             }
             if (criteria.getPresentadaFecha() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getPresentadaFecha(), Garantia_.presentadaFecha));

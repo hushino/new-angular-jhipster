@@ -5,7 +5,7 @@
         "title": "Licencias",
         "createLabel": "Crear nuevo Licencia",
         "createOrEditLabel": "Crear o editar Licencia",
-        "notFound": "No Licencias found"
+        "notFound": "Ningún Licencias encontrado"
       },
       "created": "Un nuevo Licencia ha sido creado con el identificador {{ param }}",
       "updated": "Un Licencia ha sido actualizado con el identificador {{ param }}",

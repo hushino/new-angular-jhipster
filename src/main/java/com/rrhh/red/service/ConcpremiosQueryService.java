@@ -83,7 +83,7 @@ public class ConcpremiosQueryService extends QueryService<Concpremios> {
         Specification<Concpremios> specification = Specification.where(null);
         if (criteria != null) {
             if (criteria.getId() != null) {
-                specification = specification.and(buildSpecification(criteria.getId(), Concpremios_.id));
+                specification = specification.and(buildRangeSpecification(criteria.getId(), Concpremios_.id));
             }
             if (criteria.getFecha() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getFecha(), Concpremios_.fecha));

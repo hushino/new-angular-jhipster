@@ -5,20 +5,18 @@ import { IOtrosServiciosPrestados } from 'app/shared/model/otros-servicios-prest
 
 @Component({
   selector: 'jhi-otros-servicios-prestados-detail',
-  templateUrl: './otros-servicios-prestados-detail.component.html'
+  templateUrl: './otros-servicios-prestados-detail.component.html',
 })
 export class OtrosServiciosPrestadosDetailComponent implements OnInit {
-  otrosServiciosPrestados: IOtrosServiciosPrestados;
+  otrosServiciosPrestados: IOtrosServiciosPrestados | null = null;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
-    this.activatedRoute.data.subscribe(({ otrosServiciosPrestados }) => {
-      this.otrosServiciosPrestados = otrosServiciosPrestados;
-    });
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ otrosServiciosPrestados }) => (this.otrosServiciosPrestados = otrosServiciosPrestados));
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 }
