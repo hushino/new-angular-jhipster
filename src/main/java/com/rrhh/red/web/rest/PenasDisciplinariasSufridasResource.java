@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -92,9 +91,7 @@ public class PenasDisciplinariasSufridasResource {
     /**
      * {@code GET  /penas-disciplinarias-sufridas} : get all the penasDisciplinariasSufridas.
      *
-
      * @param pageable the pagination information.
-
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of penasDisciplinariasSufridas in body.
      */
@@ -107,11 +104,11 @@ public class PenasDisciplinariasSufridasResource {
     }
 
     /**
-    * {@code GET  /penas-disciplinarias-sufridas/count} : count all the penasDisciplinariasSufridas.
-    *
-    * @param criteria the criteria which the requested entities should match.
-    * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-    */
+     * {@code GET  /penas-disciplinarias-sufridas/count} : count all the penasDisciplinariasSufridas.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
     @GetMapping("/penas-disciplinarias-sufridas/count")
     public ResponseEntity<Long> countPenasDisciplinariasSufridas(PenasDisciplinariasSufridasCriteria criteria) {
         log.debug("REST request to count PenasDisciplinariasSufridas by criteria: {}", criteria);

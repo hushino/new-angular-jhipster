@@ -35,10 +35,10 @@ public class GarantiaCriteria implements Serializable, Criteria {
 
     private LongFilter personaId;
 
-    public GarantiaCriteria(){
+    public GarantiaCriteria() {
     }
 
-    public GarantiaCriteria(GarantiaCriteria other){
+    public GarantiaCriteria(GarantiaCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.presentadaFecha = other.presentadaFecha == null ? null : other.presentadaFecha.copy();
         this.garantia = other.garantia == null ? null : other.garantia.copy();
@@ -120,6 +120,7 @@ public class GarantiaCriteria implements Serializable, Criteria {
         );
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "GarantiaCriteria{" +

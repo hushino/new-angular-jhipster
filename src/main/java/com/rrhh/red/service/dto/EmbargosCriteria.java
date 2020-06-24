@@ -47,10 +47,10 @@ public class EmbargosCriteria implements Serializable, Criteria {
 
     private LongFilter personaId;
 
-    public EmbargosCriteria(){
+    public EmbargosCriteria() {
     }
 
-    public EmbargosCriteria(EmbargosCriteria other){
+    public EmbargosCriteria(EmbargosCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.fecha = other.fecha == null ? null : other.fecha.copy();
         this.juzgado = other.juzgado == null ? null : other.juzgado.copy();
@@ -198,6 +198,7 @@ public class EmbargosCriteria implements Serializable, Criteria {
         );
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "EmbargosCriteria{" +

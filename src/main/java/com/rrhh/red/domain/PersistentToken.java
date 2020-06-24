@@ -1,6 +1,8 @@
 package com.rrhh.red.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,6 +19,7 @@ import java.time.LocalDate;
  */
 @Entity
 @Table(name = "jhi_persistent_token")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class PersistentToken implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -114,6 +117,7 @@ public class PersistentToken implements Serializable {
         return Objects.hashCode(series);
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "PersistentToken{" +

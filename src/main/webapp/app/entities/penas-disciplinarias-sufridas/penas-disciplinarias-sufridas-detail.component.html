@@ -1,26 +1,29 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="penasDisciplinariasSufridas">
-            <h2><span jhiTranslate="rrhh2App.penasDisciplinariasSufridas.detail.title">Penas Disciplinarias Sufridas</span> {{penasDisciplinariasSufridas.id}}</h2>
+            <h2><span jhiTranslate="rrhh2App.penasDisciplinariasSufridas.detail.title">Penas Disciplinarias Sufridas</span> {{ penasDisciplinariasSufridas.id }}</h2>
+
             <hr>
+
             <jhi-alert-error></jhi-alert-error>
+
             <dl class="row-md jh-entity-details">
                 <dt><span jhiTranslate="rrhh2App.penasDisciplinariasSufridas.fecha">Fecha</span></dt>
                 <dd>
-                    <span>{{penasDisciplinariasSufridas.fecha}}</span>
+                    <span>{{ penasDisciplinariasSufridas.fecha }}</span>
                 </dd>
                 <dt><span jhiTranslate="rrhh2App.penasDisciplinariasSufridas.expediente">Expediente</span></dt>
                 <dd>
-                    <span>{{penasDisciplinariasSufridas.expediente}}</span>
+                    <span>{{ penasDisciplinariasSufridas.expediente }}</span>
                 </dd>
                 <dt><span jhiTranslate="rrhh2App.penasDisciplinariasSufridas.referencias">Referencias</span></dt>
                 <dd>
-                    <span>{{penasDisciplinariasSufridas.referencias}}</span>
+                    <span>{{ penasDisciplinariasSufridas.referencias }}</span>
                 </dd>
                 <dt><span jhiTranslate="rrhh2App.penasDisciplinariasSufridas.persona">Persona</span></dt>
                 <dd>
                     <div *ngIf="penasDisciplinariasSufridas.persona">
-                        <a [routerLink]="['/persona', penasDisciplinariasSufridas.persona?.id, 'view']">ID: {{penasDisciplinariasSufridas.persona?.id}}  -Apellido: {{penasDisciplinariasSufridas.persona?.apellido}} -DNI: {{penasDisciplinariasSufridas.persona?.dni}} -Legajo: {{penasDisciplinariasSufridas.persona?.legajo}}</a>
+                        <a [routerLink]="['/persona', penasDisciplinariasSufridas.persona?.id, 'view']">{{ penasDisciplinariasSufridas.persona?.id }}</a>
                     </div>
                 </dd>
             </dl>
@@ -28,13 +31,13 @@
             <button type="submit"
                     (click)="previousState()"
                     class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
             </button>
 
             <button type="button"
                     [routerLink]="['/penas-disciplinarias-sufridas', penasDisciplinariasSufridas.id, 'edit']"
                     class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
             </button>
         </div>
     </div>

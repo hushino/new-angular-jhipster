@@ -1,28 +1,33 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { JhiResolvePagingParams } from 'ng-jhipster';
+import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
+import { Observable, of, EMPTY } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
+
+import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { Embargos } from 'app/shared/model/embargos.model';
+import { IEmbargos, Embargos } from 'app/shared/model/embargos.model';
 import { EmbargosService } from './embargos.service';
 import { EmbargosComponent } from './embargos.component';
 import { EmbargosDetailComponent } from './embargos-detail.component';
 import { EmbargosUpdateComponent } from './embargos-update.component';
-import { EmbargosDeletePopupComponent } from './embargos-delete-dialog.component';
-import { IEmbargos } from 'app/shared/model/embargos.model';
 
 @Injectable({ providedIn: 'root' })
 export class EmbargosResolve implements Resolve<IEmbargos> {
-  constructor(private service: EmbargosService) {}
+  constructor(private service: EmbargosService, private router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IEmbargos> {
+  resolve(route: ActivatedRouteSnapshot): Observable<IEmbargos> | Observable<never> {
     const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
-        filter((response: HttpResponse<Embargos>) => response.ok),
-        map((embargos: HttpResponse<Embargos>) => embargos.body)
+        flatMap((embargos: HttpResponse<Embargos>) => {
+          if (embargos.body) {
+            return of(embargos.body);
+          } else {
+            this.router.navigate(['404']);
+            return EMPTY;
+          }
+        })
       );
     }
     return of(new Embargos());
@@ -33,66 +38,47 @@ export const embargosRoute: Routes = [
   {
     path: '',
     component: EmbargosComponent,
-    resolve: {
-      pagingParams: JhiResolvePagingParams
-    },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: [Authority.USER],
       defaultSort: 'id,asc',
-      pageTitle: 'rrhh2App.embargos.home.title'
+      pageTitle: 'rrhh2App.embargos.home.title',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/view',
     component: EmbargosDetailComponent,
     resolve: {
-      embargos: EmbargosResolve
+      embargos: EmbargosResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'rrhh2App.embargos.home.title'
+      authorities: [Authority.USER],
+      pageTitle: 'rrhh2App.embargos.home.title',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: 'new',
     component: EmbargosUpdateComponent,
     resolve: {
-      embargos: EmbargosResolve
+      embargos: EmbargosResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'rrhh2App.embargos.home.title'
+      authorities: [Authority.USER],
+      pageTitle: 'rrhh2App.embargos.home.title',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/edit',
     component: EmbargosUpdateComponent,
     resolve: {
-      embargos: EmbargosResolve
+      embargos: EmbargosResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'rrhh2App.embargos.home.title'
-    },
-    canActivate: [UserRouteAccessService]
-  }
-];
-
-export const embargosPopupRoute: Routes = [
-  {
-    path: ':id/delete',
-    component: EmbargosDeletePopupComponent,
-    resolve: {
-      embargos: EmbargosResolve
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'rrhh2App.embargos.home.title'
+      authorities: [Authority.USER],
+      pageTitle: 'rrhh2App.embargos.home.title',
     },
     canActivate: [UserRouteAccessService],
-    outlet: 'popup'
-  }
+  },
 ];

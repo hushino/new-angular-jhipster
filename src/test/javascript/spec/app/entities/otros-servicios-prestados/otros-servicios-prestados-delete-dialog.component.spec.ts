@@ -4,6 +4,8 @@ import { of } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { Rrhh2TestModule } from '../../../test.module';
+import { MockEventManager } from '../../../helpers/mock-event-manager.service';
+import { MockActiveModal } from '../../../helpers/mock-active-modal.service';
 import { OtrosServiciosPrestadosDeleteDialogComponent } from 'app/entities/otros-servicios-prestados/otros-servicios-prestados-delete-dialog.component';
 import { OtrosServiciosPrestadosService } from 'app/entities/otros-servicios-prestados/otros-servicios-prestados.service';
 
@@ -12,21 +14,21 @@ describe('Component Tests', () => {
     let comp: OtrosServiciosPrestadosDeleteDialogComponent;
     let fixture: ComponentFixture<OtrosServiciosPrestadosDeleteDialogComponent>;
     let service: OtrosServiciosPrestadosService;
-    let mockEventManager: any;
-    let mockActiveModal: any;
+    let mockEventManager: MockEventManager;
+    let mockActiveModal: MockActiveModal;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [Rrhh2TestModule],
-        declarations: [OtrosServiciosPrestadosDeleteDialogComponent]
+        declarations: [OtrosServiciosPrestadosDeleteDialogComponent],
       })
         .overrideTemplate(OtrosServiciosPrestadosDeleteDialogComponent, '')
         .compileComponents();
       fixture = TestBed.createComponent(OtrosServiciosPrestadosDeleteDialogComponent);
       comp = fixture.componentInstance;
       service = fixture.debugElement.injector.get(OtrosServiciosPrestadosService);
-      mockEventManager = fixture.debugElement.injector.get(JhiEventManager);
-      mockActiveModal = fixture.debugElement.injector.get(NgbActiveModal);
+      mockEventManager = TestBed.get(JhiEventManager);
+      mockActiveModal = TestBed.get(NgbActiveModal);
     });
 
     describe('confirmDelete', () => {
@@ -42,10 +44,22 @@ describe('Component Tests', () => {
 
           // THEN
           expect(service.delete).toHaveBeenCalledWith(123);
-          expect(mockActiveModal.dismissSpy).toHaveBeenCalled();
+          expect(mockActiveModal.closeSpy).toHaveBeenCalled();
           expect(mockEventManager.broadcastSpy).toHaveBeenCalled();
         })
       ));
+
+      it('Should not call delete service on clear', () => {
+        // GIVEN
+        spyOn(service, 'delete');
+
+        // WHEN
+        comp.cancel();
+
+        // THEN
+        expect(service.delete).not.toHaveBeenCalled();
+        expect(mockActiveModal.dismissSpy).toHaveBeenCalled();
+      });
     });
   });
 });

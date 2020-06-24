@@ -5,20 +5,20 @@ import { IPenasDisciplinariasSufridas } from 'app/shared/model/penas-disciplinar
 
 @Component({
   selector: 'jhi-penas-disciplinarias-sufridas-detail',
-  templateUrl: './penas-disciplinarias-sufridas-detail.component.html'
+  templateUrl: './penas-disciplinarias-sufridas-detail.component.html',
 })
 export class PenasDisciplinariasSufridasDetailComponent implements OnInit {
-  penasDisciplinariasSufridas: IPenasDisciplinariasSufridas;
+  penasDisciplinariasSufridas: IPenasDisciplinariasSufridas | null = null;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
-    this.activatedRoute.data.subscribe(({ penasDisciplinariasSufridas }) => {
-      this.penasDisciplinariasSufridas = penasDisciplinariasSufridas;
-    });
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(
+      ({ penasDisciplinariasSufridas }) => (this.penasDisciplinariasSufridas = penasDisciplinariasSufridas)
+    );
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 }

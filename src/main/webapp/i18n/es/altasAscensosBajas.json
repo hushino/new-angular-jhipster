@@ -5,7 +5,7 @@
         "title": "Altas Ascensos Bajas",
         "createLabel": "Crear nuevo Altas Ascensos Bajas",
         "createOrEditLabel": "Crear o editar Altas Ascensos Bajas",
-        "notFound": "No Altas Ascensos Bajas found"
+        "notFound": "Ningún Altas Ascensos Bajas encontrado"
       },
       "created": "Un nuevo Altas Ascensos Bajas ha sido creado con el identificador {{ param }}",
       "updated": "Un Altas Ascensos Bajas ha sido actualizado con el identificador {{ param }}",

@@ -16,7 +16,7 @@ describe('Component Tests', () => {
       TestBed.configureTestingModule({
         imports: [Rrhh2TestModule],
         declarations: [ConcpremiosDetailComponent],
-        providers: [{ provide: ActivatedRoute, useValue: route }]
+        providers: [{ provide: ActivatedRoute, useValue: route }],
       })
         .overrideTemplate(ConcpremiosDetailComponent, '')
         .compileComponents();
@@ -25,9 +25,7 @@ describe('Component Tests', () => {
     });
 
     describe('OnInit', () => {
-      it('Should call load all on init', () => {
-        // GIVEN
-
+      it('Should load concpremios on init', () => {
         // WHEN
         comp.ngOnInit();
 

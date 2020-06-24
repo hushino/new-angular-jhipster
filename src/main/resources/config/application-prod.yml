@@ -33,7 +33,7 @@ spring:
       enabled: false
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://localhost:3306/rrhh2?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/rrhh2?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
     username: root
     password:
     hikari:
@@ -45,15 +45,7 @@ spring:
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    database: MYSQL
     show-sql: false
-    properties:
-      hibernate.id.new_generator_mappings: true
-      hibernate.connection.provider_disables_autocommit: true
-      hibernate.cache.use_second_level_cache: false
-      hibernate.cache.use_query_cache: false
-      hibernate.generate_statistics: false
   # Replace by 'prod, faker' to add the faker context and have sample data loaded in production
   liquibase:
     contexts: prod
@@ -75,14 +67,14 @@ spring:
 # Then, modify the server.ssl properties so your "server" configuration looks like:
 #
 # server:
-#    port: 443
-#    ssl:
-#        key-store: classpath:config/tls/keystore.p12
-#        key-store-password: password
-#        key-store-type: PKCS12
-#        key-alias: rrhh2
-#        # The ciphers suite enforce the security by deactivating some old and deprecated SSL cipher, this list was tested against SSL Labs (https://www.ssllabs.com/ssltest/)
-#        ciphers: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 ,TLS_DHE_RSA_WITH_AES_128_GCM_SHA256 ,TLS_DHE_RSA_WITH_AES_256_GCM_SHA384 ,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,TLS_DHE_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_RSA_WITH_AES_256_CBC_SHA256,TLS_DHE_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA,TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA,TLS_RSA_WITH_CAMELLIA_256_CBC_SHA,TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA,TLS_RSA_WITH_CAMELLIA_128_CBC_SHA
+#   port: 443
+#   ssl:
+#     key-store: classpath:config/tls/keystore.p12
+#     key-store-password: password
+#     key-store-type: PKCS12
+#     key-alias: selfsigned
+#     # The ciphers suite enforce the security by deactivating some old and deprecated SSL cipher, this list was tested against SSL Labs (https://www.ssllabs.com/ssltest/)
+#     ciphers: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 ,TLS_DHE_RSA_WITH_AES_128_GCM_SHA256 ,TLS_DHE_RSA_WITH_AES_256_GCM_SHA384 ,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,TLS_DHE_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_RSA_WITH_AES_256_CBC_SHA256,TLS_DHE_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA,TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA,TLS_RSA_WITH_CAMELLIA_256_CBC_SHA,TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA,TLS_RSA_WITH_CAMELLIA_128_CBC_SHA
 # ===================================================================
 server:
   port: 8080
@@ -101,10 +93,14 @@ jhipster:
   http:
     cache: # Used by the CachingHttpHeadersFilter
       timeToLiveInDays: 1461
+  cache: # Cache configuration
+    ehcache: # Ehcache configuration
+      time-to-live-seconds: 3600 # By default objects stay 1 hour in the cache
+      max-entries: 1000 # Number of objects in each cache entry
   security:
     remember-me:
       # security key (this key should be unique for your application, and kept secret)
-      key: ea1841935209d94d91d28a3d8ef413ebf47fbe3d2ad958aa48670986c94b154f1442c8b481b743bf1c0a609c572069a9ad1e
+      key: 7d695adc26dedd7efc0c571ca7c02c51233f510e124d4ae4619aea408584a7ba4e573aa951380dffe94aec1652f12950c4e2
   mail: # specific JHipster mail property, for standard properties see MailProperties
     base-url: http://my-server-url-to-change # Modify according to your server's URL
   metrics:

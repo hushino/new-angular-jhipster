@@ -5,7 +5,7 @@
         "title": "Embargos",
         "createLabel": "Crear nuevo Embargos",
         "createOrEditLabel": "Crear o editar Embargos",
-        "notFound": "No Embargos found"
+        "notFound": "Ningún Embargos encontrado"
       },
       "created": "Un nuevo Embargos ha sido creado con el identificador {{ param }}",
       "updated": "Un Embargos ha sido actualizado con el identificador {{ param }}",

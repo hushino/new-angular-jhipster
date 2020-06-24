@@ -39,10 +39,10 @@ public class LicenciaCriteria implements Serializable, Criteria {
 
     private LongFilter personaId;
 
-    public LicenciaCriteria(){
+    public LicenciaCriteria() {
     }
 
-    public LicenciaCriteria(LicenciaCriteria other){
+    public LicenciaCriteria(LicenciaCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.fechaLicencia = other.fechaLicencia == null ? null : other.fechaLicencia.copy();
         this.referencias = other.referencias == null ? null : other.referencias.copy();
@@ -146,6 +146,7 @@ public class LicenciaCriteria implements Serializable, Criteria {
         );
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "LicenciaCriteria{" +

@@ -5,31 +5,26 @@ import com.rrhh.red.domain.OtrosServiciosPrestados;
 import com.rrhh.red.domain.Persona;
 import com.rrhh.red.repository.OtrosServiciosPrestadosRepository;
 import com.rrhh.red.service.OtrosServiciosPrestadosService;
-import com.rrhh.red.web.rest.errors.ExceptionTranslator;
 import com.rrhh.red.service.dto.OtrosServiciosPrestadosCriteria;
 import com.rrhh.red.service.OtrosServiciosPrestadosQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
-
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
-import static com.rrhh.red.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -37,6 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link OtrosServiciosPrestadosResource} REST controller.
  */
 @SpringBootTest(classes = Rrhh2App.class)
+@AutoConfigureMockMvc
+@WithMockUser
 public class OtrosServiciosPrestadosResourceIT {
 
     private static final LocalDate DEFAULT_FECHA = LocalDate.ofEpochDay(0L);
@@ -56,35 +53,12 @@ public class OtrosServiciosPrestadosResourceIT {
     private OtrosServiciosPrestadosQueryService otrosServiciosPrestadosQueryService;
 
     @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
-    private Validator validator;
-
     private MockMvc restOtrosServiciosPrestadosMockMvc;
 
     private OtrosServiciosPrestados otrosServiciosPrestados;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final OtrosServiciosPrestadosResource otrosServiciosPrestadosResource = new OtrosServiciosPrestadosResource(otrosServiciosPrestadosService, otrosServiciosPrestadosQueryService);
-        this.restOtrosServiciosPrestadosMockMvc = MockMvcBuilders.standaloneSetup(otrosServiciosPrestadosResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
-    }
 
     /**
      * Create an entity for this test.
@@ -120,10 +94,9 @@ public class OtrosServiciosPrestadosResourceIT {
     @Transactional
     public void createOtrosServiciosPrestados() throws Exception {
         int databaseSizeBeforeCreate = otrosServiciosPrestadosRepository.findAll().size();
-
         // Create the OtrosServiciosPrestados
-        restOtrosServiciosPrestadosMockMvc.perform(post("/api/otros-servicios-prestados")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restOtrosServiciosPrestadosMockMvc.perform(post("/api/otros-servicios-prestados").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(otrosServiciosPrestados)))
             .andExpect(status().isCreated());
 
@@ -144,8 +117,8 @@ public class OtrosServiciosPrestadosResourceIT {
         otrosServiciosPrestados.setId(1L);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restOtrosServiciosPrestadosMockMvc.perform(post("/api/otros-servicios-prestados")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restOtrosServiciosPrestadosMockMvc.perform(post("/api/otros-servicios-prestados").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(otrosServiciosPrestados)))
             .andExpect(status().isBadRequest());
 
@@ -164,7 +137,7 @@ public class OtrosServiciosPrestadosResourceIT {
         // Get all the otrosServiciosPrestadosList
         restOtrosServiciosPrestadosMockMvc.perform(get("/api/otros-servicios-prestados?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(otrosServiciosPrestados.getId().intValue())))
             .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())))
             .andExpect(jsonPath("$.[*].referencias").value(hasItem(DEFAULT_REFERENCIAS)));
@@ -179,11 +152,31 @@ public class OtrosServiciosPrestadosResourceIT {
         // Get the otrosServiciosPrestados
         restOtrosServiciosPrestadosMockMvc.perform(get("/api/otros-servicios-prestados/{id}", otrosServiciosPrestados.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(otrosServiciosPrestados.getId().intValue()))
             .andExpect(jsonPath("$.fecha").value(DEFAULT_FECHA.toString()))
             .andExpect(jsonPath("$.referencias").value(DEFAULT_REFERENCIAS));
     }
+
+
+    @Test
+    @Transactional
+    public void getOtrosServiciosPrestadosByIdFiltering() throws Exception {
+        // Initialize the database
+        otrosServiciosPrestadosRepository.saveAndFlush(otrosServiciosPrestados);
+
+        Long id = otrosServiciosPrestados.getId();
+
+        defaultOtrosServiciosPrestadosShouldBeFound("id.equals=" + id);
+        defaultOtrosServiciosPrestadosShouldNotBeFound("id.notEquals=" + id);
+
+        defaultOtrosServiciosPrestadosShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultOtrosServiciosPrestadosShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultOtrosServiciosPrestadosShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultOtrosServiciosPrestadosShouldNotBeFound("id.lessThan=" + id);
+    }
+
 
     @Test
     @Transactional
@@ -393,7 +386,7 @@ public class OtrosServiciosPrestadosResourceIT {
     private void defaultOtrosServiciosPrestadosShouldBeFound(String filter) throws Exception {
         restOtrosServiciosPrestadosMockMvc.perform(get("/api/otros-servicios-prestados?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(otrosServiciosPrestados.getId().intValue())))
             .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())))
             .andExpect(jsonPath("$.[*].referencias").value(hasItem(DEFAULT_REFERENCIAS)));
@@ -401,7 +394,7 @@ public class OtrosServiciosPrestadosResourceIT {
         // Check, that the count call also returns 1
         restOtrosServiciosPrestadosMockMvc.perform(get("/api/otros-servicios-prestados/count?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(content().string("1"));
     }
 
@@ -411,17 +404,16 @@ public class OtrosServiciosPrestadosResourceIT {
     private void defaultOtrosServiciosPrestadosShouldNotBeFound(String filter) throws Exception {
         restOtrosServiciosPrestadosMockMvc.perform(get("/api/otros-servicios-prestados?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$").isArray())
             .andExpect(jsonPath("$").isEmpty());
 
         // Check, that the count call also returns 0
         restOtrosServiciosPrestadosMockMvc.perform(get("/api/otros-servicios-prestados/count?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(content().string("0"));
     }
-
 
     @Test
     @Transactional
@@ -447,8 +439,8 @@ public class OtrosServiciosPrestadosResourceIT {
             .fecha(UPDATED_FECHA)
             .referencias(UPDATED_REFERENCIAS);
 
-        restOtrosServiciosPrestadosMockMvc.perform(put("/api/otros-servicios-prestados")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restOtrosServiciosPrestadosMockMvc.perform(put("/api/otros-servicios-prestados").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(updatedOtrosServiciosPrestados)))
             .andExpect(status().isOk());
 
@@ -465,11 +457,9 @@ public class OtrosServiciosPrestadosResourceIT {
     public void updateNonExistingOtrosServiciosPrestados() throws Exception {
         int databaseSizeBeforeUpdate = otrosServiciosPrestadosRepository.findAll().size();
 
-        // Create the OtrosServiciosPrestados
-
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restOtrosServiciosPrestadosMockMvc.perform(put("/api/otros-servicios-prestados")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restOtrosServiciosPrestadosMockMvc.perform(put("/api/otros-servicios-prestados").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(otrosServiciosPrestados)))
             .andExpect(status().isBadRequest());
 
@@ -487,27 +477,12 @@ public class OtrosServiciosPrestadosResourceIT {
         int databaseSizeBeforeDelete = otrosServiciosPrestadosRepository.findAll().size();
 
         // Delete the otrosServiciosPrestados
-        restOtrosServiciosPrestadosMockMvc.perform(delete("/api/otros-servicios-prestados/{id}", otrosServiciosPrestados.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+        restOtrosServiciosPrestadosMockMvc.perform(delete("/api/otros-servicios-prestados/{id}", otrosServiciosPrestados.getId()).with(csrf())
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
         List<OtrosServiciosPrestados> otrosServiciosPrestadosList = otrosServiciosPrestadosRepository.findAll();
         assertThat(otrosServiciosPrestadosList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(OtrosServiciosPrestados.class);
-        OtrosServiciosPrestados otrosServiciosPrestados1 = new OtrosServiciosPrestados();
-        otrosServiciosPrestados1.setId(1L);
-        OtrosServiciosPrestados otrosServiciosPrestados2 = new OtrosServiciosPrestados();
-        otrosServiciosPrestados2.setId(otrosServiciosPrestados1.getId());
-        assertThat(otrosServiciosPrestados1).isEqualTo(otrosServiciosPrestados2);
-        otrosServiciosPrestados2.setId(2L);
-        assertThat(otrosServiciosPrestados1).isNotEqualTo(otrosServiciosPrestados2);
-        otrosServiciosPrestados1.setId(null);
-        assertThat(otrosServiciosPrestados1).isNotEqualTo(otrosServiciosPrestados2);
     }
 }

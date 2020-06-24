@@ -5,20 +5,18 @@ import { IGarantia } from 'app/shared/model/garantia.model';
 
 @Component({
   selector: 'jhi-garantia-detail',
-  templateUrl: './garantia-detail.component.html'
+  templateUrl: './garantia-detail.component.html',
 })
 export class GarantiaDetailComponent implements OnInit {
-  garantia: IGarantia;
+  garantia: IGarantia | null = null;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
-    this.activatedRoute.data.subscribe(({ garantia }) => {
-      this.garantia = garantia;
-    });
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ garantia }) => (this.garantia = garantia));
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 }

@@ -1,38 +1,6 @@
 # rrhh2
 
-## docker run --restart=always -d --name watchtower -e REPO_USER=lightcube -e REPO_PASS=123qweasdZXC -v /var/run/docker.sock:/var/run/docker.sock containrrr/watchtower --interval 60
-
-docker images
-docker push lightcube/rrhh2:latest
-
----
-
-docker pull lightcube/rrhh2
-gradlew -Pprod bootJar jibDockerBuild
-docker-compose -f src/main/docker/app.yml up
-
----
-
-docker run --rm -it -p 8080:8080/tcp lightcube/rrhh2:latest
----BACKUP DATABASE--
-docker exec docker_rrhh2-mysql_1 /usr/bin/mysqldump -u root --password= rrhh2 > backup.sql
-
----
-
-buildear y pushear para actualizar remotamente:
-gradlew -Pprod bootJar jibDockerBuild
-docker push lightcube/rrhh2:latest
-el hosting remoto debe tener esto:
-rrhh2-app:
-image: lightcube/rrhh2
-el hosting local desde el que hace el push es
-rrhh2-app:
-image: rrhh2
-y le sigue el push en el local
-
----
-
-This application was generated using JHipster 6.4.1, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v6.4.1](https://www.jhipster.tech/documentation-archive/v6.4.1).
+This application was generated using JHipster 6.9.1, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v6.9.1](https://www.jhipster.tech/documentation-archive/v6.9.1).
 
 ## Development
 
@@ -51,7 +19,7 @@ We use npm scripts and [Webpack][] as our build system.
 Run the following commands in two separate terminals to create a blissful development experience where your browser
 auto-refreshes when files change on your hard drive.
 
-    ./gradlew
+    ./gradlew -x webpack
     npm start
 
 Npm is also used to manage CSS and JavaScript dependencies used in this application. You can upgrade dependencies by
@@ -62,14 +30,14 @@ The `npm run` command will list all of the scripts available to run for this pro
 
 ### PWA Support
 
-JHipster ships with PWA (Progressive Web App) support, and it's disabled by default. One of the main components of a PWA is a service worker.
+JHipster ships with PWA (Progressive Web App) support, and it's turned off by default. One of the main components of a PWA is a service worker.
 
 The service worker initialization code is commented out by default. To enable it, uncomment the following code in `src/main/webapp/index.html`:
 
 ```html
 <script>
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./service-worker.js').then(function() {
+    navigator.serviceWorker.register('./service-worker.js').then(function () {
       console.log('Service Worker Registered');
     });
   }
@@ -202,13 +170,13 @@ For more information refer to [Using Docker and Docker-Compose][], this page als
 To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`), this will let you generate configuration files for a number of Continuous Integration systems. Consult the [Setting up Continuous Integration][] page for more information.
 
 [jhipster homepage and latest documentation]: https://www.jhipster.tech
-[jhipster 6.4.1 archive]: https://www.jhipster.tech/documentation-archive/v6.4.1
-[using jhipster in development]: https://www.jhipster.tech/documentation-archive/v6.4.1/development/
-[using docker and docker-compose]: https://www.jhipster.tech/documentation-archive/v6.4.1/docker-compose
-[using jhipster in production]: https://www.jhipster.tech/documentation-archive/v6.4.1/production/
-[running tests page]: https://www.jhipster.tech/documentation-archive/v6.4.1/running-tests/
-[code quality page]: https://www.jhipster.tech/documentation-archive/v6.4.1/code-quality/
-[setting up continuous integration]: https://www.jhipster.tech/documentation-archive/v6.4.1/setting-up-ci/
+[jhipster 6.9.1 archive]: https://www.jhipster.tech/documentation-archive/v6.9.1
+[using jhipster in development]: https://www.jhipster.tech/documentation-archive/v6.9.1/development/
+[using docker and docker-compose]: https://www.jhipster.tech/documentation-archive/v6.9.1/docker-compose
+[using jhipster in production]: https://www.jhipster.tech/documentation-archive/v6.9.1/production/
+[running tests page]: https://www.jhipster.tech/documentation-archive/v6.9.1/running-tests/
+[code quality page]: https://www.jhipster.tech/documentation-archive/v6.9.1/code-quality/
+[setting up continuous integration]: https://www.jhipster.tech/documentation-archive/v6.9.1/setting-up-ci/
 [node.js]: https://nodejs.org/
 [yarn]: https://yarnpkg.org/
 [webpack]: https://webpack.github.io/

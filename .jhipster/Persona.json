@@ -1,881 +1,690 @@
 {
-    "name": "Persona",
-    "fields": [
-        {
-            "fieldName": "nombre",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required",
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 150
-        },
-        {
-            "fieldName": "apellido",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required",
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 150
-        },
-        {
-            "fieldName": "cuil",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required",
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "dni",
-            "fieldType": "Integer",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "legajo",
-            "fieldType": "Integer",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "apodo",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "foto",
-            "fieldType": "byte[]",
-            "fieldTypeBlobContent": "image"
-        },
-        {
-            "fieldName": "soltero",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "casado",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "conviviente",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "viudo",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "domicilio",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "lugar",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "calle",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "numero",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "telefonofijo",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "numerodecelular",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "oficioprofecion",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "niveldeestudios",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "gruposanguineo",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "factor",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "donante",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "diabetes",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "hipertension",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "alergias",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "asma",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "otros",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "fechadeingreso",
-            "fieldType": "LocalDate"
-        },
-        {
-            "fieldName": "instrumentolegal",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "categoria",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "item",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "planta",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "area",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "direccion",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "annos",
-            "fieldType": "Integer"
-        },
-        {
-            "fieldName": "meses",
-            "fieldType": "Integer"
-        },
-        {
-            "fieldName": "dias",
-            "fieldType": "Integer"
-        },
-        {
-            "fieldName": "realizocomputodeservicios",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "poseeconocimientoenmaquinasviales",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "casoemergenciacelular",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "casoemergenciafijo",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "casoemergencianombre",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "casoemergenciacelular2",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "casoemergenciafijo2",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "casoemergencianombre2",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "familiaracargonombre",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "familiaracargonombre2",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "familiaracargonombre3",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "familiaracargonombre4",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "familiaracargonombre5",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "familiaracargodni",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "familiaracargodni2",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "familiaracargodni3",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "familiaracargodni4",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "familiaracargodni5",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "familiaracargoedad",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "familiaracargoedad2",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "familiaracargoedad3",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "familiaracargoedad4",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "familiaracargoedad5",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "altura",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "barrio",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "estudiosincompletos",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "conyugeapellido",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "conyugenombre",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "conyugedni",
-            "fieldType": "Integer"
-        },
-        {
-            "fieldName": "conyugecuil",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombre",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombre2",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombre3",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombre4",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombre5",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombre6",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombre7",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombre8",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombre9",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombre10",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombre11",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombreedad",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombreedad2",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombreedad3",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombreedad4",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombreedad5",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombreedad6",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombreedad7",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombreedad8",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombreedad9",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombreedad10",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombreedad11",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombredni",
-            "fieldType": "Integer"
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombredni2",
-            "fieldType": "Integer"
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombredni3",
-            "fieldType": "Integer"
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombredni4",
-            "fieldType": "Integer"
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombredni5",
-            "fieldType": "Integer"
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombredni6",
-            "fieldType": "Integer"
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombredni7",
-            "fieldType": "Integer"
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombredni8",
-            "fieldType": "Integer"
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombredni9",
-            "fieldType": "Integer"
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombredni10",
-            "fieldType": "Integer"
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombredni11",
-            "fieldType": "Integer"
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombrefamiliar",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombrefamiliar2",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombrefamiliar4",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombrefamiliar3",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombrefamiliar5",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombrefamiliar6",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombrefamiliar7",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombrefamiliar8",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombrefamiliar9",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombrefamiliar10",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        },
-        {
-            "fieldName": "grupofamiliarapellidonombrefamiliar11",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 50
-        }
-    ],
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "licencia",
-            "otherEntityRelationshipName": "persona",
-            "relationshipName": "licencia"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "altasAscensosBajas",
-            "otherEntityRelationshipName": "persona",
-            "relationshipName": "altasAscensosBajas"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "concpremios",
-            "otherEntityRelationshipName": "persona",
-            "relationshipName": "concpremios"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "embargos",
-            "otherEntityRelationshipName": "persona",
-            "relationshipName": "embargos"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "garantia",
-            "otherEntityRelationshipName": "persona",
-            "relationshipName": "garantia"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "otrosServiciosPrestados",
-            "otherEntityRelationshipName": "persona",
-            "relationshipName": "otrosServiciosPrestados"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "penasDisciplinariasSufridas",
-            "otherEntityRelationshipName": "persona",
-            "relationshipName": "penasDisciplinariasSufridas"
-        }
-    ],
-    "changelogDate": "20191106003145",
-    "entityTableName": "persona",
-    "dto": "no",
-    "pagination": "pagination",
-    "service": "serviceImpl",
-    "jpaMetamodelFiltering": true,
-    "fluentMethods": true,
-    "readOnly": false,
-    "clientRootFolder": "",
-    "applications": "*"
+  "name": "Persona",
+  "fields": [
+    {
+      "fieldName": "nombre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": 150
+    },
+    {
+      "fieldName": "apellido",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": 150
+    },
+    {
+      "fieldName": "cuil",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "dni",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "legajo",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "apodo",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "foto",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "soltero",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "casado",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "conviviente",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "viudo",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "domicilio",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "lugar",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "calle",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "numero",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "telefonofijo",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "numerodecelular",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "oficioprofecion",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "niveldeestudios",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "gruposanguineo",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "factor",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "donante",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "diabetes",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "hipertension",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "alergias",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "asma",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "otros",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "fechadeingreso",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "instrumentolegal",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "categoria",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "item",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "planta",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "area",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "direccion",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "annos",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "meses",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "dias",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "realizocomputodeservicios",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "poseeconocimientoenmaquinasviales",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "casoemergenciacelular",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "casoemergenciafijo",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "casoemergencianombre",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "casoemergenciacelular2",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "casoemergenciafijo2",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "casoemergencianombre2",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "familiaracargonombre",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "familiaracargonombre2",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "familiaracargonombre3",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "familiaracargonombre4",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "familiaracargonombre5",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "familiaracargodni",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "familiaracargodni2",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "familiaracargodni3",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "familiaracargodni4",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "familiaracargodni5",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "familiaracargoedad",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "familiaracargoedad2",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "familiaracargoedad3",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "familiaracargoedad4",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "familiaracargoedad5",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "altura",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "barrio",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "estudiosincompletos",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "conyugeapellido",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "conyugenombre",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "conyugedni",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "conyugecuil",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombre",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombre2",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombre3",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombre4",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombre5",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombre6",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombre7",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombre8",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombre9",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombre10",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombre11",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombreedad",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombreedad2",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombreedad3",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombreedad4",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombreedad5",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombreedad6",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombreedad7",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombreedad8",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombreedad9",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombreedad10",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombreedad11",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombredni",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombredni2",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombredni3",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombredni4",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombredni5",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombredni6",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombredni7",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombredni8",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombredni9",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombredni10",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombredni11",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombrefamiliar",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombrefamiliar2",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombrefamiliar4",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombrefamiliar3",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombrefamiliar5",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombrefamiliar6",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombrefamiliar7",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombrefamiliar8",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombrefamiliar9",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombrefamiliar10",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "grupofamiliarapellidonombrefamiliar11",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "licencia",
+      "otherEntityRelationshipName": "persona",
+      "relationshipName": "licencia"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "altasAscensosBajas",
+      "otherEntityRelationshipName": "persona",
+      "relationshipName": "altasAscensosBajas"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "concpremios",
+      "otherEntityRelationshipName": "persona",
+      "relationshipName": "concpremios"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "embargos",
+      "otherEntityRelationshipName": "persona",
+      "relationshipName": "embargos"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "garantia",
+      "otherEntityRelationshipName": "persona",
+      "relationshipName": "garantia"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "otrosServiciosPrestados",
+      "otherEntityRelationshipName": "persona",
+      "relationshipName": "otrosServiciosPrestados"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "penasDisciplinariasSufridas",
+      "otherEntityRelationshipName": "persona",
+      "relationshipName": "penasDisciplinariasSufridas"
+    }
+  ],
+  "changelogDate": "20191106003145",
+  "entityTableName": "persona",
+  "dto": "no",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "clientRootFolder": "",
+  "applications": "*"
 }

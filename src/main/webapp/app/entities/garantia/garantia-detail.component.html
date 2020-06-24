@@ -1,27 +1,29 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="garantia">
-            <h2><span jhiTranslate="rrhh2App.garantia.detail.title">Garantia</span> {{garantia.id}}</h2>
+            <h2><span jhiTranslate="rrhh2App.garantia.detail.title">Garantia</span> {{ garantia.id }}</h2>
+
             <hr>
+
             <jhi-alert-error></jhi-alert-error>
+
             <dl class="row-md jh-entity-details">
                 <dt><span jhiTranslate="rrhh2App.garantia.presentadaFecha">Presentada Fecha</span></dt>
                 <dd>
-                    <span>{{garantia.presentadaFecha}}</span>
+                    <span>{{ garantia.presentadaFecha }}</span>
                 </dd>
                 <dt><span jhiTranslate="rrhh2App.garantia.garantia">Garantia</span></dt>
                 <dd>
-                    <span>{{garantia.garantia}}</span>
+                    <span>{{ garantia.garantia }}</span>
                 </dd>
                 <dt><span jhiTranslate="rrhh2App.garantia.observaciones">Observaciones</span></dt>
                 <dd>
-                    <span>{{garantia.observaciones}}</span>
+                    <span>{{ garantia.observaciones }}</span>
                 </dd>
                 <dt><span jhiTranslate="rrhh2App.garantia.persona">Persona</span></dt>
                 <dd>
                     <div *ngIf="garantia.persona">
-                        <a [routerLink]="['/persona', garantia.persona?.id, 'view']"></a>
-                            ID: {{garantia.persona?.id}} -Nombre: {{garantia.persona?.nombre}} -Apellido: {{garantia.persona?.apellido}} -DNI: {{garantia.persona?.dni}} -Legajo: {{garantia.persona?.legajo}}
+                        <a [routerLink]="['/persona', garantia.persona?.id, 'view']">{{ garantia.persona?.id }}</a>
                     </div>
                 </dd>
             </dl>
@@ -29,13 +31,13 @@
             <button type="submit"
                     (click)="previousState()"
                     class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
             </button>
 
             <button type="button"
                     [routerLink]="['/garantia', garantia.id, 'edit']"
                     class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
             </button>
         </div>
     </div>

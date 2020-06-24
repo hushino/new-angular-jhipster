@@ -1,5 +1,8 @@
 package com.rrhh.red.domain;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
@@ -11,6 +14,7 @@ import java.time.LocalDate;
  */
 @Entity
 @Table(name = "otros_servicios_prestados")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class OtrosServiciosPrestados implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -26,10 +30,10 @@ public class OtrosServiciosPrestados implements Serializable {
     private String referencias;
 
     @ManyToOne
-    @JsonIgnoreProperties("otrosServiciosPrestados")
+    @JsonIgnoreProperties(value = "otrosServiciosPrestados", allowSetters = true)
     private Persona persona;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
     }
@@ -76,7 +80,7 @@ public class OtrosServiciosPrestados implements Serializable {
     public void setPersona(Persona persona) {
         this.persona = persona;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -94,6 +98,7 @@ public class OtrosServiciosPrestados implements Serializable {
         return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "OtrosServiciosPrestados{" +

@@ -1,28 +1,33 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { JhiResolvePagingParams } from 'ng-jhipster';
+import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
+import { Observable, of, EMPTY } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
+
+import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { Concpremios } from 'app/shared/model/concpremios.model';
+import { IConcpremios, Concpremios } from 'app/shared/model/concpremios.model';
 import { ConcpremiosService } from './concpremios.service';
 import { ConcpremiosComponent } from './concpremios.component';
 import { ConcpremiosDetailComponent } from './concpremios-detail.component';
 import { ConcpremiosUpdateComponent } from './concpremios-update.component';
-import { ConcpremiosDeletePopupComponent } from './concpremios-delete-dialog.component';
-import { IConcpremios } from 'app/shared/model/concpremios.model';
 
 @Injectable({ providedIn: 'root' })
 export class ConcpremiosResolve implements Resolve<IConcpremios> {
-  constructor(private service: ConcpremiosService) {}
+  constructor(private service: ConcpremiosService, private router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IConcpremios> {
+  resolve(route: ActivatedRouteSnapshot): Observable<IConcpremios> | Observable<never> {
     const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
-        filter((response: HttpResponse<Concpremios>) => response.ok),
-        map((concpremios: HttpResponse<Concpremios>) => concpremios.body)
+        flatMap((concpremios: HttpResponse<Concpremios>) => {
+          if (concpremios.body) {
+            return of(concpremios.body);
+          } else {
+            this.router.navigate(['404']);
+            return EMPTY;
+          }
+        })
       );
     }
     return of(new Concpremios());
@@ -33,66 +38,47 @@ export const concpremiosRoute: Routes = [
   {
     path: '',
     component: ConcpremiosComponent,
-    resolve: {
-      pagingParams: JhiResolvePagingParams
-    },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: [Authority.USER],
       defaultSort: 'id,asc',
-      pageTitle: 'rrhh2App.concpremios.home.title'
+      pageTitle: 'rrhh2App.concpremios.home.title',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/view',
     component: ConcpremiosDetailComponent,
     resolve: {
-      concpremios: ConcpremiosResolve
+      concpremios: ConcpremiosResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'rrhh2App.concpremios.home.title'
+      authorities: [Authority.USER],
+      pageTitle: 'rrhh2App.concpremios.home.title',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: 'new',
     component: ConcpremiosUpdateComponent,
     resolve: {
-      concpremios: ConcpremiosResolve
+      concpremios: ConcpremiosResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'rrhh2App.concpremios.home.title'
+      authorities: [Authority.USER],
+      pageTitle: 'rrhh2App.concpremios.home.title',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/edit',
     component: ConcpremiosUpdateComponent,
     resolve: {
-      concpremios: ConcpremiosResolve
+      concpremios: ConcpremiosResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'rrhh2App.concpremios.home.title'
-    },
-    canActivate: [UserRouteAccessService]
-  }
-];
-
-export const concpremiosPopupRoute: Routes = [
-  {
-    path: ':id/delete',
-    component: ConcpremiosDeletePopupComponent,
-    resolve: {
-      concpremios: ConcpremiosResolve
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'rrhh2App.concpremios.home.title'
+      authorities: [Authority.USER],
+      pageTitle: 'rrhh2App.concpremios.home.title',
     },
     canActivate: [UserRouteAccessService],
-    outlet: 'popup'
-  }
+  },
 ];

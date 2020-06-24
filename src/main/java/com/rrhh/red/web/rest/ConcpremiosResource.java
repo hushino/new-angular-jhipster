@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -92,9 +91,7 @@ public class ConcpremiosResource {
     /**
      * {@code GET  /concpremios} : get all the concpremios.
      *
-
      * @param pageable the pagination information.
-
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of concpremios in body.
      */
@@ -107,11 +104,11 @@ public class ConcpremiosResource {
     }
 
     /**
-    * {@code GET  /concpremios/count} : count all the concpremios.
-    *
-    * @param criteria the criteria which the requested entities should match.
-    * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-    */
+     * {@code GET  /concpremios/count} : count all the concpremios.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
     @GetMapping("/concpremios/count")
     public ResponseEntity<Long> countConcpremios(ConcpremiosCriteria criteria) {
         log.debug("REST request to count Concpremios by criteria: {}", criteria);

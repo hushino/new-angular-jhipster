@@ -5,7 +5,7 @@
         "title": "Otros Servicios Prestados",
         "createLabel": "Crear nuevo Otros Servicios Prestados",
         "createOrEditLabel": "Crear o editar Otros Servicios Prestados",
-        "notFound": "No Otros Servicios Prestados found"
+        "notFound": "Ningún Otros Servicios Prestados encontrado"
       },
       "created": "Un nuevo Otros Servicios Prestados ha sido creado con el identificador {{ param }}",
       "updated": "Un Otros Servicios Prestados ha sido actualizado con el identificador {{ param }}",

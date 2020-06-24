@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import * as moment from 'moment';
-import { JhiAlertService } from 'ng-jhipster';
+
 import { ILicencia, Licencia } from 'app/shared/model/licencia.model';
 import { LicenciaService } from './licencia.service';
 import { IPersona } from 'app/shared/model/persona.model';
@@ -15,12 +12,11 @@ import { PersonaService } from 'app/entities/persona/persona.service';
 
 @Component({
   selector: 'jhi-licencia-update',
-  templateUrl: './licencia-update.component.html'
+  templateUrl: './licencia-update.component.html',
 })
 export class LicenciaUpdateComponent implements OnInit {
-  isSaving: boolean;
-
-  personas: IPersona[];
+  isSaving = false;
+  personas: IPersona[] = [];
   fechaLicenciaDp: any;
 
   editForm = this.fb.group({
@@ -30,32 +26,25 @@ export class LicenciaUpdateComponent implements OnInit {
     numeroDeDias: [],
     observaciones: [],
     usuariosMod: [],
-    persona: []
+    persona: [],
   });
 
   constructor(
-    protected jhiAlertService: JhiAlertService,
     protected licenciaService: LicenciaService,
     protected personaService: PersonaService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
 
-  ngOnInit() {
-    this.isSaving = false;
+  ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ licencia }) => {
       this.updateForm(licencia);
+
+      this.personaService.query().subscribe((res: HttpResponse<IPersona[]>) => (this.personas = res.body || []));
     });
-    this.personaService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IPersona[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IPersona[]>) => response.body)
-      )
-      .subscribe((res: IPersona[]) => (this.personas = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
-  updateForm(licencia: ILicencia) {
+  updateForm(licencia: ILicencia): void {
     this.editForm.patchValue({
       id: licencia.id,
       fechaLicencia: licencia.fechaLicencia,
@@ -63,15 +52,15 @@ export class LicenciaUpdateComponent implements OnInit {
       numeroDeDias: licencia.numeroDeDias,
       observaciones: licencia.observaciones,
       usuariosMod: licencia.usuariosMod,
-      persona: licencia.persona
+      persona: licencia.persona,
     });
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 
-  save() {
+  save(): void {
     this.isSaving = true;
     const licencia = this.createFromForm();
     if (licencia.id !== undefined) {
@@ -84,33 +73,33 @@ export class LicenciaUpdateComponent implements OnInit {
   private createFromForm(): ILicencia {
     return {
       ...new Licencia(),
-      id: this.editForm.get(['id']).value,
-      fechaLicencia: this.editForm.get(['fechaLicencia']).value,
-      referencias: this.editForm.get(['referencias']).value,
-      numeroDeDias: this.editForm.get(['numeroDeDias']).value,
-      observaciones: this.editForm.get(['observaciones']).value,
-      usuariosMod: this.editForm.get(['usuariosMod']).value,
-      persona: this.editForm.get(['persona']).value
+      id: this.editForm.get(['id'])!.value,
+      fechaLicencia: this.editForm.get(['fechaLicencia'])!.value,
+      referencias: this.editForm.get(['referencias'])!.value,
+      numeroDeDias: this.editForm.get(['numeroDeDias'])!.value,
+      observaciones: this.editForm.get(['observaciones'])!.value,
+      usuariosMod: this.editForm.get(['usuariosMod'])!.value,
+      persona: this.editForm.get(['persona'])!.value,
     };
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<ILicencia>>) {
-    result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<ILicencia>>): void {
+    result.subscribe(
+      () => this.onSaveSuccess(),
+      () => this.onSaveError()
+    );
   }
 
-  protected onSaveSuccess() {
+  protected onSaveSuccess(): void {
     this.isSaving = false;
     this.previousState();
   }
 
-  protected onSaveError() {
+  protected onSaveError(): void {
     this.isSaving = false;
   }
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
-  }
 
-  trackPersonaById(index: number, item: IPersona) {
+  trackById(index: number, item: IPersona): any {
     return item.id;
   }
 }

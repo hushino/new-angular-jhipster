@@ -4,24 +4,24 @@
       "packageName": "com.rrhh.red",
       "nativeLanguage": "es"
     },
-    "jhipsterVersion": "6.4.1",
+    "jhipsterVersion": "6.9.1",
     "applicationType": "monolith",
     "baseName": "rrhh2",
     "packageName": "com.rrhh.red",
     "packageFolder": "com/rrhh/red",
     "serverPort": "8080",
     "authenticationType": "session",
-    "cacheProvider": "no",
+    "cacheProvider": "ehcache",
     "websocket": false,
     "databaseType": "sql",
-    "devDatabaseType": "mysql",
+    "devDatabaseType": "h2Disk",
     "prodDatabaseType": "mysql",
     "searchEngine": false,
     "messageBroker": false,
     "serviceDiscoveryType": false,
     "buildTool": "gradle",
     "enableSwaggerCodegen": false,
-    "rememberMeKey": "ea1841935209d94d91d28a3d8ef413ebf47fbe3d2ad958aa48670986c94b154f1442c8b481b743bf1c0a609c572069a9ad1e",
+    "rememberMeKey": "7d695adc26dedd7efc0c571ca7c02c51233f510e124d4ae4619aea408584a7ba4e573aa951380dffe94aec1652f12950c4e2",
     "embeddableLaunchScript": false,
     "useSass": true,
     "clientPackageManager": "npm",
@@ -35,17 +35,14 @@
     "otherModules": [],
     "enableTranslation": true,
     "nativeLanguage": "es",
-    "languages": [
-      "es",
-      "en"
-    ],
+    "languages": ["es", "en"],
     "blueprints": [],
-    "appsFolders": [
-      "new-angular"
-    ],
+    "appsFolders": ["new-angular"],
     "directoryPath": "../",
     "monitoring": "no",
     "consoleOptions": [],
-    "jwtSecretKey": "ZWI4ZmUxZDQ0YzRjNjBiYmZkNTUyZDhhMTUyZmNhZDhiOTk1ZmVlYmVmYjFjOGJiY2ZjMDEwMzVkN2U2MjQyZGI1ZjM3MjI3NzhmZTBiMmM3YWM5YzBmMjAyYThjMDA0M2Y5ZQ=="
+    "jwtSecretKey": "ZWI4ZmUxZDQ0YzRjNjBiYmZkNTUyZDhhMTUyZmNhZDhiOTk1ZmVlYmVmYjFjOGJiY2ZjMDEwMzVkN2U2MjQyZGI1ZjM3MjI3NzhmZTBiMmM3YWM5YzBmMjAyYThjMDA0M2Y5ZQ==",
+    "enableHibernateCache": true,
+    "creationTimestamp": 1593005199050
   }
 }

@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -92,9 +91,7 @@ public class OtrosServiciosPrestadosResource {
     /**
      * {@code GET  /otros-servicios-prestados} : get all the otrosServiciosPrestados.
      *
-
      * @param pageable the pagination information.
-
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of otrosServiciosPrestados in body.
      */
@@ -107,11 +104,11 @@ public class OtrosServiciosPrestadosResource {
     }
 
     /**
-    * {@code GET  /otros-servicios-prestados/count} : count all the otrosServiciosPrestados.
-    *
-    * @param criteria the criteria which the requested entities should match.
-    * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-    */
+     * {@code GET  /otros-servicios-prestados/count} : count all the otrosServiciosPrestados.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
     @GetMapping("/otros-servicios-prestados/count")
     public ResponseEntity<Long> countOtrosServiciosPrestados(OtrosServiciosPrestadosCriteria criteria) {
         log.debug("REST request to count OtrosServiciosPrestados by criteria: {}", criteria);

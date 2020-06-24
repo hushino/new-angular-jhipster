@@ -1,124 +1,118 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { filter, map } from 'rxjs/operators';
-import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
+import { ActivatedRoute, ParamMap, Router, Data } from '@angular/router';
+import { Subscription, combineLatest } from 'rxjs';
+import { JhiEventManager } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IOtrosServiciosPrestados } from 'app/shared/model/otros-servicios-prestados.model';
-import { AccountService } from 'app/core/auth/account.service';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { OtrosServiciosPrestadosService } from './otros-servicios-prestados.service';
+import { OtrosServiciosPrestadosDeleteDialogComponent } from './otros-servicios-prestados-delete-dialog.component';
 
 @Component({
   selector: 'jhi-otros-servicios-prestados',
-  templateUrl: './otros-servicios-prestados.component.html'
+  templateUrl: './otros-servicios-prestados.component.html',
 })
 export class OtrosServiciosPrestadosComponent implements OnInit, OnDestroy {
-  currentAccount: any;
-  otrosServiciosPrestados: IOtrosServiciosPrestados[];
-  error: any;
-  success: any;
-  eventSubscriber: Subscription;
-  routeData: any;
-  links: any;
-  totalItems: any;
-  itemsPerPage: any;
-  page: any;
-  predicate: any;
-  previousPage: any;
-  reverse: any;
+  otrosServiciosPrestados?: IOtrosServiciosPrestados[];
+  eventSubscriber?: Subscription;
+  totalItems = 0;
+  itemsPerPage = ITEMS_PER_PAGE;
+  page!: number;
+  predicate!: string;
+  ascending!: boolean;
+  ngbPaginationPage = 1;
 
   constructor(
     protected otrosServiciosPrestadosService: OtrosServiciosPrestadosService,
-    protected parseLinks: JhiParseLinks,
-    protected accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
-    protected eventManager: JhiEventManager
-  ) {
-    this.itemsPerPage = ITEMS_PER_PAGE;
-    this.routeData = this.activatedRoute.data.subscribe(data => {
-      this.page = data.pagingParams.page;
-      this.previousPage = data.pagingParams.page;
-      this.reverse = data.pagingParams.ascending;
-      this.predicate = data.pagingParams.predicate;
-    });
-  }
+    protected eventManager: JhiEventManager,
+    protected modalService: NgbModal
+  ) {}
 
-  loadAll() {
+  loadPage(page?: number, dontNavigate?: boolean): void {
+    const pageToLoad: number = page || this.page || 1;
+
     this.otrosServiciosPrestadosService
       .query({
-        page: this.page - 1,
+        page: pageToLoad - 1,
         size: this.itemsPerPage,
-        sort: this.sort()
+        sort: this.sort(),
       })
-      .subscribe((res: HttpResponse<IOtrosServiciosPrestados[]>) => this.paginateOtrosServiciosPrestados(res.body, res.headers));
+      .subscribe(
+        (res: HttpResponse<IOtrosServiciosPrestados[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
+        () => this.onError()
+      );
   }
 
-  loadPage(page: number) {
-    if (page !== this.previousPage) {
-      this.previousPage = page;
-      this.transition();
-    }
-  }
-
-  transition() {
-    this.router.navigate(['/otros-servicios-prestados'], {
-      queryParams: {
-        page: this.page,
-        size: this.itemsPerPage,
-        sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-      }
-    });
-    this.loadAll();
-  }
-
-  clear() {
-    this.page = 0;
-    this.router.navigate([
-      '/otros-servicios-prestados',
-      {
-        page: this.page,
-        sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-      }
-    ]);
-    this.loadAll();
-  }
-
-  ngOnInit() {
-    this.loadAll();
-    this.accountService.identity().subscribe(account => {
-      this.currentAccount = account;
-    });
+  ngOnInit(): void {
+    this.handleNavigation();
     this.registerChangeInOtrosServiciosPrestados();
   }
 
-  ngOnDestroy() {
-    this.eventManager.destroy(this.eventSubscriber);
+  protected handleNavigation(): void {
+    combineLatest(this.activatedRoute.data, this.activatedRoute.queryParamMap, (data: Data, params: ParamMap) => {
+      const page = params.get('page');
+      const pageNumber = page !== null ? +page : 1;
+      const sort = (params.get('sort') ?? data['defaultSort']).split(',');
+      const predicate = sort[0];
+      const ascending = sort[1] === 'asc';
+      if (pageNumber !== this.page || predicate !== this.predicate || ascending !== this.ascending) {
+        this.predicate = predicate;
+        this.ascending = ascending;
+        this.loadPage(pageNumber, true);
+      }
+    }).subscribe();
   }
 
-  trackId(index: number, item: IOtrosServiciosPrestados) {
-    return item.id;
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
+    }
   }
 
-  registerChangeInOtrosServiciosPrestados() {
-    this.eventSubscriber = this.eventManager.subscribe('otrosServiciosPrestadosListModification', response => this.loadAll());
+  trackId(index: number, item: IOtrosServiciosPrestados): number {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
   }
 
-  sort() {
-    const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
+  registerChangeInOtrosServiciosPrestados(): void {
+    this.eventSubscriber = this.eventManager.subscribe('otrosServiciosPrestadosListModification', () => this.loadPage());
+  }
+
+  delete(otrosServiciosPrestados: IOtrosServiciosPrestados): void {
+    const modalRef = this.modalService.open(OtrosServiciosPrestadosDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.otrosServiciosPrestados = otrosServiciosPrestados;
+  }
+
+  sort(): string[] {
+    const result = [this.predicate + ',' + (this.ascending ? 'asc' : 'desc')];
     if (this.predicate !== 'id') {
       result.push('id');
     }
     return result;
   }
 
-  protected paginateOtrosServiciosPrestados(data: IOtrosServiciosPrestados[], headers: HttpHeaders) {
-    this.links = this.parseLinks.parse(headers.get('link'));
-    this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
-    this.otrosServiciosPrestados = data;
+  protected onSuccess(data: IOtrosServiciosPrestados[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
+    this.totalItems = Number(headers.get('X-Total-Count'));
+    this.page = page;
+    if (navigate) {
+      this.router.navigate(['/otros-servicios-prestados'], {
+        queryParams: {
+          page: this.page,
+          size: this.itemsPerPage,
+          sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
+        },
+      });
+    }
+    this.otrosServiciosPrestados = data || [];
+    this.ngbPaginationPage = this.page;
+  }
+
+  protected onError(): void {
+    this.ngbPaginationPage = this.page ?? 1;
   }
 }

@@ -5,31 +5,26 @@ import com.rrhh.red.domain.Concpremios;
 import com.rrhh.red.domain.Persona;
 import com.rrhh.red.repository.ConcpremiosRepository;
 import com.rrhh.red.service.ConcpremiosService;
-import com.rrhh.red.web.rest.errors.ExceptionTranslator;
 import com.rrhh.red.service.dto.ConcpremiosCriteria;
 import com.rrhh.red.service.ConcpremiosQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
-
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
-import static com.rrhh.red.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -37,6 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link ConcpremiosResource} REST controller.
  */
 @SpringBootTest(classes = Rrhh2App.class)
+@AutoConfigureMockMvc
+@WithMockUser
 public class ConcpremiosResourceIT {
 
     private static final LocalDate DEFAULT_FECHA = LocalDate.ofEpochDay(0L);
@@ -56,35 +53,12 @@ public class ConcpremiosResourceIT {
     private ConcpremiosQueryService concpremiosQueryService;
 
     @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
-    private Validator validator;
-
     private MockMvc restConcpremiosMockMvc;
 
     private Concpremios concpremios;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final ConcpremiosResource concpremiosResource = new ConcpremiosResource(concpremiosService, concpremiosQueryService);
-        this.restConcpremiosMockMvc = MockMvcBuilders.standaloneSetup(concpremiosResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
-    }
 
     /**
      * Create an entity for this test.
@@ -120,10 +94,9 @@ public class ConcpremiosResourceIT {
     @Transactional
     public void createConcpremios() throws Exception {
         int databaseSizeBeforeCreate = concpremiosRepository.findAll().size();
-
         // Create the Concpremios
-        restConcpremiosMockMvc.perform(post("/api/concpremios")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restConcpremiosMockMvc.perform(post("/api/concpremios").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(concpremios)))
             .andExpect(status().isCreated());
 
@@ -144,8 +117,8 @@ public class ConcpremiosResourceIT {
         concpremios.setId(1L);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restConcpremiosMockMvc.perform(post("/api/concpremios")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restConcpremiosMockMvc.perform(post("/api/concpremios").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(concpremios)))
             .andExpect(status().isBadRequest());
 
@@ -164,7 +137,7 @@ public class ConcpremiosResourceIT {
         // Get all the concpremiosList
         restConcpremiosMockMvc.perform(get("/api/concpremios?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(concpremios.getId().intValue())))
             .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())))
             .andExpect(jsonPath("$.[*].referencias").value(hasItem(DEFAULT_REFERENCIAS)));
@@ -179,11 +152,31 @@ public class ConcpremiosResourceIT {
         // Get the concpremios
         restConcpremiosMockMvc.perform(get("/api/concpremios/{id}", concpremios.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(concpremios.getId().intValue()))
             .andExpect(jsonPath("$.fecha").value(DEFAULT_FECHA.toString()))
             .andExpect(jsonPath("$.referencias").value(DEFAULT_REFERENCIAS));
     }
+
+
+    @Test
+    @Transactional
+    public void getConcpremiosByIdFiltering() throws Exception {
+        // Initialize the database
+        concpremiosRepository.saveAndFlush(concpremios);
+
+        Long id = concpremios.getId();
+
+        defaultConcpremiosShouldBeFound("id.equals=" + id);
+        defaultConcpremiosShouldNotBeFound("id.notEquals=" + id);
+
+        defaultConcpremiosShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultConcpremiosShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultConcpremiosShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultConcpremiosShouldNotBeFound("id.lessThan=" + id);
+    }
+
 
     @Test
     @Transactional
@@ -393,7 +386,7 @@ public class ConcpremiosResourceIT {
     private void defaultConcpremiosShouldBeFound(String filter) throws Exception {
         restConcpremiosMockMvc.perform(get("/api/concpremios?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(concpremios.getId().intValue())))
             .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())))
             .andExpect(jsonPath("$.[*].referencias").value(hasItem(DEFAULT_REFERENCIAS)));
@@ -401,7 +394,7 @@ public class ConcpremiosResourceIT {
         // Check, that the count call also returns 1
         restConcpremiosMockMvc.perform(get("/api/concpremios/count?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(content().string("1"));
     }
 
@@ -411,17 +404,16 @@ public class ConcpremiosResourceIT {
     private void defaultConcpremiosShouldNotBeFound(String filter) throws Exception {
         restConcpremiosMockMvc.perform(get("/api/concpremios?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$").isArray())
             .andExpect(jsonPath("$").isEmpty());
 
         // Check, that the count call also returns 0
         restConcpremiosMockMvc.perform(get("/api/concpremios/count?sort=id,desc&" + filter))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(content().string("0"));
     }
-
 
     @Test
     @Transactional
@@ -447,8 +439,8 @@ public class ConcpremiosResourceIT {
             .fecha(UPDATED_FECHA)
             .referencias(UPDATED_REFERENCIAS);
 
-        restConcpremiosMockMvc.perform(put("/api/concpremios")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restConcpremiosMockMvc.perform(put("/api/concpremios").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(updatedConcpremios)))
             .andExpect(status().isOk());
 
@@ -465,11 +457,9 @@ public class ConcpremiosResourceIT {
     public void updateNonExistingConcpremios() throws Exception {
         int databaseSizeBeforeUpdate = concpremiosRepository.findAll().size();
 
-        // Create the Concpremios
-
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restConcpremiosMockMvc.perform(put("/api/concpremios")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restConcpremiosMockMvc.perform(put("/api/concpremios").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(concpremios)))
             .andExpect(status().isBadRequest());
 
@@ -487,27 +477,12 @@ public class ConcpremiosResourceIT {
         int databaseSizeBeforeDelete = concpremiosRepository.findAll().size();
 
         // Delete the concpremios
-        restConcpremiosMockMvc.perform(delete("/api/concpremios/{id}", concpremios.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+        restConcpremiosMockMvc.perform(delete("/api/concpremios/{id}", concpremios.getId()).with(csrf())
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
         List<Concpremios> concpremiosList = concpremiosRepository.findAll();
         assertThat(concpremiosList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Concpremios.class);
-        Concpremios concpremios1 = new Concpremios();
-        concpremios1.setId(1L);
-        Concpremios concpremios2 = new Concpremios();
-        concpremios2.setId(concpremios1.getId());
-        assertThat(concpremios1).isEqualTo(concpremios2);
-        concpremios2.setId(2L);
-        assertThat(concpremios1).isNotEqualTo(concpremios2);
-        concpremios1.setId(null);
-        assertThat(concpremios1).isNotEqualTo(concpremios2);
     }
 }

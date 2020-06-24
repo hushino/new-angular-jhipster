@@ -1,5 +1,8 @@
 package com.rrhh.red.domain;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -13,6 +16,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "persona")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Persona implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -456,27 +460,34 @@ public class Persona implements Serializable {
     private String grupofamiliarapellidonombrefamiliar11;
 
     @OneToMany(mappedBy = "persona")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Licencia> licencias = new HashSet<>();
 
     @OneToMany(mappedBy = "persona")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<AltasAscensosBajas> altasAscensosBajas = new HashSet<>();
 
     @OneToMany(mappedBy = "persona")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Concpremios> concpremios = new HashSet<>();
 
     @OneToMany(mappedBy = "persona")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Embargos> embargos = new HashSet<>();
 
     @OneToMany(mappedBy = "persona")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Garantia> garantias = new HashSet<>();
 
     @OneToMany(mappedBy = "persona")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<OtrosServiciosPrestados> otrosServiciosPrestados = new HashSet<>();
 
     @OneToMany(mappedBy = "persona")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<PenasDisciplinariasSufridas> penasDisciplinariasSufridas = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
     }
@@ -2115,7 +2126,7 @@ public class Persona implements Serializable {
     public void setPenasDisciplinariasSufridas(Set<PenasDisciplinariasSufridas> penasDisciplinariasSufridas) {
         this.penasDisciplinariasSufridas = penasDisciplinariasSufridas;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -2133,6 +2144,7 @@ public class Persona implements Serializable {
         return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "Persona{" +

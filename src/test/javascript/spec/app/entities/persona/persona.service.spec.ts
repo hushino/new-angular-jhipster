@@ -1,6 +1,5 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { take, map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { PersonaService } from 'app/entities/persona/persona.service';
@@ -12,13 +11,14 @@ describe('Service Tests', () => {
     let service: PersonaService;
     let httpMock: HttpTestingController;
     let elemDefault: IPersona;
-    let expectedResult;
+    let expectedResult: IPersona | IPersona[] | boolean | null;
     let currentDate: moment.Moment;
+
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule]
+        imports: [HttpClientTestingModule],
       });
-      expectedResult = {};
+      expectedResult = null;
       injector = getTestBed();
       service = injector.get(PersonaService);
       httpMock = injector.get(HttpTestingController);
@@ -145,41 +145,39 @@ describe('Service Tests', () => {
       it('should find an element', () => {
         const returnedFromService = Object.assign(
           {
-            fechadeingreso: currentDate.format(DATE_FORMAT)
+            fechadeingreso: currentDate.format(DATE_FORMAT),
           },
           elemDefault
         );
-        service
-          .find(123)
-          .pipe(take(1))
-          .subscribe(resp => (expectedResult = resp));
+
+        service.find(123).subscribe(resp => (expectedResult = resp.body));
 
         const req = httpMock.expectOne({ method: 'GET' });
         req.flush(returnedFromService);
-        expect(expectedResult).toMatchObject({ body: elemDefault });
+        expect(expectedResult).toMatchObject(elemDefault);
       });
 
       it('should create a Persona', () => {
         const returnedFromService = Object.assign(
           {
             id: 0,
-            fechadeingreso: currentDate.format(DATE_FORMAT)
+            fechadeingreso: currentDate.format(DATE_FORMAT),
           },
           elemDefault
         );
+
         const expected = Object.assign(
           {
-            fechadeingreso: currentDate
+            fechadeingreso: currentDate,
           },
           returnedFromService
         );
-        service
-          .create(new Persona(null))
-          .pipe(take(1))
-          .subscribe(resp => (expectedResult = resp));
+
+        service.create(new Persona()).subscribe(resp => (expectedResult = resp.body));
+
         const req = httpMock.expectOne({ method: 'POST' });
         req.flush(returnedFromService);
-        expect(expectedResult).toMatchObject({ body: expected });
+        expect(expectedResult).toMatchObject(expected);
       });
 
       it('should update a Persona', () => {
@@ -295,24 +293,23 @@ describe('Service Tests', () => {
             grupofamiliarapellidonombrefamiliar8: 'BBBBBB',
             grupofamiliarapellidonombrefamiliar9: 'BBBBBB',
             grupofamiliarapellidonombrefamiliar10: 'BBBBBB',
-            grupofamiliarapellidonombrefamiliar11: 'BBBBBB'
+            grupofamiliarapellidonombrefamiliar11: 'BBBBBB',
           },
           elemDefault
         );
 
         const expected = Object.assign(
           {
-            fechadeingreso: currentDate
+            fechadeingreso: currentDate,
           },
           returnedFromService
         );
-        service
-          .update(expected)
-          .pipe(take(1))
-          .subscribe(resp => (expectedResult = resp));
+
+        service.update(expected).subscribe(resp => (expectedResult = resp.body));
+
         const req = httpMock.expectOne({ method: 'PUT' });
         req.flush(returnedFromService);
-        expect(expectedResult).toMatchObject({ body: expected });
+        expect(expectedResult).toMatchObject(expected);
       });
 
       it('should return a list of Persona', () => {
@@ -428,23 +425,20 @@ describe('Service Tests', () => {
             grupofamiliarapellidonombrefamiliar8: 'BBBBBB',
             grupofamiliarapellidonombrefamiliar9: 'BBBBBB',
             grupofamiliarapellidonombrefamiliar10: 'BBBBBB',
-            grupofamiliarapellidonombrefamiliar11: 'BBBBBB'
+            grupofamiliarapellidonombrefamiliar11: 'BBBBBB',
           },
           elemDefault
         );
+
         const expected = Object.assign(
           {
-            fechadeingreso: currentDate
+            fechadeingreso: currentDate,
           },
           returnedFromService
         );
-        service
-          .query(expected)
-          .pipe(
-            take(1),
-            map(resp => resp.body)
-          )
-          .subscribe(body => (expectedResult = body));
+
+        service.query().subscribe(resp => (expectedResult = resp.body));
+
         const req = httpMock.expectOne({ method: 'GET' });
         req.flush([returnedFromService]);
         httpMock.verify();

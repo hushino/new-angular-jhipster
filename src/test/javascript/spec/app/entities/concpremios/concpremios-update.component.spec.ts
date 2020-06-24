@@ -18,7 +18,7 @@ describe('Component Tests', () => {
       TestBed.configureTestingModule({
         imports: [Rrhh2TestModule],
         declarations: [ConcpremiosUpdateComponent],
-        providers: [FormBuilder]
+        providers: [FormBuilder],
       })
         .overrideTemplate(ConcpremiosUpdateComponent, '')
         .compileComponents();
