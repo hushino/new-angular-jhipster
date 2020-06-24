@@ -3,7 +3,7 @@
   "version": "0.0.1-SNAPSHOT",
   "description": "Description for rrhh2",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "PRIVATE",
   "cacheDirectories": [
     "node_modules"
   ],
