@@ -18,6 +18,11 @@ export class PersonaUpdateComponent implements OnInit {
   isSaving: boolean;
   fechadeingresoDp: any;
   public isCollapsed = true;
+  public isCollapseddni = true;
+  public isCollapsedfamiliaracargoedad = true;
+  public isCollapsedfamiliaracargonombreedad = true;
+  public isCollapsedfamiliaracargoapellido = true;
+  public isCollapsedfamiliaracargonombrefamiliar = true;
 
   editForm = this.fb.group({
     id: [],

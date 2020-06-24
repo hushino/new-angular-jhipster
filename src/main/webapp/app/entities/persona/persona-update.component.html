@@ -12,7 +12,7 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.nombre"
                         for="field_nombre">Nombre</label>
-                    <input type="text" class="form-control" name="nombre" id="field_nombre" formControlName="nombre" />
+                    <input type="text" class="form-control" name="nombre" id="field_nombre" formControlName="nombre" style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('nombre').invalid && (editForm.get('nombre').dirty || editForm.get('nombre').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('nombre').errors.required"
@@ -28,7 +28,7 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.apellido"
                         for="field_apellido">Apellido</label>
-                    <input type="text" class="form-control" name="apellido" id="field_apellido"
+                    <input type="text" class="form-control" name="apellido" id="field_apellido" style="background-color: #7b8688c7;"
                         formControlName="apellido" />
                     <div
                         *ngIf="editForm.get('apellido').invalid && (editForm.get('apellido').dirty || editForm.get('apellido').touched)">
@@ -44,7 +44,7 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.cuil" for="field_cuil">Cuil</label>
-                    <input type="text" class="form-control" name="cuil" id="field_cuil" formControlName="cuil" />
+                    <input type="text" class="form-control" name="cuil" id="field_cuil" formControlName="cuil" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('cuil').invalid && (editForm.get('cuil').dirty || editForm.get('cuil').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('cuil').errors.required"
@@ -59,7 +59,7 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.dni" for="field_dni">Dni</label>
-                    <input type="number" class="form-control" name="dni" id="field_dni" formControlName="dni" />
+                    <input type="number" class="form-control" name="dni" id="field_dni" formControlName="dni" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('dni').invalid && (editForm.get('dni').dirty || editForm.get('dni').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('dni').errors.required"
@@ -76,7 +76,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.legajo"
                         for="field_legajo">Legajo</label>
                     <input type="number" class="form-control" name="legajo" id="field_legajo"
-                        formControlName="legajo" />
+                        formControlName="legajo" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('legajo').invalid && (editForm.get('legajo').dirty || editForm.get('legajo').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('legajo').errors.required"
@@ -92,7 +92,7 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.apodo"
                         for="field_apodo">Apodo</label>
-                    <input type="text" class="form-control" name="apodo" id="field_apodo" formControlName="apodo" />
+                    <input type="text" class="form-control" name="apodo" id="field_apodo" formControlName="apodo" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('apodo').invalid && (editForm.get('apodo').dirty || editForm.get('apodo').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('apodo').errors.maxlength"
@@ -115,17 +115,17 @@
                             </button>
                         </div>
                         <input type="file" id="file_foto" (change)="setFileData($event, 'foto', true)" accept="image/*"
-                            jhiTranslate="entity.action.addimage" />
+                            jhiTranslate="entity.action.addimage" style="background-color: #7b8688c7;"/>
                     </div>
-                    <input type="hidden" class="form-control" name="foto" id="field_foto" formControlName="foto" />
+                    <input type="hidden" class="form-control" name="foto" id="field_foto" formControlName="foto" style="background-color: #7b8688c7;"/>
                     <input type="hidden" class="form-control" name="fotoContentType" id="field_fotoContentType"
-                        formControlName="fotoContentType" />
+                        formControlName="fotoContentType" style="background-color: #7b8688c7;"/>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.soltero"
                         for="field_soltero">Soltero</label>
                     <input type="text" class="form-control" name="soltero" id="field_soltero"
-                        formControlName="soltero" />
+                        formControlName="soltero" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('soltero').invalid && (editForm.get('soltero').dirty || editForm.get('soltero').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('soltero').errors.maxlength"
@@ -137,7 +137,7 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.casado"
                         for="field_casado">Casado</label>
-                    <input type="text" class="form-control" name="casado" id="field_casado" formControlName="casado" />
+                    <input type="text" class="form-control" name="casado" id="field_casado" formControlName="casado"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('casado').invalid && (editForm.get('casado').dirty || editForm.get('casado').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('casado').errors.maxlength"
@@ -150,7 +150,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.conviviente"
                         for="field_conviviente">Conviviente</label>
                     <input type="text" class="form-control" name="conviviente" id="field_conviviente"
-                        formControlName="conviviente" />
+                        formControlName="conviviente" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('conviviente').invalid && (editForm.get('conviviente').dirty || editForm.get('conviviente').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('conviviente').errors.maxlength"
@@ -162,7 +162,7 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.viudo"
                         for="field_viudo">Viudo</label>
-                    <input type="text" class="form-control" name="viudo" id="field_viudo" formControlName="viudo" />
+                    <input type="text" class="form-control" name="viudo" id="field_viudo" formControlName="viudo" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('viudo').invalid && (editForm.get('viudo').dirty || editForm.get('viudo').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('viudo').errors.maxlength"
@@ -175,7 +175,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.domicilio"
                         for="field_domicilio">Domicilio</label>
                     <input type="text" class="form-control" name="domicilio" id="field_domicilio"
-                        formControlName="domicilio" />
+                        formControlName="domicilio" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('domicilio').invalid && (editForm.get('domicilio').dirty || editForm.get('domicilio').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('domicilio').errors.maxlength"
@@ -187,7 +187,7 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.lugar"
                         for="field_lugar">Lugar</label>
-                    <input type="text" class="form-control" name="lugar" id="field_lugar" formControlName="lugar" />
+                    <input type="text" class="form-control" name="lugar" id="field_lugar" formControlName="lugar" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('lugar').invalid && (editForm.get('lugar').dirty || editForm.get('lugar').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('lugar').errors.maxlength"
@@ -199,7 +199,7 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.calle"
                         for="field_calle">Calle</label>
-                    <input type="text" class="form-control" name="calle" id="field_calle" formControlName="calle" />
+                    <input type="text" class="form-control" name="calle" id="field_calle" formControlName="calle" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('calle').invalid && (editForm.get('calle').dirty || editForm.get('calle').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('calle').errors.maxlength"
@@ -211,7 +211,7 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.numero"
                         for="field_numero">Numero</label>
-                    <input type="text" class="form-control" name="numero" id="field_numero" formControlName="numero" />
+                    <input type="text" class="form-control" name="numero" id="field_numero" formControlName="numero" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('numero').invalid && (editForm.get('numero').dirty || editForm.get('numero').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('numero').errors.maxlength"
@@ -224,7 +224,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.telefonofijo"
                         for="field_telefonofijo">Telefonofijo</label>
                     <input type="text" class="form-control" name="telefonofijo" id="field_telefonofijo"
-                        formControlName="telefonofijo" />
+                        formControlName="telefonofijo" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('telefonofijo').invalid && (editForm.get('telefonofijo').dirty || editForm.get('telefonofijo').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('telefonofijo').errors.maxlength"
@@ -237,7 +237,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.numerodecelular"
                         for="field_numerodecelular">Numerodecelular</label>
                     <input type="text" class="form-control" name="numerodecelular" id="field_numerodecelular"
-                        formControlName="numerodecelular" />
+                        formControlName="numerodecelular" style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('numerodecelular').invalid && (editForm.get('numerodecelular').dirty || editForm.get('numerodecelular').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('numerodecelular').errors.maxlength"
@@ -250,7 +250,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.oficioprofecion"
                         for="field_oficioprofecion">Oficioprofecion</label>
                     <input type="text" class="form-control" name="oficioprofecion" id="field_oficioprofecion"
-                        formControlName="oficioprofecion" />
+                        formControlName="oficioprofecion" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('oficioprofecion').invalid && (editForm.get('oficioprofecion').dirty || editForm.get('oficioprofecion').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('oficioprofecion').errors.maxlength"
@@ -263,7 +263,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.niveldeestudios"
                         for="field_niveldeestudios">Niveldeestudios</label>
                     <input type="text" class="form-control" name="niveldeestudios" id="field_niveldeestudios"
-                        formControlName="niveldeestudios" />
+                        formControlName="niveldeestudios" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('niveldeestudios').invalid && (editForm.get('niveldeestudios').dirty || editForm.get('niveldeestudios').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('niveldeestudios').errors.maxlength"
@@ -276,7 +276,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.gruposanguineo"
                         for="field_gruposanguineo">Gruposanguineo</label>
                     <input type="text" class="form-control" name="gruposanguineo" id="field_gruposanguineo"
-                        formControlName="gruposanguineo" />
+                        formControlName="gruposanguineo" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('gruposanguineo').invalid && (editForm.get('gruposanguineo').dirty || editForm.get('gruposanguineo').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('gruposanguineo').errors.maxlength"
@@ -288,7 +288,7 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.factor"
                         for="field_factor">Factor</label>
-                    <input type="text" class="form-control" name="factor" id="field_factor" formControlName="factor" />
+                    <input type="text" class="form-control" name="factor" id="field_factor" formControlName="factor" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('factor').invalid && (editForm.get('factor').dirty || editForm.get('factor').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('factor').errors.maxlength"
@@ -301,7 +301,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.donante"
                         for="field_donante">Donante</label>
                     <input type="text" class="form-control" name="donante" id="field_donante"
-                        formControlName="donante" />
+                        formControlName="donante" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('donante').invalid && (editForm.get('donante').dirty || editForm.get('donante').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('donante').errors.maxlength"
@@ -314,7 +314,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.diabetes"
                         for="field_diabetes">Diabetes</label>
                     <input type="text" class="form-control" name="diabetes" id="field_diabetes"
-                        formControlName="diabetes" />
+                        formControlName="diabetes" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('diabetes').invalid && (editForm.get('diabetes').dirty || editForm.get('diabetes').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('diabetes').errors.maxlength"
@@ -327,7 +327,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.hipertension"
                         for="field_hipertension">Hipertension</label>
                     <input type="text" class="form-control" name="hipertension" id="field_hipertension"
-                        formControlName="hipertension" />
+                        formControlName="hipertension" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('hipertension').invalid && (editForm.get('hipertension').dirty || editForm.get('hipertension').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('hipertension').errors.maxlength"
@@ -340,7 +340,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.alergias"
                         for="field_alergias">Alergias</label>
                     <input type="text" class="form-control" name="alergias" id="field_alergias"
-                        formControlName="alergias" />
+                        formControlName="alergias" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('alergias').invalid && (editForm.get('alergias').dirty || editForm.get('alergias').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('alergias').errors.maxlength"
@@ -351,7 +351,7 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.asma" for="field_asma">Asma</label>
-                    <input type="text" class="form-control" name="asma" id="field_asma" formControlName="asma" />
+                    <input type="text" class="form-control" name="asma" id="field_asma" formControlName="asma" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('asma').invalid && (editForm.get('asma').dirty || editForm.get('asma').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('asma').errors.maxlength"
@@ -363,7 +363,7 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.otros"
                         for="field_otros">Otros</label>
-                    <input type="text" class="form-control" name="otros" id="field_otros" formControlName="otros" />
+                    <input type="text" class="form-control" name="otros" id="field_otros" formControlName="otros" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('otros').invalid && (editForm.get('otros').dirty || editForm.get('otros').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('otros').errors.maxlength"
@@ -389,7 +389,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.instrumentolegal"
                         for="field_instrumentolegal">Instrumentolegal</label>
                     <input type="text" class="form-control" name="instrumentolegal" id="field_instrumentolegal"
-                        formControlName="instrumentolegal" />
+                        formControlName="instrumentolegal" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('instrumentolegal').invalid && (editForm.get('instrumentolegal').dirty || editForm.get('instrumentolegal').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('instrumentolegal').errors.maxlength"
@@ -402,7 +402,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.categoria"
                         for="field_categoria">Categoria</label>
                     <input type="text" class="form-control" name="categoria" id="field_categoria"
-                        formControlName="categoria" />
+                        formControlName="categoria" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('categoria').invalid && (editForm.get('categoria').dirty || editForm.get('categoria').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('categoria').errors.maxlength"
@@ -413,7 +413,7 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.item" for="field_item">Item</label>
-                    <input type="text" class="form-control" name="item" id="field_item" formControlName="item" />
+                    <input type="text" class="form-control" name="item" id="field_item" formControlName="item" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('item').invalid && (editForm.get('item').dirty || editForm.get('item').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('item').errors.maxlength"
@@ -425,7 +425,7 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.planta"
                         for="field_planta">Planta</label>
-                    <input type="text" class="form-control" name="planta" id="field_planta" formControlName="planta" />
+                    <input type="text" class="form-control" name="planta" id="field_planta" formControlName="planta" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('planta').invalid && (editForm.get('planta').dirty || editForm.get('planta').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('planta').errors.maxlength"
@@ -436,7 +436,7 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.area" for="field_area">Area</label>
-                    <input type="text" class="form-control" name="area" id="field_area" formControlName="area" />
+                    <input type="text" class="form-control" name="area" id="field_area" formControlName="area" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('area').invalid && (editForm.get('area').dirty || editForm.get('area').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('area').errors.maxlength"
@@ -449,7 +449,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.direccion"
                         for="field_direccion">Direccion</label>
                     <input type="text" class="form-control" name="direccion" id="field_direccion"
-                        formControlName="direccion" />
+                        formControlName="direccion" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('direccion').invalid && (editForm.get('direccion').dirty || editForm.get('direccion').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('direccion').errors.maxlength"
@@ -461,22 +461,22 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.annos"
                         for="field_annos">Años</label>
-                    <input type="number" class="form-control" name="annos" id="field_annos" formControlName="annos" />
+                    <input type="number" class="form-control" name="annos" id="field_annos" formControlName="annos" style="background-color: #7b8688c7;"/>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.meses"
                         for="field_meses">Meses</label>
-                    <input type="number" class="form-control" name="meses" id="field_meses" formControlName="meses" />
+                    <input type="number" class="form-control" name="meses" id="field_meses" formControlName="meses"style="background-color: #7b8688c7;" />
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.dias" for="field_dias">Dias</label>
-                    <input type="number" class="form-control" name="dias" id="field_dias" formControlName="dias" />
+                    <input type="number" class="form-control" name="dias" id="field_dias" formControlName="dias" style="background-color: #7b8688c7;"/>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.realizocomputodeservicios"
                         for="field_realizocomputodeservicios">Realizocomputodeservicios</label>
                     <input type="text" class="form-control" name="realizocomputodeservicios"
-                        id="field_realizocomputodeservicios" formControlName="realizocomputodeservicios" />
+                        id="field_realizocomputodeservicios" formControlName="realizocomputodeservicios" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('realizocomputodeservicios').invalid && (editForm.get('realizocomputodeservicios').dirty || editForm.get('realizocomputodeservicios').touched)">
                         <small class="form-text text-danger"
@@ -491,7 +491,7 @@
                         for="field_poseeconocimientoenmaquinasviales">Poseeconocimientoenmaquinasviales</label>
                     <input type="text" class="form-control" name="poseeconocimientoenmaquinasviales"
                         id="field_poseeconocimientoenmaquinasviales"
-                        formControlName="poseeconocimientoenmaquinasviales" />
+                        formControlName="poseeconocimientoenmaquinasviales" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('poseeconocimientoenmaquinasviales').invalid && (editForm.get('poseeconocimientoenmaquinasviales').dirty || editForm.get('poseeconocimientoenmaquinasviales').touched)">
                         <small class="form-text text-danger"
@@ -505,7 +505,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.casoemergenciacelular"
                         for="field_casoemergenciacelular">Casoemergenciacelular</label>
                     <input type="text" class="form-control" name="casoemergenciacelular"
-                        id="field_casoemergenciacelular" formControlName="casoemergenciacelular" />
+                        id="field_casoemergenciacelular" formControlName="casoemergenciacelular" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('casoemergenciacelular').invalid && (editForm.get('casoemergenciacelular').dirty || editForm.get('casoemergenciacelular').touched)">
                         <small class="form-text text-danger"
@@ -519,7 +519,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.casoemergenciafijo"
                         for="field_casoemergenciafijo">Casoemergenciafijo</label>
                     <input type="text" class="form-control" name="casoemergenciafijo" id="field_casoemergenciafijo"
-                        formControlName="casoemergenciafijo" />
+                        formControlName="casoemergenciafijo"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('casoemergenciafijo').invalid && (editForm.get('casoemergenciafijo').dirty || editForm.get('casoemergenciafijo').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('casoemergenciafijo').errors.maxlength"
@@ -532,7 +532,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.casoemergencianombre"
                         for="field_casoemergencianombre">Casoemergencianombre</label>
                     <input type="text" class="form-control" name="casoemergencianombre" id="field_casoemergencianombre"
-                        formControlName="casoemergencianombre" />
+                        formControlName="casoemergencianombre"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('casoemergencianombre').invalid && (editForm.get('casoemergencianombre').dirty || editForm.get('casoemergencianombre').touched)">
                         <small class="form-text text-danger"
@@ -546,7 +546,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.casoemergenciacelular2"
                         for="field_casoemergenciacelular2">Casoemergenciacelular 2</label>
                     <input type="text" class="form-control" name="casoemergenciacelular2"
-                        id="field_casoemergenciacelular2" formControlName="casoemergenciacelular2" />
+                        id="field_casoemergenciacelular2" formControlName="casoemergenciacelular2" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('casoemergenciacelular2').invalid && (editForm.get('casoemergenciacelular2').dirty || editForm.get('casoemergenciacelular2').touched)">
                         <small class="form-text text-danger"
@@ -560,7 +560,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.casoemergenciafijo2"
                         for="field_casoemergenciafijo2">Casoemergenciafijo 2</label>
                     <input type="text" class="form-control" name="casoemergenciafijo2" id="field_casoemergenciafijo2"
-                        formControlName="casoemergenciafijo2" />
+                        formControlName="casoemergenciafijo2"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('casoemergenciafijo2').invalid && (editForm.get('casoemergenciafijo2').dirty || editForm.get('casoemergenciafijo2').touched)">
                         <small class="form-text text-danger"
@@ -574,7 +574,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.casoemergencianombre2"
                         for="field_casoemergencianombre2">Casoemergencianombre 2</label>
                     <input type="text" class="form-control" name="casoemergencianombre2"
-                        id="field_casoemergencianombre2" formControlName="casoemergencianombre2" />
+                        id="field_casoemergencianombre2" formControlName="casoemergencianombre2"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('casoemergencianombre2').invalid && (editForm.get('casoemergencianombre2').dirty || editForm.get('casoemergencianombre2').touched)">
                         <small class="form-text text-danger"
@@ -588,7 +588,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.familiaracargonombre"
                         for="field_familiaracargonombre">Familiaracargonombre</label>
                     <input type="text" class="form-control" name="familiaracargonombre" id="field_familiaracargonombre"
-                        formControlName="familiaracargonombre" />
+                        formControlName="familiaracargonombre" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('familiaracargonombre').invalid && (editForm.get('familiaracargonombre').dirty || editForm.get('familiaracargonombre').touched)">
                         <small class="form-text text-danger"
@@ -598,24 +598,8 @@
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="rrhh2App.persona.familiaracargonombre2"
-                        for="field_familiaracargonombre2">Familiaracargonombre 2</label>
-                    <input type="text" class="form-control" name="familiaracargonombre2"
-                        id="field_familiaracargonombre2" formControlName="familiaracargonombre2" />
-                    <div
-                        *ngIf="editForm.get('familiaracargonombre2').invalid && (editForm.get('familiaracargonombre2').dirty || editForm.get('familiaracargonombre2').touched)">
-                        <small class="form-text text-danger"
-                            *ngIf="editForm.get('familiaracargonombre2').errors.maxlength"
-                            jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 50 }">
-                            This field cannot be longer than 50 characters.
-                        </small>
-                    </div>
-                </div>
-
-
                 <p>
-                    <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
+                    <button type="button" class="btn btn-outline-primary" style="color: #ccff00;" (click)="isCollapsed = !isCollapsed"
                         [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
                         Ver mas campos de familiar a cargo
                     </button>
@@ -624,10 +608,24 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-group">
+                                <label class="form-control-label" jhiTranslate="rrhh2App.persona.familiaracargonombre2"
+                                       for="field_familiaracargonombre2">Familiaracargonombre 2</label>
+                                <input type="text" class="form-control" name="familiaracargonombre2"
+                                       id="field_familiaracargonombre2" formControlName="familiaracargonombre2"style="background-color: #7b8688c7;" />
+                                <div
+                                    *ngIf="editForm.get('familiaracargonombre2').invalid && (editForm.get('familiaracargonombre2').dirty || editForm.get('familiaracargonombre2').touched)">
+                                    <small class="form-text text-danger"
+                                           *ngIf="editForm.get('familiaracargonombre2').errors.maxlength"
+                                           jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 50 }">
+                                        This field cannot be longer than 50 characters.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="form-control-label" jhiTranslate="rrhh2App.persona.familiaracargonombre3"
                                     for="field_familiaracargonombre3">Familiaracargonombre 3</label>
                                 <input type="text" class="form-control" name="familiaracargonombre3"
-                                    id="field_familiaracargonombre3" formControlName="familiaracargonombre3" />
+                                    id="field_familiaracargonombre3" formControlName="familiaracargonombre3"style="background-color: #7b8688c7;" />
                                 <div
                                     *ngIf="editForm.get('familiaracargonombre3').invalid && (editForm.get('familiaracargonombre3').dirty || editForm.get('familiaracargonombre3').touched)">
                                     <small class="form-text text-danger"
@@ -641,7 +639,7 @@
                                 <label class="form-control-label" jhiTranslate="rrhh2App.persona.familiaracargonombre4"
                                     for="field_familiaracargonombre4">Familiaracargonombre 4</label>
                                 <input type="text" class="form-control" name="familiaracargonombre4"
-                                    id="field_familiaracargonombre4" formControlName="familiaracargonombre4" />
+                                    id="field_familiaracargonombre4" formControlName="familiaracargonombre4" style="background-color: #7b8688c7;"/>
                                 <div
                                     *ngIf="editForm.get('familiaracargonombre4').invalid && (editForm.get('familiaracargonombre4').dirty || editForm.get('familiaracargonombre4').touched)">
                                     <small class="form-text text-danger"
@@ -655,7 +653,7 @@
                                 <label class="form-control-label" jhiTranslate="rrhh2App.persona.familiaracargonombre5"
                                     for="field_familiaracargonombre5">Familiaracargonombre 5</label>
                                 <input type="text" class="form-control" name="familiaracargonombre5"
-                                    id="field_familiaracargonombre5" formControlName="familiaracargonombre5" />
+                                    id="field_familiaracargonombre5" formControlName="familiaracargonombre5"style="background-color: #7b8688c7;" />
                                 <div
                                     *ngIf="editForm.get('familiaracargonombre5').invalid && (editForm.get('familiaracargonombre5').dirty || editForm.get('familiaracargonombre5').touched)">
                                     <small class="form-text text-danger"
@@ -675,7 +673,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.familiaracargodni"
                         for="field_familiaracargodni">Familiaracargodni</label>
                     <input type="text" class="form-control" name="familiaracargodni" id="field_familiaracargodni"
-                        formControlName="familiaracargodni" />
+                        formControlName="familiaracargodni" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('familiaracargodni').invalid && (editForm.get('familiaracargodni').dirty || editForm.get('familiaracargodni').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('familiaracargodni').errors.maxlength"
@@ -688,7 +686,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.familiaracargodni2"
                         for="field_familiaracargodni2">Familiaracargodni 2</label>
                     <input type="text" class="form-control" name="familiaracargodni2" id="field_familiaracargodni2"
-                        formControlName="familiaracargodni2" />
+                        formControlName="familiaracargodni2"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('familiaracargodni2').invalid && (editForm.get('familiaracargodni2').dirty || editForm.get('familiaracargodni2').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('familiaracargodni2').errors.maxlength"
@@ -697,11 +695,21 @@
                         </small>
                     </div>
                 </div>
+
+                <p>
+                    <button type="button" class="btn btn-outline-primary" style="color: #ccff00;" (click)="isCollapseddni = !isCollapseddni"
+                            [attr.aria-expanded]="!isCollapseddni" aria-controls="collapseExample2">
+                        Ver mas campos de DNI
+                    </button>
+                </p>
+                <div id="collapseExample2" [ngbCollapse]="isCollapseddni">
+                    <div class="card">
+                        <div class="card-body">
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.familiaracargodni3"
                         for="field_familiaracargodni3">Familiaracargodni 3</label>
                     <input type="text" class="form-control" name="familiaracargodni3" id="field_familiaracargodni3"
-                        formControlName="familiaracargodni3" />
+                        formControlName="familiaracargodni3" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('familiaracargodni3').invalid && (editForm.get('familiaracargodni3').dirty || editForm.get('familiaracargodni3').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('familiaracargodni3').errors.maxlength"
@@ -714,7 +722,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.familiaracargodni4"
                         for="field_familiaracargodni4">Familiaracargodni 4</label>
                     <input type="text" class="form-control" name="familiaracargodni4" id="field_familiaracargodni4"
-                        formControlName="familiaracargodni4" />
+                        formControlName="familiaracargodni4"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('familiaracargodni4').invalid && (editForm.get('familiaracargodni4').dirty || editForm.get('familiaracargodni4').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('familiaracargodni4').errors.maxlength"
@@ -727,7 +735,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.familiaracargodni5"
                         for="field_familiaracargodni5">Familiaracargodni 5</label>
                     <input type="text" class="form-control" name="familiaracargodni5" id="field_familiaracargodni5"
-                        formControlName="familiaracargodni5" />
+                        formControlName="familiaracargodni5" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('familiaracargodni5').invalid && (editForm.get('familiaracargodni5').dirty || editForm.get('familiaracargodni5').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('familiaracargodni5').errors.maxlength"
@@ -736,11 +744,14 @@
                         </small>
                     </div>
                 </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.familiaracargoedad"
                         for="field_familiaracargoedad">Familiaracargoedad</label>
                     <input type="text" class="form-control" name="familiaracargoedad" id="field_familiaracargoedad"
-                        formControlName="familiaracargoedad" />
+                        formControlName="familiaracargoedad" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('familiaracargoedad').invalid && (editForm.get('familiaracargoedad').dirty || editForm.get('familiaracargoedad').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('familiaracargoedad').errors.maxlength"
@@ -749,11 +760,21 @@
                         </small>
                     </div>
                 </div>
+
+                <p>
+                    <button type="button" class="btn btn-outline-primary" style="color: #ccff00;"  (click)="isCollapsedfamiliaracargoedad = !isCollapsedfamiliaracargoedad"
+                            [attr.aria-expanded]="!isCollapsedfamiliaracargoedad" aria-controls="collapseExample3">
+                        Ver mas campos de Familiar a cargo
+                    </button>
+                </p>
+                <div id="collapseExample3" [ngbCollapse]="isCollapsedfamiliaracargoedad">
+                    <div class="card">
+                        <div class="card-body">
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.familiaracargoedad2"
                         for="field_familiaracargoedad2">Familiaracargoedad 2</label>
                     <input type="text" class="form-control" name="familiaracargoedad2" id="field_familiaracargoedad2"
-                        formControlName="familiaracargoedad2" />
+                        formControlName="familiaracargoedad2" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('familiaracargoedad2').invalid && (editForm.get('familiaracargoedad2').dirty || editForm.get('familiaracargoedad2').touched)">
                         <small class="form-text text-danger"
@@ -767,7 +788,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.familiaracargoedad3"
                         for="field_familiaracargoedad3">Familiaracargoedad 3</label>
                     <input type="text" class="form-control" name="familiaracargoedad3" id="field_familiaracargoedad3"
-                        formControlName="familiaracargoedad3" />
+                        formControlName="familiaracargoedad3"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('familiaracargoedad3').invalid && (editForm.get('familiaracargoedad3').dirty || editForm.get('familiaracargoedad3').touched)">
                         <small class="form-text text-danger"
@@ -781,7 +802,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.familiaracargoedad4"
                         for="field_familiaracargoedad4">Familiaracargoedad 4</label>
                     <input type="text" class="form-control" name="familiaracargoedad4" id="field_familiaracargoedad4"
-                        formControlName="familiaracargoedad4" />
+                        formControlName="familiaracargoedad4" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('familiaracargoedad4').invalid && (editForm.get('familiaracargoedad4').dirty || editForm.get('familiaracargoedad4').touched)">
                         <small class="form-text text-danger"
@@ -795,7 +816,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.familiaracargoedad5"
                         for="field_familiaracargoedad5">Familiaracargoedad 5</label>
                     <input type="text" class="form-control" name="familiaracargoedad5" id="field_familiaracargoedad5"
-                        formControlName="familiaracargoedad5" />
+                        formControlName="familiaracargoedad5" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('familiaracargoedad5').invalid && (editForm.get('familiaracargoedad5').dirty || editForm.get('familiaracargoedad5').touched)">
                         <small class="form-text text-danger"
@@ -805,10 +826,13 @@
                         </small>
                     </div>
                 </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.altura"
                         for="field_altura">Altura</label>
-                    <input type="text" class="form-control" name="altura" id="field_altura" formControlName="altura" />
+                    <input type="text" class="form-control" name="altura" id="field_altura" formControlName="altura"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('altura').invalid && (editForm.get('altura').dirty || editForm.get('altura').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('altura').errors.maxlength"
@@ -820,7 +844,7 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.barrio"
                         for="field_barrio">Barrio</label>
-                    <input type="text" class="form-control" name="barrio" id="field_barrio" formControlName="barrio" />
+                    <input type="text" class="form-control" name="barrio" id="field_barrio" formControlName="barrio"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('barrio').invalid && (editForm.get('barrio').dirty || editForm.get('barrio').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('barrio').errors.maxlength"
@@ -833,7 +857,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.estudiosincompletos"
                         for="field_estudiosincompletos">Estudiosincompletos</label>
                     <input type="text" class="form-control" name="estudiosincompletos" id="field_estudiosincompletos"
-                        formControlName="estudiosincompletos" />
+                        formControlName="estudiosincompletos" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('estudiosincompletos').invalid && (editForm.get('estudiosincompletos').dirty || editForm.get('estudiosincompletos').touched)">
                         <small class="form-text text-danger"
@@ -847,7 +871,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.conyugeapellido"
                         for="field_conyugeapellido">Conyugeapellido</label>
                     <input type="text" class="form-control" name="conyugeapellido" id="field_conyugeapellido"
-                        formControlName="conyugeapellido" />
+                        formControlName="conyugeapellido"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('conyugeapellido').invalid && (editForm.get('conyugeapellido').dirty || editForm.get('conyugeapellido').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('conyugeapellido').errors.maxlength"
@@ -860,7 +884,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.conyugenombre"
                         for="field_conyugenombre">Conyugenombre</label>
                     <input type="text" class="form-control" name="conyugenombre" id="field_conyugenombre"
-                        formControlName="conyugenombre" />
+                        formControlName="conyugenombre" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('conyugenombre').invalid && (editForm.get('conyugenombre').dirty || editForm.get('conyugenombre').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('conyugenombre').errors.maxlength"
@@ -873,13 +897,13 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.conyugedni"
                         for="field_conyugedni">Conyugedni</label>
                     <input type="number" class="form-control" name="conyugedni" id="field_conyugedni"
-                        formControlName="conyugedni" />
+                        formControlName="conyugedni"style="background-color: #7b8688c7;" />
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.conyugecuil"
                         for="field_conyugecuil">Conyugecuil</label>
                     <input type="text" class="form-control" name="conyugecuil" id="field_conyugecuil"
-                        formControlName="conyugecuil" />
+                        formControlName="conyugecuil" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('conyugecuil').invalid && (editForm.get('conyugecuil').dirty || editForm.get('conyugecuil').touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('conyugecuil').errors.maxlength"
@@ -892,7 +916,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombre"
                         for="field_grupofamiliarapellidonombre">Grupofamiliarapellidonombre</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombre"
-                        id="field_grupofamiliarapellidonombre" formControlName="grupofamiliarapellidonombre" />
+                        id="field_grupofamiliarapellidonombre" formControlName="grupofamiliarapellidonombre"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombre').invalid && (editForm.get('grupofamiliarapellidonombre').dirty || editForm.get('grupofamiliarapellidonombre').touched)">
                         <small class="form-text text-danger"
@@ -902,11 +926,21 @@
                         </small>
                     </div>
                 </div>
+
+                <p>
+                    <button type="button" class="btn btn-outline-primary" style="color: #ccff00;"  (click)="isCollapsedfamiliaracargoedad = !isCollapsedfamiliaracargoedad"
+                            [attr.aria-expanded]="!isCollapsedfamiliaracargoedad" aria-controls="collapseExample4">
+                        Ver mas campos de Familiar acargo
+                    </button>
+                </p>
+                <div id="collapseExample4" [ngbCollapse]="isCollapsedfamiliaracargoedad">
+                    <div class="card">
+                        <div class="card-body">
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombre2"
                         for="field_grupofamiliarapellidonombre2">Grupofamiliarapellidonombre 2</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombre2"
-                        id="field_grupofamiliarapellidonombre2" formControlName="grupofamiliarapellidonombre2" />
+                        id="field_grupofamiliarapellidonombre2" formControlName="grupofamiliarapellidonombre2" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombre2').invalid && (editForm.get('grupofamiliarapellidonombre2').dirty || editForm.get('grupofamiliarapellidonombre2').touched)">
                         <small class="form-text text-danger"
@@ -920,7 +954,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombre3"
                         for="field_grupofamiliarapellidonombre3">Grupofamiliarapellidonombre 3</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombre3"
-                        id="field_grupofamiliarapellidonombre3" formControlName="grupofamiliarapellidonombre3" />
+                        id="field_grupofamiliarapellidonombre3" formControlName="grupofamiliarapellidonombre3"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombre3').invalid && (editForm.get('grupofamiliarapellidonombre3').dirty || editForm.get('grupofamiliarapellidonombre3').touched)">
                         <small class="form-text text-danger"
@@ -934,7 +968,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombre4"
                         for="field_grupofamiliarapellidonombre4">Grupofamiliarapellidonombre 4</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombre4"
-                        id="field_grupofamiliarapellidonombre4" formControlName="grupofamiliarapellidonombre4" />
+                        id="field_grupofamiliarapellidonombre4" formControlName="grupofamiliarapellidonombre4" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombre4').invalid && (editForm.get('grupofamiliarapellidonombre4').dirty || editForm.get('grupofamiliarapellidonombre4').touched)">
                         <small class="form-text text-danger"
@@ -948,7 +982,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombre5"
                         for="field_grupofamiliarapellidonombre5">Grupofamiliarapellidonombre 5</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombre5"
-                        id="field_grupofamiliarapellidonombre5" formControlName="grupofamiliarapellidonombre5" />
+                        id="field_grupofamiliarapellidonombre5" formControlName="grupofamiliarapellidonombre5" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombre5').invalid && (editForm.get('grupofamiliarapellidonombre5').dirty || editForm.get('grupofamiliarapellidonombre5').touched)">
                         <small class="form-text text-danger"
@@ -962,7 +996,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombre6"
                         for="field_grupofamiliarapellidonombre6">Grupofamiliarapellidonombre 6</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombre6"
-                        id="field_grupofamiliarapellidonombre6" formControlName="grupofamiliarapellidonombre6" />
+                        id="field_grupofamiliarapellidonombre6" formControlName="grupofamiliarapellidonombre6" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombre6').invalid && (editForm.get('grupofamiliarapellidonombre6').dirty || editForm.get('grupofamiliarapellidonombre6').touched)">
                         <small class="form-text text-danger"
@@ -976,7 +1010,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombre7"
                         for="field_grupofamiliarapellidonombre7">Grupofamiliarapellidonombre 7</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombre7"
-                        id="field_grupofamiliarapellidonombre7" formControlName="grupofamiliarapellidonombre7" />
+                        id="field_grupofamiliarapellidonombre7" formControlName="grupofamiliarapellidonombre7"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombre7').invalid && (editForm.get('grupofamiliarapellidonombre7').dirty || editForm.get('grupofamiliarapellidonombre7').touched)">
                         <small class="form-text text-danger"
@@ -990,7 +1024,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombre8"
                         for="field_grupofamiliarapellidonombre8">Grupofamiliarapellidonombre 8</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombre8"
-                        id="field_grupofamiliarapellidonombre8" formControlName="grupofamiliarapellidonombre8" />
+                        id="field_grupofamiliarapellidonombre8" formControlName="grupofamiliarapellidonombre8"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombre8').invalid && (editForm.get('grupofamiliarapellidonombre8').dirty || editForm.get('grupofamiliarapellidonombre8').touched)">
                         <small class="form-text text-danger"
@@ -1004,7 +1038,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombre9"
                         for="field_grupofamiliarapellidonombre9">Grupofamiliarapellidonombre 9</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombre9"
-                        id="field_grupofamiliarapellidonombre9" formControlName="grupofamiliarapellidonombre9" />
+                        id="field_grupofamiliarapellidonombre9" formControlName="grupofamiliarapellidonombre9" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombre9').invalid && (editForm.get('grupofamiliarapellidonombre9').dirty || editForm.get('grupofamiliarapellidonombre9').touched)">
                         <small class="form-text text-danger"
@@ -1018,7 +1052,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombre10"
                         for="field_grupofamiliarapellidonombre10">Grupofamiliarapellidonombre 10</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombre10"
-                        id="field_grupofamiliarapellidonombre10" formControlName="grupofamiliarapellidonombre10" />
+                        id="field_grupofamiliarapellidonombre10" formControlName="grupofamiliarapellidonombre10" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombre10').invalid && (editForm.get('grupofamiliarapellidonombre10').dirty || editForm.get('grupofamiliarapellidonombre10').touched)">
                         <small class="form-text text-danger"
@@ -1032,7 +1066,7 @@
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombre11"
                         for="field_grupofamiliarapellidonombre11">Grupofamiliarapellidonombre 11</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombre11"
-                        id="field_grupofamiliarapellidonombre11" formControlName="grupofamiliarapellidonombre11" />
+                        id="field_grupofamiliarapellidonombre11" formControlName="grupofamiliarapellidonombre11"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombre11').invalid && (editForm.get('grupofamiliarapellidonombre11').dirty || editForm.get('grupofamiliarapellidonombre11').touched)">
                         <small class="form-text text-danger"
@@ -1042,11 +1076,16 @@
                         </small>
                     </div>
                 </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombreedad"
                         for="field_grupofamiliarapellidonombreedad">Grupofamiliarapellidonombreedad</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombreedad"
-                        id="field_grupofamiliarapellidonombreedad" formControlName="grupofamiliarapellidonombreedad" />
+                        id="field_grupofamiliarapellidonombreedad" formControlName="grupofamiliarapellidonombreedad"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombreedad').invalid && (editForm.get('grupofamiliarapellidonombreedad').dirty || editForm.get('grupofamiliarapellidonombreedad').touched)">
                         <small class="form-text text-danger"
@@ -1056,12 +1095,21 @@
                         </small>
                     </div>
                 </div>
+                <p>
+                    <button type="button" class="btn btn-outline-primary" style="color: #ccff00;"  (click)="isCollapsedfamiliaracargonombreedad = !isCollapsedfamiliaracargonombreedad"
+                            [attr.aria-expanded]="!isCollapsedfamiliaracargonombreedad" aria-controls="collapseExample5">
+                        Ver mas campos de Grupo Familiar Nombre Edad
+                    </button>
+                </p>
+                <div id="collapseExample5" [ngbCollapse]="isCollapsedfamiliaracargonombreedad">
+                    <div class="card">
+                        <div class="card-body">
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombreedad2"
                         for="field_grupofamiliarapellidonombreedad2">Grupofamiliarapellidonombreedad 2</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombreedad2"
                         id="field_grupofamiliarapellidonombreedad2"
-                        formControlName="grupofamiliarapellidonombreedad2" />
+                        formControlName="grupofamiliarapellidonombreedad2"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombreedad2').invalid && (editForm.get('grupofamiliarapellidonombreedad2').dirty || editForm.get('grupofamiliarapellidonombreedad2').touched)">
                         <small class="form-text text-danger"
@@ -1076,7 +1124,7 @@
                         for="field_grupofamiliarapellidonombreedad3">Grupofamiliarapellidonombreedad 3</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombreedad3"
                         id="field_grupofamiliarapellidonombreedad3"
-                        formControlName="grupofamiliarapellidonombreedad3" />
+                        formControlName="grupofamiliarapellidonombreedad3"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombreedad3').invalid && (editForm.get('grupofamiliarapellidonombreedad3').dirty || editForm.get('grupofamiliarapellidonombreedad3').touched)">
                         <small class="form-text text-danger"
@@ -1091,7 +1139,7 @@
                         for="field_grupofamiliarapellidonombreedad4">Grupofamiliarapellidonombreedad 4</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombreedad4"
                         id="field_grupofamiliarapellidonombreedad4"
-                        formControlName="grupofamiliarapellidonombreedad4" />
+                        formControlName="grupofamiliarapellidonombreedad4" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombreedad4').invalid && (editForm.get('grupofamiliarapellidonombreedad4').dirty || editForm.get('grupofamiliarapellidonombreedad4').touched)">
                         <small class="form-text text-danger"
@@ -1106,7 +1154,7 @@
                         for="field_grupofamiliarapellidonombreedad5">Grupofamiliarapellidonombreedad 5</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombreedad5"
                         id="field_grupofamiliarapellidonombreedad5"
-                        formControlName="grupofamiliarapellidonombreedad5" />
+                        formControlName="grupofamiliarapellidonombreedad5" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombreedad5').invalid && (editForm.get('grupofamiliarapellidonombreedad5').dirty || editForm.get('grupofamiliarapellidonombreedad5').touched)">
                         <small class="form-text text-danger"
@@ -1121,7 +1169,7 @@
                         for="field_grupofamiliarapellidonombreedad6">Grupofamiliarapellidonombreedad 6</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombreedad6"
                         id="field_grupofamiliarapellidonombreedad6"
-                        formControlName="grupofamiliarapellidonombreedad6" />
+                        formControlName="grupofamiliarapellidonombreedad6"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombreedad6').invalid && (editForm.get('grupofamiliarapellidonombreedad6').dirty || editForm.get('grupofamiliarapellidonombreedad6').touched)">
                         <small class="form-text text-danger"
@@ -1136,7 +1184,7 @@
                         for="field_grupofamiliarapellidonombreedad7">Grupofamiliarapellidonombreedad 7</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombreedad7"
                         id="field_grupofamiliarapellidonombreedad7"
-                        formControlName="grupofamiliarapellidonombreedad7" />
+                        formControlName="grupofamiliarapellidonombreedad7"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombreedad7').invalid && (editForm.get('grupofamiliarapellidonombreedad7').dirty || editForm.get('grupofamiliarapellidonombreedad7').touched)">
                         <small class="form-text text-danger"
@@ -1151,7 +1199,7 @@
                         for="field_grupofamiliarapellidonombreedad8">Grupofamiliarapellidonombreedad 8</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombreedad8"
                         id="field_grupofamiliarapellidonombreedad8"
-                        formControlName="grupofamiliarapellidonombreedad8" />
+                        formControlName="grupofamiliarapellidonombreedad8" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombreedad8').invalid && (editForm.get('grupofamiliarapellidonombreedad8').dirty || editForm.get('grupofamiliarapellidonombreedad8').touched)">
                         <small class="form-text text-danger"
@@ -1166,7 +1214,7 @@
                         for="field_grupofamiliarapellidonombreedad9">Grupofamiliarapellidonombreedad 9</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombreedad9"
                         id="field_grupofamiliarapellidonombreedad9"
-                        formControlName="grupofamiliarapellidonombreedad9" />
+                        formControlName="grupofamiliarapellidonombreedad9"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombreedad9').invalid && (editForm.get('grupofamiliarapellidonombreedad9').dirty || editForm.get('grupofamiliarapellidonombreedad9').touched)">
                         <small class="form-text text-danger"
@@ -1181,7 +1229,7 @@
                         for="field_grupofamiliarapellidonombreedad10">Grupofamiliarapellidonombreedad 10</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombreedad10"
                         id="field_grupofamiliarapellidonombreedad10"
-                        formControlName="grupofamiliarapellidonombreedad10" />
+                        formControlName="grupofamiliarapellidonombreedad10"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombreedad10').invalid && (editForm.get('grupofamiliarapellidonombreedad10').dirty || editForm.get('grupofamiliarapellidonombreedad10').touched)">
                         <small class="form-text text-danger"
@@ -1196,7 +1244,7 @@
                         for="field_grupofamiliarapellidonombreedad11">Grupofamiliarapellidonombreedad 11</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombreedad11"
                         id="field_grupofamiliarapellidonombreedad11"
-                        formControlName="grupofamiliarapellidonombreedad11" />
+                        formControlName="grupofamiliarapellidonombreedad11"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombreedad11').invalid && (editForm.get('grupofamiliarapellidonombreedad11').dirty || editForm.get('grupofamiliarapellidonombreedad11').touched)">
                         <small class="form-text text-danger"
@@ -1206,73 +1254,90 @@
                         </small>
                     </div>
                 </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombredni"
                         for="field_grupofamiliarapellidonombredni">Grupofamiliarapellidonombredni</label>
                     <input type="number" class="form-control" name="grupofamiliarapellidonombredni"
-                        id="field_grupofamiliarapellidonombredni" formControlName="grupofamiliarapellidonombredni" />
+                        id="field_grupofamiliarapellidonombredni" formControlName="grupofamiliarapellidonombredni"style="background-color: #7b8688c7;" />
                 </div>
+
+                <p>
+                    <button type="button" class="btn btn-outline-primary" style="color: #ccff00;"  (click)="isCollapsedfamiliaracargoapellido = !isCollapsedfamiliaracargoapellido"
+                            [attr.aria-expanded]="!isCollapsedfamiliaracargoapellido" aria-controls="collapseExample6">
+                        Ver mas campos de Grupo Familiar Apellido
+                    </button>
+                </p>
+                <div id="collapseExample6" [ngbCollapse]="isCollapsedfamiliaracargoapellido">
+                    <div class="card">
+                        <div class="card-body">
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombredni2"
                         for="field_grupofamiliarapellidonombredni2">Grupofamiliarapellidonombredni 2</label>
                     <input type="number" class="form-control" name="grupofamiliarapellidonombredni2"
-                        id="field_grupofamiliarapellidonombredni2" formControlName="grupofamiliarapellidonombredni2" />
+                        id="field_grupofamiliarapellidonombredni2" formControlName="grupofamiliarapellidonombredni2"style="background-color: #7b8688c7;" />
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombredni3"
                         for="field_grupofamiliarapellidonombredni3">Grupofamiliarapellidonombredni 3</label>
                     <input type="number" class="form-control" name="grupofamiliarapellidonombredni3"
-                        id="field_grupofamiliarapellidonombredni3" formControlName="grupofamiliarapellidonombredni3" />
+                        id="field_grupofamiliarapellidonombredni3" formControlName="grupofamiliarapellidonombredni3"style="background-color: #7b8688c7;" />
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombredni4"
                         for="field_grupofamiliarapellidonombredni4">Grupofamiliarapellidonombredni 4</label>
                     <input type="number" class="form-control" name="grupofamiliarapellidonombredni4"
-                        id="field_grupofamiliarapellidonombredni4" formControlName="grupofamiliarapellidonombredni4" />
+                        id="field_grupofamiliarapellidonombredni4" formControlName="grupofamiliarapellidonombredni4"style="background-color: #7b8688c7;" />
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombredni5"
                         for="field_grupofamiliarapellidonombredni5">Grupofamiliarapellidonombredni 5</label>
                     <input type="number" class="form-control" name="grupofamiliarapellidonombredni5"
-                        id="field_grupofamiliarapellidonombredni5" formControlName="grupofamiliarapellidonombredni5" />
+                        id="field_grupofamiliarapellidonombredni5" formControlName="grupofamiliarapellidonombredni5"style="background-color: #7b8688c7;" />
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombredni6"
                         for="field_grupofamiliarapellidonombredni6">Grupofamiliarapellidonombredni 6</label>
                     <input type="number" class="form-control" name="grupofamiliarapellidonombredni6"
-                        id="field_grupofamiliarapellidonombredni6" formControlName="grupofamiliarapellidonombredni6" />
+                        id="field_grupofamiliarapellidonombredni6" formControlName="grupofamiliarapellidonombredni6"style="background-color: #7b8688c7;" />
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombredni7"
                         for="field_grupofamiliarapellidonombredni7">Grupofamiliarapellidonombredni 7</label>
                     <input type="number" class="form-control" name="grupofamiliarapellidonombredni7"
-                        id="field_grupofamiliarapellidonombredni7" formControlName="grupofamiliarapellidonombredni7" />
+                        id="field_grupofamiliarapellidonombredni7" formControlName="grupofamiliarapellidonombredni7" style="background-color: #7b8688c7;"/>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombredni8"
                         for="field_grupofamiliarapellidonombredni8">Grupofamiliarapellidonombredni 8</label>
                     <input type="number" class="form-control" name="grupofamiliarapellidonombredni8"
-                        id="field_grupofamiliarapellidonombredni8" formControlName="grupofamiliarapellidonombredni8" />
+                        id="field_grupofamiliarapellidonombredni8" formControlName="grupofamiliarapellidonombredni8" style="background-color: #7b8688c7;"/>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombredni9"
                         for="field_grupofamiliarapellidonombredni9">Grupofamiliarapellidonombredni 9</label>
                     <input type="number" class="form-control" name="grupofamiliarapellidonombredni9"
-                        id="field_grupofamiliarapellidonombredni9" formControlName="grupofamiliarapellidonombredni9" />
+                        id="field_grupofamiliarapellidonombredni9" formControlName="grupofamiliarapellidonombredni9" style="background-color: #7b8688c7;"/>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombredni10"
                         for="field_grupofamiliarapellidonombredni10">Grupofamiliarapellidonombredni 10</label>
                     <input type="number" class="form-control" name="grupofamiliarapellidonombredni10"
                         id="field_grupofamiliarapellidonombredni10"
-                        formControlName="grupofamiliarapellidonombredni10" />
+                        formControlName="grupofamiliarapellidonombredni10"style="background-color: #7b8688c7;" />
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombredni11"
                         for="field_grupofamiliarapellidonombredni11">Grupofamiliarapellidonombredni 11</label>
                     <input type="number" class="form-control" name="grupofamiliarapellidonombredni11"
                         id="field_grupofamiliarapellidonombredni11"
-                        formControlName="grupofamiliarapellidonombredni11" />
+                        formControlName="grupofamiliarapellidonombredni11" style="background-color: #7b8688c7;"/>
+                </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label"
@@ -1280,7 +1345,7 @@
                         for="field_grupofamiliarapellidonombrefamiliar">Grupofamiliarapellidonombrefamiliar</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombrefamiliar"
                         id="field_grupofamiliarapellidonombrefamiliar"
-                        formControlName="grupofamiliarapellidonombrefamiliar" />
+                        formControlName="grupofamiliarapellidonombrefamiliar" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombrefamiliar').invalid && (editForm.get('grupofamiliarapellidonombrefamiliar').dirty || editForm.get('grupofamiliarapellidonombrefamiliar').touched)">
                         <small class="form-text text-danger"
@@ -1290,13 +1355,23 @@
                         </small>
                     </div>
                 </div>
+
+                <p>
+                    <button type="button" class="btn btn-outline-primary" style="color: #ccff00;"  (click)="isCollapsedfamiliaracargonombrefamiliar = !isCollapsedfamiliaracargonombrefamiliar"
+                            [attr.aria-expanded]="!isCollapsedfamiliaracargonombrefamiliar" aria-controls="collapseExample7">
+                        Ver mas campos de Grupo Familiar Nombre Familiar
+                    </button>
+                </p>
+                <div id="collapseExample7" [ngbCollapse]="isCollapsedfamiliaracargonombrefamiliar">
+                    <div class="card">
+                        <div class="card-body">
                 <div class="form-group">
                     <label class="form-control-label"
                         jhiTranslate="rrhh2App.persona.grupofamiliarapellidonombrefamiliar2"
                         for="field_grupofamiliarapellidonombrefamiliar2">Grupofamiliarapellidonombrefamiliar 2</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombrefamiliar2"
                         id="field_grupofamiliarapellidonombrefamiliar2"
-                        formControlName="grupofamiliarapellidonombrefamiliar2" />
+                        formControlName="grupofamiliarapellidonombrefamiliar2" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombrefamiliar2').invalid && (editForm.get('grupofamiliarapellidonombrefamiliar2').dirty || editForm.get('grupofamiliarapellidonombrefamiliar2').touched)">
                         <small class="form-text text-danger"
@@ -1312,7 +1387,7 @@
                         for="field_grupofamiliarapellidonombrefamiliar4">Grupofamiliarapellidonombrefamiliar 4</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombrefamiliar4"
                         id="field_grupofamiliarapellidonombrefamiliar4"
-                        formControlName="grupofamiliarapellidonombrefamiliar4" />
+                        formControlName="grupofamiliarapellidonombrefamiliar4" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombrefamiliar4').invalid && (editForm.get('grupofamiliarapellidonombrefamiliar4').dirty || editForm.get('grupofamiliarapellidonombrefamiliar4').touched)">
                         <small class="form-text text-danger"
@@ -1328,7 +1403,7 @@
                         for="field_grupofamiliarapellidonombrefamiliar3">Grupofamiliarapellidonombrefamiliar 3</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombrefamiliar3"
                         id="field_grupofamiliarapellidonombrefamiliar3"
-                        formControlName="grupofamiliarapellidonombrefamiliar3" />
+                        formControlName="grupofamiliarapellidonombrefamiliar3" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombrefamiliar3').invalid && (editForm.get('grupofamiliarapellidonombrefamiliar3').dirty || editForm.get('grupofamiliarapellidonombrefamiliar3').touched)">
                         <small class="form-text text-danger"
@@ -1344,7 +1419,7 @@
                         for="field_grupofamiliarapellidonombrefamiliar5">Grupofamiliarapellidonombrefamiliar 5</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombrefamiliar5"
                         id="field_grupofamiliarapellidonombrefamiliar5"
-                        formControlName="grupofamiliarapellidonombrefamiliar5" />
+                        formControlName="grupofamiliarapellidonombrefamiliar5"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombrefamiliar5').invalid && (editForm.get('grupofamiliarapellidonombrefamiliar5').dirty || editForm.get('grupofamiliarapellidonombrefamiliar5').touched)">
                         <small class="form-text text-danger"
@@ -1360,7 +1435,7 @@
                         for="field_grupofamiliarapellidonombrefamiliar6">Grupofamiliarapellidonombrefamiliar 6</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombrefamiliar6"
                         id="field_grupofamiliarapellidonombrefamiliar6"
-                        formControlName="grupofamiliarapellidonombrefamiliar6" />
+                        formControlName="grupofamiliarapellidonombrefamiliar6" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombrefamiliar6').invalid && (editForm.get('grupofamiliarapellidonombrefamiliar6').dirty || editForm.get('grupofamiliarapellidonombrefamiliar6').touched)">
                         <small class="form-text text-danger"
@@ -1376,7 +1451,7 @@
                         for="field_grupofamiliarapellidonombrefamiliar7">Grupofamiliarapellidonombrefamiliar 7</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombrefamiliar7"
                         id="field_grupofamiliarapellidonombrefamiliar7"
-                        formControlName="grupofamiliarapellidonombrefamiliar7" />
+                        formControlName="grupofamiliarapellidonombrefamiliar7" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombrefamiliar7').invalid && (editForm.get('grupofamiliarapellidonombrefamiliar7').dirty || editForm.get('grupofamiliarapellidonombrefamiliar7').touched)">
                         <small class="form-text text-danger"
@@ -1392,7 +1467,7 @@
                         for="field_grupofamiliarapellidonombrefamiliar8">Grupofamiliarapellidonombrefamiliar 8</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombrefamiliar8"
                         id="field_grupofamiliarapellidonombrefamiliar8"
-                        formControlName="grupofamiliarapellidonombrefamiliar8" />
+                        formControlName="grupofamiliarapellidonombrefamiliar8" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombrefamiliar8').invalid && (editForm.get('grupofamiliarapellidonombrefamiliar8').dirty || editForm.get('grupofamiliarapellidonombrefamiliar8').touched)">
                         <small class="form-text text-danger"
@@ -1408,7 +1483,7 @@
                         for="field_grupofamiliarapellidonombrefamiliar9">Grupofamiliarapellidonombrefamiliar 9</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombrefamiliar9"
                         id="field_grupofamiliarapellidonombrefamiliar9"
-                        formControlName="grupofamiliarapellidonombrefamiliar9" />
+                        formControlName="grupofamiliarapellidonombrefamiliar9"style="background-color: #7b8688c7;" />
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombrefamiliar9').invalid && (editForm.get('grupofamiliarapellidonombrefamiliar9').dirty || editForm.get('grupofamiliarapellidonombrefamiliar9').touched)">
                         <small class="form-text text-danger"
@@ -1424,7 +1499,7 @@
                         for="field_grupofamiliarapellidonombrefamiliar10">Grupofamiliarapellidonombrefamiliar 10</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombrefamiliar10"
                         id="field_grupofamiliarapellidonombrefamiliar10"
-                        formControlName="grupofamiliarapellidonombrefamiliar10" />
+                        formControlName="grupofamiliarapellidonombrefamiliar10" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombrefamiliar10').invalid && (editForm.get('grupofamiliarapellidonombrefamiliar10').dirty || editForm.get('grupofamiliarapellidonombrefamiliar10').touched)">
                         <small class="form-text text-danger"
@@ -1440,7 +1515,7 @@
                         for="field_grupofamiliarapellidonombrefamiliar11">Grupofamiliarapellidonombrefamiliar 11</label>
                     <input type="text" class="form-control" name="grupofamiliarapellidonombrefamiliar11"
                         id="field_grupofamiliarapellidonombrefamiliar11"
-                        formControlName="grupofamiliarapellidonombrefamiliar11" />
+                        formControlName="grupofamiliarapellidonombrefamiliar11" style="background-color: #7b8688c7;"/>
                     <div
                         *ngIf="editForm.get('grupofamiliarapellidonombrefamiliar11').invalid && (editForm.get('grupofamiliarapellidonombrefamiliar11').dirty || editForm.get('grupofamiliarapellidonombrefamiliar11').touched)">
                         <small class="form-text text-danger"
@@ -1448,6 +1523,9 @@
                             jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 50 }">
                             This field cannot be longer than 50 characters.
                         </small>
+                    </div>
+                </div>
+                        </div>
                     </div>
                 </div>
 
